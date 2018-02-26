@@ -6,7 +6,7 @@ C
 C   SUBROUTINE ISPITA
 C              WBROJK
 C              WIMIDZ
-C              READTE
+C              READTE 
 C              READTT
 C              VISINE
 C              ADRESE
@@ -19,7 +19,7 @@ C              READDD
 C              IREADD
 C              CLEAR
 C              ICLEAR
-C              ZBIRM
+C              ZBIRM 
 C              ZBIRM1
 C              JEDNAK
 C              JEDNA1
@@ -142,15 +142,15 @@ C
       ENDIF
       RETURN
 C-----------------------------------------------------------------------
- 2000 FORMAT(//////' KARTICE OD BROJA',I5,' DO',I5///)
- 2010 FORMAT(///'1'/' KARTICE OD BROJA',I5,' DO',I5///)
- 2100 FORMAT(//////' KARTICA BROJ',I5///)
- 2110 FORMAT(///'1'/' KARTICA BROJ',I5///)
+ 2000 FORMAT(//////' KARTICE OD BROJA',I9,' DO',I9///)
+ 2010 FORMAT(///'1'/' KARTICE OD BROJA',I9,' DO',I9///)
+ 2100 FORMAT(//////' KARTICA BROJ',I9///)
+ 2110 FORMAT(///'1'/' KARTICA BROJ',I9///)
 C-----------------------------------------------------------------------
- 6000 FORMAT(//////' CARD FROM NUMBER ',I5,' TO',I5///)
- 6010 FORMAT(///'1'/' CARD FROM NUMBER ',I5,' TO',I5///)
- 6100 FORMAT(//////' CARD NUMBER ',I5///)
- 6110 FORMAT(///'1'/' CARD NUMBER ',I5///)
+ 6000 FORMAT(//////' CARD FROM NUMBER ',I9,' TO',I9///)
+ 6010 FORMAT(///'1'/' CARD FROM NUMBER ',I9,' TO',I9///)
+ 6100 FORMAT(//////' CARD NUMBER ',I9///)
+ 6110 FORMAT(///'1'/' CARD NUMBER ',I9///)
 C-----------------------------------------------------------------------
       END
 C=======================================================================
@@ -527,7 +527,7 @@ C
       DIMENSION A(*)
 C
       IF(IDEBUG.GT.0) PRINT *, ' WRITDD'
-      IF(ISKDSK.EQ.0.AND.N.EQ.NWK)RETURN
+C      IF(ISKDSK.EQ.0.AND.N.EQ.NWK)RETURN
       IF(N.EQ.0) RETURN
       NK=N*8/LD
       NN=NK*LD/8
@@ -604,7 +604,7 @@ C
       DIMENSION A(*)
 C
       IF(IDEBUG.GT.0) PRINT *, ' READDD'
-      IF(ISKDSK.EQ.0.AND.N.EQ.NWK)RETURN
+C      IF(ISKDSK.EQ.0.AND.N.EQ.NWK)RETURN
       IF(N.EQ.0) RETURN
       NK=N*8/LD
       NN=NK*LD/8
@@ -1702,12 +1702,15 @@ C      WRITE(3,*) 'RK,NS,LRTD',NS,LRTD
          CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
       ELSE
          IF(ISKDSK.NE.0) THEN
+c        za ljusku mora da se skine komentar
+         IF(ISKDSK.NE.0) THEN
             IF(NBLOCK.EQ.1) THEN
                CALL READDD(A(LRTD),NWK,IPODS,LMAX13,LDUZI)
             ELSE
                CALL READDB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
      1                     NBLOCK,LR,IBLK,LMAX13)
             ENDIF
+         ENDIF
          ENDIF
       ENDIF
       RETURN
@@ -1743,7 +1746,7 @@ C
       DIMENSION NPODS(JPS1,*)
 C
       IF(IDEBUG.GT.0) PRINT *, ' WSTAZK'
-C      WRITE(3,*) 'WK,NS,LRTD',NS,LRTD
+      WRITE(3,*) 'WK,NS,LRTD',NS,LRTD
       LMAX13=NPODS(JPBR,NS)-1
       IF(JPBR.LT.JPS1.AND.NS.EQ.60) THEN
          CALL WRITDD(A(LRTD),NWP,IPODS,LMAX13,LDUZI)
@@ -1752,12 +1755,15 @@ C      WRITE(3,*) 'WK,NS,LRTD',NS,LRTD
          CALL WRITDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
       ELSE
          IF(ISKDSK.NE.0) THEN
+c        za ljusku mora da se skine komentar
+         IF(ISKDSK.NE.0) THEN
             IF(NBLOCK.EQ.1) THEN
                CALL WRITDD(A(LRTD),NWK,IPODS,LMAX13,LDUZI)
             ELSE
                CALL WRITEB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
      1                     NBLOCK,LR,IBLK,LMAX13)
             ENDIF
+         ENDIF 
          ENDIF 
       ENDIF
       RETURN
@@ -3117,8 +3123,8 @@ C
       COMMON /CDEBUG/ IDEBUG
       DIMENSION S(*)
 C OVU TOLERANCIJU PROVERITI 1.D-08 -STARA TOLERANCIJA
-      DATA TOL/1.D-08/
-C      DATA TOL/1.D-16/
+C      DATA TOL/1.D-08/
+      DATA TOL/1.D-12/
 C
       IF(IDEBUG.GT.0) PRINT *, ' GLAVN'
       IZILE=0
@@ -3229,8 +3235,8 @@ C OVU TOLERANCIJU PROVERITI 1.D-06 -STARA TOLERANCIJA
 C ZA SAVIJANJE
 C      DATA TOL/1.D-06/
 C ZA ZATEZANJE
-      DATA TOL/1.D-08/
-C      DATA TOL/1.D-16/
+C      DATA TOL/1.D-08/
+      DATA TOL/1.D-12/
 C
       IF(IDEBUG.GT.0) PRINT *, ' GLAPR3'
 CE  CHECK FOR ALL SAME ROOTS
@@ -3607,6 +3613,7 @@ C     DRUGI SLUCAJ
       END
 C=======================================================================
       INTEGER FUNCTION MODPR1( NMODM )
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CE    SPACE NECESSARY IN MATERIAL MODEL FOR 1D ELEMENT, 
 CE    ON GAUSS INTEGRATION POINT LEVEL
@@ -3634,6 +3641,7 @@ C
       END
 C=======================================================================
       INTEGER FUNCTION MODPR2( NMODM )
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CE    SPACE NECESSARY IN MATERIAL MODEL FOR 2D ELEMENT, 
 CE    ON GAUSS INTEGRATION POINT LEVEL
@@ -3644,7 +3652,7 @@ C
      1       999,999,999,  6, 15, 16,  6, 18, 19,  6,
      2         6, 22,999,999, 25, 26,999, 28,999, 30,
      3        31,999,999,999,999,999,999,999,999, 40,
-     4       999,999,999,999,999,999,999,999,999,999,
+     4        41,999,999,999,999,999,999,999,999,999,
      5        51,999,999,999,999,999,999,999,999,999,
      6        61,999,999,999,999,999,999,999,999,999,
      7       999,999,999,999,999,999,999,999,999,999,
@@ -3677,6 +3685,9 @@ C VISKOELASTICAN ( 5 JE BROJ TACAKA)
       RETURN
    40 MODPR2=19
       RETURN
+C     Drucker-Prager (rakic)
+   41 MODPR2=20
+      RETURN
 C ARGENTINA
    51 MODPR2=32
       RETURN
@@ -3686,6 +3697,7 @@ C     Isotropic Damage Model (Oliver 1996)
       END
 C=======================================================================
       INTEGER FUNCTION MODPRO( NMODM )
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       COMMON /IZOL4B/ NGS12,ND,MSLOJ,MXS,MSET,LNSLOJ,LMATSL,LDSLOJ,LBBET
 C
 CE    SPACE NECESSARY IN MATERIAL MODEL FOR 3D ELEMENT, SHELL AND 
@@ -3698,7 +3710,7 @@ C
      2         6, 22, 15, 24, 25, 26, 27, 28, 29, 30,
      3        31, 32, 33, 34,999,999,999,999,999,999,
      4        41, 42, 43, 44, 45,999,999,999,999,999,
-     5       999, 52, 53, 54,999,999,999,999,999,999,
+     5       999, 52, 53, 54,999, 56,999,999,999,999,
      6        61,999,999,999,999,999,999,999,999,999,
      7       999,999,999,999,999,999,999,999,999,999,
      8       999,999,999,999,999,999,999,999,999,999,
@@ -3740,7 +3752,7 @@ C
    34 MODPRO=26
       RETURN
 C     Drucker-Prager (rakic)
-   41 MODPRO=20
+   41 MODPRO=30
       RETURN
 C     Mohr-Coulomb (rakic)
    42 MODPRO=20
@@ -3763,33 +3775,48 @@ C     SMA
 C     SMA VLADA     
    54 MODPRO=57
       RETURN 
+C     CONCRETE DAMAGE 
+   56 MODPRO=30
+      RETURN          
 C     Isotropic Damage Model (Oliver 1996)
    61 MODPRO=15
   999 RETURN
       END
 C=======================================================================
       INTEGER FUNCTION MODTMP( NMODM )
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CE    INDICATOR FOR MODELS WITH TEMPERATURE DEPENDENCE
 CS    INDIKATOR ZA TERMO MODELE
 C
+      COMMON /MODELT/ TEMPC0,ALFAC,INDTEM
+      COMMON /VRTEMP/ AVRTEMP      
+      COMMON /PERKOR/ LNKDT,LDTDT,LVDT,NDT,DT,VREME,KOR      
+C
       GO TO (999,999,  1,  1,999,999,999,999,999,999,
      1       999,999,999,  1,  1,  1,  1,  1,  1,999,
-     2       999,999,999,999,999,999,999,999,999,999,
+     2       999,999,999,999,999,999,  2,999,999,999,
      3       999,999,999,999,999,999,999,999,999,999,
-     4       999,999,999,999,999,999,999,999,999,999,
-     5       999,999,  1,999,999,999,999,999,999,999,
+     4       999,999,  2,  2,999,999,999,999,999,999,
+     5       999,999,  1,999,  1,  3,999,999,999,999,
      6       999,999,999,999,999,999,999,999,999,999,
      7       999,999,999,999,999,999,999,999,999,999,
      8       999,999,999,999,999,999,999,999,999,999,
      9       999,999,999,999,999,999,999,999,999,999),NMODM
     1 MODTMP=1
       RETURN
+    2 MODTMP=0
+      IF(INDTEM.EQ.1) MODTMP=1
+      RETURN
+    3 MODTMP=0
+      IF(INDTEM.EQ.1.AND.VREME.GE.AVRTEMP) MODTMP=1
+      RETURN      
   999 MODTMP=0
       RETURN
       END
 C=======================================================================
       INTEGER FUNCTION MODORT( NMODM )
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CE    INDICATOR FOR MATERIAL ORTHOTROPY
 CS    INDIKATOR ZA ORTOTROPNE MODELE
@@ -4371,7 +4398,7 @@ C
      2          21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
      3          31, 32, 33, 34,999,999,999,999,999, 40,
      4          41, 42, 43, 44, 45,999,999,999,999,999,
-     5          51, 52, 53, 54,999,999,999,999,999,999,
+     5          51, 52, 53, 54,999, 56,999,999,999,999,
      6          61,999,999,999,999,999,999,999,999,999,
      7         999,999,999,999,999,999,999,999,999,999,
      8         999,999,999,999,999,999,999,999,999,999,
@@ -4645,6 +4672,15 @@ C     SMA VLADA
       MREPER(1)=LREP
       MREPER(4)=MATE
       RETURN 
+C     CONCRETE DAMAGE 
+   56 LREP=MODEL(4,J)
+      MATE=MODEL(2,J)
+      MAXT=MODEL(3,J)
+      LTEM=LREP+MATE*20*MAXT*IDVA
+      MREPER(1)=LREP
+      MREPER(3)=LTEM
+      MREPER(4)=MATE
+      RETURN      
 C     Isotropic Damage Model (Oliver 1996)
    61 LREP=MODEL(4,J)
       MATE=MODEL(2,J)
@@ -4716,6 +4752,17 @@ C....  VEKTORSKI IZRAZ   A() <--- A() * C - B()
       DIMENSION A(*),B(*)
       DO 10 I=1,N
    10 A(I)=A(I)*C-B(I)
+      RETURN
+      END
+C=======================================================================
+C
+C======================================================================
+      SUBROUTINE ZBIRACB(A,B,C,N)
+C....  VEKTORSKI IZRAZ   A() <--- A() + C * B()
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+      DIMENSION A(*),B(*)
+      DO 10 I=1,N
+   10 A(I)=A(I)+C*B(I)
       RETURN
       END
 C=======================================================================
@@ -4949,6 +4996,32 @@ C
       DO 10 I=1,N
          M=MAXA(I)
    10 A(M)=A(M)+C*B(I)
+      RETURN
+      END
+C=======================================================================
+C
+C=======================================================================
+      SUBROUTINE ZBIRKD(A,B,D,C,N,MAXA)
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+C
+C ......................................................................
+C .
+CE.    P R O G R A M
+CE.       TO ADD 2 REAL VECTORS IN ACCORDANCE WITH TERM :
+CS.    P R O G R A M
+CS        ZA SABIRANJE MATRICE I VEKTORA U SAGLASNOSTI SA IZRAZOM :
+C .
+C .          A(MAXA(I))=D*A(MAXA(I))+C*B(I)
+C .
+C ......................................................................
+C
+      COMMON /CDEBUG/ IDEBUG
+      DIMENSION A(*),B(*),MAXA(*)
+C
+      IF(IDEBUG.GT.0) PRINT *, ' ZBIRKD'
+      DO 10 I=1,N
+         M=MAXA(I)
+   10 A(M)=D*A(M)+C*B(I)
       RETURN
       END
 C=======================================================================
@@ -5330,5 +5403,31 @@ C
           ENDIF
           RETURN
       ENDIF
+      END
+C=======================================================================
+C
+C=======================================================================
+      SUBROUTINE AXBVI(A,B,D)
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+C
+CS  IZRACUNAVANJE POVRSINE TROUGLA
+C
+      DIMENSION A(*),B(*),C(3)
+      COMMON /CDEBUG/ IDEBUG
+C
+      IF(IDEBUG.GT.0) PRINT *, ' AXBVI  '
+C
+CS  VEKTORSKI PROIZVOD
+C        C = A X B
+C
+      C(1)=A(2)*B(3)-A(3)*B(2)
+      C(2)=A(3)*B(1)-A(1)*B(3)
+      C(3)=A(1)*B(2)-A(2)*B(1)
+C
+CS  IZRACUNAVANJE POVRSINE TROUGLA
+C        D^2 = C(1)^2 + C(2)^2 + C(3)^2
+C
+      D=0.5*DSQRT(C(1)*C(1)+C(2)*C(2)+C(3)*C(3))
+      RETURN
       END
 C==========================================================================

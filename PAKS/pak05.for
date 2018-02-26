@@ -217,11 +217,15 @@ C       ZASTO JE UVEDEN NDOD
         LID=LMAX
         LMAX=LID+NPP*6
         IF(MIXED.EQ.1) LMAX=LMAX+NPP*6
+        IF(MIXED.EQ.2) LMAX=LMAX+NPP
+        IF(MIXED.EQ.3) LMAX=LMAX+NPP*4
         IF(ICVEL.EQ.0) THEN
           LCVEL=LMAX
           LELCV=LMAX
           NP6=NP*6
           IF(MIXED.EQ.1) NP6=NP6*2
+          IF(MIXED.EQ.2) NP6=NP*7
+          IF(MIXED.EQ.3) NP6=NP*10
         ELSE
           NPM=NPA-NPI+1
           LCVEL=LMAX
@@ -265,7 +269,7 @@ c         WRITE(3,*) ' PRE UCELE LMAX',LMAX
           CALL UCELE(A(LIGRUP))
           LMAXA=LRAD
           LMAX=LMAXA+JEDN+1
-          WRITE(3,*) ' POSLE UCELE LMAX',LMAX
+c          WRITE(3,*) ' POSLE UCELE LMAX',LMAX
          IF(LMAX.GT.MTOT) CALL ERROR(1)
           LMAXM=0
 CE        CALCULATING ACTIVE COLUMN HEIGHTS AND ADDRESSES OF DIAGONAL 
@@ -309,9 +313,12 @@ C
 c         nwk8=19000000000
          write(3,*) 'pre alociranja isk - LMAX',LMAX
          write(*,*) 'pre alociranja isk'
+         memisk=(4*(1+NWK8/28))/1000000
+            write(*,*) ' isk matrix memory MB=',memisk 
+            write(3,*) ' isk matrix memory MB=',memisk 
          ALLOCATE (ISK(1+NWK8/28), STAT = iAllocateStatus)
          mema=(1+NWK8/28)*4
-         IF (iAllocateStatus /= 0) write(3,*)'*** Not enough memory ***'
+         IF (iAllocateStatus /= 0) write(3,*)'ISK Not enough memory ***'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
          write(3,*) 'alocirao isk - LMAX',LMAX
          write(*,*) 'alocirao isk'
@@ -956,7 +963,7 @@ C-----------------------------------------------------------------------
      116X,'EQ.92; KONTAKTNI 2/D                    (2    CVORA)'/
      116X,'EQ.93; KONTAKTNI 3/D                    (4    CVORA)')
  2030 FORMAT(//
-     211X,'BROJ KONACNIH ELEMENATA GRUPE ELEMENATA ',I6,' .... NE =',I5/
+     211X,'BROJ KONACNIH ELEMENATA GRUPE ELEMENATA ',I6,' . NE =',I8/
      216X,'GT.0;'///
      311X,'INDIKATOR ANALIZE GRUPE ELEMENATA ',I6,' ....... IATYP =',I5/
      316X,'EQ. 0; LINEARNA ANALIZA'/
@@ -1011,6 +1018,7 @@ C-----------------------------------------------------------------------
      215X,'EQ.33; BIOLOSKI MODEL PUZANJA'/ 
      215X,'EQ.34; BIOLOSKI NAPON-STREC MODEL ZA AKTIVNO STANJE'/
      215X,'EQ.40; GURSON'/
+     215X,'EQ.56; BETON SA OSTECENJEM'/     
      215X,'EQ.61; IZOTROPAN MODEL OSTECENJA (Oliver)'/)
  2050 FORMAT(//
      211X,'INDIKATOR OPCIJE NASTAJANJA ELEMENATA ......... INDBTH =',I5/
@@ -1064,7 +1072,7 @@ C-----------------------------------------------------------------------
      116X,'EQ.92; CONTACT 2/D                      (2    NODES)'/
      116X,'EQ.93; CONTACT 3/D                      (4    NODES)')
  6030 FORMAT(//
-     211X,'NUMBER OF ELEMENTS IN THE GROUP ',I6,' ............ NE =',I5/
+     211X,'NUMBER OF ELEMENTS IN THE GROUP ',I6,' ......... NE =',I8/
      216X,'GT.0;'///
      311X,'INDICATOR FOR TYPE OF ANALYSIS FOR GROUP',I6,' . IATYP =',I5/
      316X,'EQ. 0; LINEAR ANALYSIS'/
@@ -1120,6 +1128,7 @@ C-----------------------------------------------------------------------
      215X,'       WITH CREEP'/
      215X,'EQ.34; BIOLOGICAL STRESS-STRETCH MODEL FOR ACTIVE STATE'/
      215X,'EQ.40; GURSON'/
+     215X,'EQ.56; CONCRETE DAMAGE'/     
      215X,'EQ.61; ISOTROPIC DAMAGE MODEL (OLIVER)'/)
  6050 FORMAT(//
      211X,'ELEMENT BIRTH OPTION INDICATOR ................ INDBTH =',I5/
@@ -1702,8 +1711,8 @@ CZILESK
       ENDIF
       NWM=0
       IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN
-         IF(IMASS.EQ.1) NWM=NWK
-         IF(IMASS.EQ.2) NWM=JEDN
+         NWM=NWK
+         IF(IMASS.EQ.2.AND.(IDAMP.EQ.0.OR.IDAMP.EQ.2)) NWM=JEDN
       ENDIF
       IF(NDIN.EQ.0.AND.ISOPS.GT.0) NWM=NWK
 CZILESK
@@ -1717,17 +1726,19 @@ CZILESK
         LR=LDUZI/8
       ELSE
         LAMAX=LMAX+(NWM+NWK)*IDVA+NRAD
-c      if(IVER.EQ.1.AND.nblock.gt.1) STOP 
+c      if(IVER.EQ.1) STOP 
 c     1 'PROGRAM STOP-STUDENTSKA VERZIJA PROGRAMA, NE RADI SA BLOKOVIMA'
+      if(ICCGG.NE.0) STOP 
+     1 'PROGRAM STOP - MUMPS DOES NOT WORK WITH BLOCKS'
         IF(JPS.GT.1) THEN
       IF(ISRPS.EQ.0)
      1WRITE(IZLAZ,2200)
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6200)
       IF(ISRPS.EQ.0)
-     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT,LAMAX
       IF(ISRPS.EQ.1)
-     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT,LAMAX
         STOP
         ENDIF
         IF(NDIN.GT.0) THEN
@@ -1736,9 +1747,9 @@ c     1 'PROGRAM STOP-STUDENTSKA VERZIJA PROGRAMA, NE RADI SA BLOKOVIMA'
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6300)
       IF(ISRPS.EQ.0)
-     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT,LAMAX
       IF(ISRPS.EQ.1)
-     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT,LAMAX
         STOP
         ENDIF
         IF(ISOPS.GT.0) THEN
@@ -1747,9 +1758,9 @@ c     1 'PROGRAM STOP-STUDENTSKA VERZIJA PROGRAMA, NE RADI SA BLOKOVIMA'
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6400)
       IF(ISRPS.EQ.0)
-     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,2001) JEDN,NWK,MTOT,LAMAX
       IF(ISRPS.EQ.1)
-     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT
+     1WRITE(IZLAZ,6001) JEDN,NWK,MTOT,LAMAX
         STOP
         ENDIF
         LMNQ=LMAX
@@ -1812,11 +1823,13 @@ C            CALL CLEAR(A(LAILU),(LMAX-LAILU)/IDVA)
       LSK=LMAX
       IF(NBLOCK.EQ.1) THEN
          LRAD=LSK+NWK*I2*IDVA
+         IF(LRAD.GT.MTOT) CALL ERROR(2)
          CALL CLEAR(A(LSK),NWK*I2)
          NPODS(JPBR,35)=LMAX13+1
          IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
          IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN
             LRAD=LRAD+NWM*IDVA
+            IF(LRAD.GT.MTOT) CALL ERROR(2)
             NPODS(JPBR,54)=LMAX13+1
               IF(IREST.NE.2.AND.IMASS.EQ.1)
      +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
@@ -1948,7 +1961,8 @@ C-----------------------------------------------------------------------
  2001 FORMAT(
      111X,'BROJ JEDNACINA .............................. JEDN =',I10// 
      211X,'BROJ ELEMENATA U MATRICI SISTEMA ............. NWK =',I10// 
-     411X,'RASPOLOZIV PROSTOR U RADNOM VEKTORU ......... MTOT =',I10///)
+     311X,'RASPOLOZIV PROSTOR U RADNOM VEKTORU ......... MTOT =',I10//
+     411X,'POTREBAN PROSTOR U RADNOM VEKTORU .......... LAMAX =',I10///)
  2010 FORMAT(///' NEDOVOLJNA DIMENZIJA ZA SMESTANJE MATRICA I VEKTORA ',
      1'SISTEMA :'/' POTREBNA DIMENZIJA,    LMAXM=',I10/' RASPOLOZIVA ',
      2'DIMENZIJA, MTOT =',I10//
@@ -1975,7 +1989,8 @@ C-----------------------------------------------------------------------
  6001 FORMAT(
      111X,'NUMBER OF EQUATIONS ......................... JEDN =',I10//
      211X,'NUMBER OF ELEMENTS INTO MATRIX OF SYSTEM ..... NWK =',I10//
-     411X,'MAXIMUM TOTAL STORAGE AVAILABLE ............. MTOT =',I10///)
+     311X,'MAXIMUM TOTAL STORAGE AVAILABLE ............. MTOT =',I10//
+     411X,'NEEDED TOTAL STORAGE ....................... LAMAX =',I10///)
  6010 FORMAT(///' UNSUFFICIENT DIMENSION OF WORKING VECTOR:'/
      1' REQUIRED DIMENSION LMAXM =',I10/
      2' AVAILABLE DIMENSION MTOT =',I10)
@@ -2374,11 +2389,15 @@ C PRIVREMENO ZBOG VAGONA
                   ID(I,J)=0
                ENDIF
     3       CONTINUE
-         WRITE(IZLAZ,5000) II,(ID(I,J),J=1,5),KAKO6(I),(CORD(I,J),J=1,3)
+         if(ind56.eq.0) 
+     1   WRITE(IZLAZ,5000) II,(ID(I,J),J=1,5),KAKO6(I),(CORD(I,J),J=1,3)
+         if(ind56.eq.1) 
+     1   WRITE(IZLAZ,4000) II,(ID(I,J),J=1,5),KAKO6(I),(CORD(I,J),J=1,3)
     2    CONTINUE
       ENDIF
  1011 FORMAT(///' PROGRAMSKI OGRANICEN STEPEN SLOBODE 6'/)
  5000 FORMAT(I5,1X,6I2,2X,3F10.4)
+ 4000 FORMAT(I10,1X,6I2,2X,3F15.4,I5,I5,8X,6I2)
 C
       IF(JPS.EQ.1) THEN
 C        NORMIRANJE JEDINICNIH VEKTORA NORMALE  I  V1    

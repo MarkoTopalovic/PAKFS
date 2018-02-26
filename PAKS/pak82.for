@@ -618,7 +618,7 @@ C                  WRITE(3,*) 'IG,5',IG
                         IF(ICVEL.EQ.1) NMM=MCVEL(NLM)
                         WRITE(*,5000) NMM,NBR,SKALAR
                         WRITE(IZLAZ,5000) NMM,NBR,SKALAR
- 5000 FORMAT(/' ELEMENT=',I5,' REDNI BROJ CVORA=',I5,' SKALAR=',1PD12.5/
+ 5000 FORMAT(/' ELEMENT=',I9,' REDNI BROJ CVORA=',I9,' SKALAR=',1PD12.5/
      +' CVOR            VEKTOR NORMALE',15X,'ZAJEDNICKI VEKTOR NORMALE')       
                         DO 422 NBRR=1,NCVE
                            IGG=NOP(NLM,NBRR)
@@ -629,7 +629,7 @@ C                  WRITE(3,*) 'IG,5',IG
      +                                      (DRG(IGG,J),J=1,3)
                            WRITE(IZLAZ,5001) NI,(VN(J,NBRR),J=1,3),
      +                                          (DRG(IGG,J),J=1,3)
- 5001 FORMAT(I5,6(1PD12.4))
+ 5001 FORMAT(I9,6(1PD12.4))
   422                   CONTINUE
 C               STOP 'PROVERI ORIJENTACIJU ELEMENTA, SCAL<0. - PAK82'
 C
@@ -691,7 +691,7 @@ C            WRITE(3,*) 'BB0',BB0
                   ENDIF
                ENDIF
             ENDIF
- 1010 FORMAT(5I5,F10.3,I5,2F10.3,3F5.2)
+ 1010 FORMAT(5I8,F10.3,I5,2F10.3,3F5.2)
    40    CONTINUE
          RETURN
       ENDIF

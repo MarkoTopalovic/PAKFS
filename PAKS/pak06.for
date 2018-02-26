@@ -299,7 +299,7 @@ C
       if ( myid .ne. 0 ) goto 10
       k=kkk
 C
-C      write(3,*)'kkk',kkk
+c      write(3,*)'kkk',kkk
       IF(IDEBUG.GT.0) PRINT *, ' RESEN'
       IF(ISRPS.EQ.0.AND.INDBG.EQ.0)
      1WRITE(*,2000) KKK
@@ -359,16 +359,17 @@ CS          BEZ BLOKOVA
             IF(JPS.GT.1.AND.JPBR.LT.JPS1) THEN
                CALL RESENP(B,V,MAXA,NN,JEDNP,IZLAZ,K)
             ELSE
-C              if(nn.le.30) call swrr(B,MAXA,NN,'B-  ')
-C              call wrr6(B,NWK,'B-  ')
+c              if(nn.le.30) call swrr(B,MAXA,NN,'B-  ')
+c              call wrr6(B,NWK,'B-  ')
 C              call wrr6(B,36,'B-  ')
-C              if(nn.le.30) call wrr6(V,NN,'V-  ')
+c              if(nn.le.30) call wrr6(V,NN,'V-  ')
                IF(ICCGG.EQ.2) THEN
                   CALL UACTCF(B,C(1),V,MAXA,NN,K)
                ELSE
                   CALL RESENA(B,V,MAXA,NN,IZLAZ,K)
                ENDIF
 c              if(nn.le.30) call swrr(B,MAXA,NN,'B+  ')
+c              call wrr6(B,NWK,'B+  ')
 c              if(nn.le.30) call wrr6(V,NN,'V+  ')
             ENDIF
          ELSE
@@ -1023,7 +1024,7 @@ C
       EQUIVALENCE (A(1),IA(1))
       MNQ(NN)=IA(LMNQ+NN-1)
 C
-      IF(IDEBUG.GT.0) PRINT *, ' ZADLEB'
+      IF(IDEBUG.GT.0) PRINT *, ' ZADLEV'
       VBR=1.0D35
       DO 20 NB=1,NBLOCK
       IF(NBLOCK.EQ.1)THEN
@@ -1270,7 +1271,7 @@ C
       COMMON /SISTEM/ LSK,LRTDT,NWK,JEDN,LFTDT
       COMMON /CDEBUG/ IDEBUG
 C
-      IF(IDEBUG.GT.0) PRINT *, ' FORMCT'
+      IF(IDEBUG.GT.0) PRINT *, ' ZADATL'
       LZADFM = LRAD
       LNZADF = LZADFM + NZADP*IDVA
       LNZADJ = LNZADF + NZADP

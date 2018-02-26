@@ -36,7 +36,7 @@
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|x64" DeleteExtensionsOnClean="*.obj;*.mod;*.pdb;*.asm;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Optimization="optimizeDisabled" AdditionalIncludeDirectories="..\MPICH2x64\include;&quot;..\MUMPS\include&quot;" PreprocessorDefinitions="pord" ModulePath="$(INTDIR)/" ObjectFile="$(INTDIR)/"/>
-				<Tool Name="VFLinkerTool" AdditionalOptions=" /FORCE:MULTIPLE mumps.lib mumps_core_mp.lib blacs_mpi.lib blacs_mpi_CallFromC.lib blacs_mpi_CallFromF.lib mumps.lib scalapack.lib scalapack_core.lib blas_win32.lib fmpich2.lib libmetis.a mpi.lib " OutputFile="$(OUTDIR)/pakpar.exe" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\MPICH2x64\lib;..\MUMPS\lib;..\MUMPS\WinMumps\Release\x64" SubSystem="subSystemConsole"/>
+				<Tool Name="VFLinkerTool" AdditionalOptions=" /FORCE:MULTIPLE mumps.lib mumps_core_mp.lib blacs_mpi.lib blacs_mpi_CallFromC.lib blacs_mpi_CallFromF.lib mumps.lib scalapack.lib scalapack_core.lib blas_win32.lib fmpich2.lib libmetis.a mpi.lib " OutputFile="$(OUTDIR)/PAKS.exe" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="..\MPICH2x64\lib;..\MUMPS\lib;..\MUMPS\WinMumps\Release\x64" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64" HeaderFileName="$(InputName).h" TypeLibraryName="$(IntDir)/$(InputName).tlb"/>
 				<Tool Name="VFCustomBuildTool"/>
@@ -114,6 +114,7 @@
 		<File RelativePath=".\pak2430.for"/>
 		<File RelativePath=".\pak2431.for"/>
 		<File RelativePath=".\pak2440.for"/>
+		<File RelativePath=".\pak2441.for"/>
 		<File RelativePath=".\pak2451.for"/>
 		<File RelativePath=".\pak2461.for"/>
 		<File RelativePath=".\pak25.for"/>
@@ -151,8 +152,10 @@
 		<File RelativePath=".\pak3452.for"/>
 		<File RelativePath=".\pak3453.for"/>
 		<File RelativePath=".\pak3454.for"/>
+		<File RelativePath=".\pak3456.for"/>
 		<File RelativePath=".\pak3461.for"/>
 		<File RelativePath=".\pak35.for"/>
+		<File RelativePath=".\pak35d.for"/>
 		<File RelativePath=".\pak36.for"/>
 		<File RelativePath=".\pak41.for"/>
 		<File RelativePath=".\pak42.for"/>

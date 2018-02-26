@@ -410,6 +410,7 @@ CS    WRITE LINEAR MATRIX K ON DISK
 CS    ZAPISIVANJE LINEARNE MATRICE K NA DISK
 C
       CALL WSTAZK(NPODS,LSK,35)
+      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07W')
       RETURN
       END
 C=======================================================================
