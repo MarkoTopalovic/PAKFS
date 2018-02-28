@@ -24,6 +24,7 @@ C              SILAAN
 C
 C=======================================================================
       SUBROUTINE INTKMM
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -70,9 +71,9 @@ CSKDISK
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6010)
       CALL ISPITA(ACOZ)
-      CALL READTE(A(LSK),NWM)
+C      CALL READTE(A(LSK),NWM)
       GO TO 20
-   10 CALL CLEAR(A(LSK),NWM)
+   10 CALL CLEAR(ALSK,NWM)
       CALL INTKM(A(LIGRUP))
 
 C      IF(INDEXPL.EQ.1) CALL JEDNA1(A(IMASA),A(LSK),JEDN)
@@ -83,7 +84,7 @@ C
    20 IF(IMASS.EQ.1) CALL WSTAZK(A(LIPODS),LSK,54)
       IF(IMASS.EQ.2) CALL WSTAZ(A(LIPODS),LSK,54)
 C      WRITE(3,*) 'LSK',LSK
-      if(jedn.le.30) CALL WRR6(A(LSK),NWM,'MASW')
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWM,'MASW')
 c      CALL WRR6(A(IMASA),JEDN,'IMASA')
 C
 CE    LOOP FOR GROUPS OF ELEMENTS TO INTEGRATION MATRIX C
@@ -96,9 +97,9 @@ C
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6020)
       CALL ISPITA(ACOZ)
-      CALL READTE(A(LSK),NWD)
+C      CALL READTE(A(LSK),NWD)
       GO TO 40
-   30 CALL CLEAR(A(LSK),NWD)
+   30 CALL CLEAR(ALSK,NWD)
       if(idamp.ne.3) CALL INTKMC(A(LIGRUP))
 C      IF(INDEXPL.EQ.1) CALL JEDNA1(A(IPRIGUSEN),A(LSK),JEDN)
 C
@@ -107,7 +108,7 @@ CS    ZAPISIVANJE LINEARNE MATRICE C NA DISK 11
 C
    40 IF(IDAMP.EQ.1) CALL WSTAZK(A(LIPODS),LSK,56)
       IF(IDAMP.EQ.2) CALL WSTAZ(A(LIPODS),LSK,56)
-      if(idamp.ne.3.and.jedn.le.30) call wrr6(a(lsk),nwd,'D10W')
+C      if(idamp.ne.3.and.jedn.le.30) call wrr6(a(lsk),nwd,'D10W')
 CSKDISK....
    50 LSK =LSKP
 CSKDISK
@@ -305,7 +306,7 @@ CSKDISK
       LSKP=LSK+NWK*IDVA
 C      LDUM =LSKP+NWK*IDVA
 C      IF(IMASS.EQ.2.AND.(IDAMP.EQ.0.OR.IDAMP.EQ.2)LDUM =LSKP+JEDN*IDVA 
-      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K-10')
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K-10')
       CALL RSTAZK(A(LIPODS),LSKP,35)
       if(jedn.le.30) CALL WRR6(A(LSKP),NWK,'K10R')
 CSKDISK

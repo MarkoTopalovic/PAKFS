@@ -1355,7 +1355,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE FORMGR(NPODS,LMM)
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+      REAL*8 BRISI
 C
 C ......................................................................
 C .
@@ -1823,40 +1825,61 @@ C            CALL CLEAR(A(LAILU),(LMAX-LAILU)/IDVA)
       LSK=LMAX
       IF(NBLOCK.EQ.1) THEN
          LRAD=LSK+NWK*I2*IDVA
-         IF(LRAD.GT.MTOT) CALL ERROR(2)
-         CALL CLEAR(A(LSK),NWK*I2)
+              IF(LRAD.GT.MTOT) CALL ERROR(2)
+         !UMESTO STAROG PISANJA MATRICE NA DISK
+C              !CALL CLEAR(A(LSK),NWK*I2)
+         !KORISTIMO NOVO DINAMICKO ALOCIRANJE
+         BRISI=0.0
+         ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
+      IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
+      IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
+      
          NPODS(JPBR,35)=LMAX13+1
-         IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
-         IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN
-            LRAD=LRAD+NWM*IDVA
+         !STARO PISANJE PO DISKU
+C         !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)       
+         IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
+             LRAD=LRAD+NWM*IDVA
             IF(LRAD.GT.MTOT) CALL ERROR(2)
             NPODS(JPBR,54)=LMAX13+1
-              IF(IREST.NE.2.AND.IMASS.EQ.1)
-     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+         !TOPALOVIC UMESTO PISANJA PO DISKU ALOCIRANJE MATRICE M
+C              IF(IREST.NE.2.AND.IMASS.EQ.1)
+C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
 C         WRITE(3,*) '54,LSK',LSK
-            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+            IF(IMASS.GE.1) THEN
+          ALLOCATE (ALSM(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+      IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory ***'
+      IF (iAllocateStatus /= 0) STOP '*** ALSM Not enough memory ***'
+            ENDIF
          ENDIF
+         
          IF(NDIN.GT.0) THEN
             NPODS(JPBR,58)=LMAX13+1
-            IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
+            !TOPALOVIC EFEKTIVNA MATRICA KE ZAUZIMA ISTO MESTO KAO I K
+C            !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
             IF(IDAMP.GT.0) THEN
                NPODS(JPBR,56)=LMAX13+1
-               IF(IREST.NE.2.AND.IMASS.EQ.1)
-     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
-               IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+               !TOPALOVIC MATRICA PRIGUSENJA C
+!               IF(IREST.NE.2.AND.IMASS.EQ.1)
+C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+C               IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
+               ALLOCATE (ALSC(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+      IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory ***'
+      IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory ***'
             ENDIF
          ENDIF
          IF(JPS.GT.1.AND.JPBR.LT.JPS1) THEN
+            !TOPALOVIC PODSTUKTURE JPS SE NE KORISTE
             NPODS(JPBR,37)=LMAX13+1
             JED=JEDN-JEDNP
             NWPK=JED*(JED+1)/2
-            IF(IREST.NE.2)CALL WRITDD(A(LSK),NWPK,IPODS,LMAX13,LDUZI)
+C           IF(IREST.NE.2)CALL WRITDD(A(LSK),NWPK,IPODS,LMAX13,LDUZI)
             NPODS(JPBR,60)=LMAX13+1
-            IF(IREST.NE.2)CALL WRITDD(A(LSK),NWP,IPODS,LMAX13,LDUZI)
+C           IF(IREST.NE.2)CALL WRITDD(A(LSK),NWP,IPODS,LMAX13,LDUZI)
             LSKG=LSK+NWP*IDVA
             NWKP=NWK-NWP
             NPODS(JPBR,61)=LMAX13+1
-            IF(IREST.NE.2)CALL WRITDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
+C           IF(IREST.NE.2)CALL WRITDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
          ELSE 
             NPODS(JPBR,60)=LMAX13+1
 C         WRITE(3,*) '60,LSK',LSK
@@ -1864,21 +1887,23 @@ C            IF(IREST.EQ.0.AND.METOD.EQ.-1)
 C     +      CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
 C            IF(IREST.EQ.1.AND.METOD.EQ.-1)
 C     +      CALL READDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
+            !TOPALOVIC CEMU OVO SLUZI? FAJL OSTAJE OTVOREN
              FILDLT='ZILDLT'
              OPEN (ILDLT,FILE=FILDLT,STATUS='UNKNOWN',
      1                   FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
             IF(METOD.GT.-1) CLOSE (ILDLT,STATUS='DELETE')
+            !OVO GORE VEROVATNO TREBA STAVITI POD KOMENTAR
          ENDIF
-      ELSE
+      ELSE !IF(NBLOCK.EQ.1) THEN !DEO ZA BLOKOVE NE KORISTI SE
          LRAD=MTOT-NRAD-1
-         CALL CLEAR(A(LSK),KC)
+C        CALL CLEAR(A(LSK),KC)
          NPODS(JPBR,35)=LMAX13+1
 C         IF(IREST.NE.2.AND.(IREST.NE.1.OR.METOD.NE.-1))
 C     +     CALL BLKZAP(A(LSK),A(LMAXA),A(LMNQ))
          NPODS(JPBR,60)=LMAX13+1
 C         IF(IREST.NE.2.AND.(IREST.NE.1.OR.METOD.NE.-1))
 C     +     CALL BLKZAP(A(LSK),A(LMAXA),A(LMNQ))
-      ENDIF
+      ENDIF !IF(NBLOCK.EQ.1) THEN
       CALL DELJIV(LRAD,2,INDL)
       IF(INDL.EQ.0) LRAD=LRAD+1
       NPODS(JPBR,50)=LSK

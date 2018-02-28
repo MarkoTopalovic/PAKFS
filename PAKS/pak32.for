@@ -420,6 +420,7 @@ C=======================================================================
      1                COR0,TEMGT,CORGT,AU,ZAPS,NPRZ,INDZS,GUSM,LA,CEGE,
      1                ESILA,ID,DEF,NNOD,ALFT,INDBEL,BIRTHC,TBTH,MCVEL)
       USE PLAST3D
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -2356,7 +2357,7 @@ C
 CS       RASPOREDJIVANJE MATRICE KRUTOSTI (SKE)
 CE       ASSEMBLE STIFFNESS MATRIX 
 C
-         IF(ISKNP.NE.2) CALL SPAKUJ(A(LSK),A(LMAXA),SKE,LM,ND)
+         IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
 C
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT
 CE       ASSEMBLE INTERNAL FORCE VECTOR

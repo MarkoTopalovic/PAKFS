@@ -259,6 +259,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE RESEN(B,V,MAXA,NN,KKK)
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -327,7 +328,7 @@ c              PSI=1.D-6
                MAXA(JEDN+1)=MAXA(JEDN)+1
 C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK U')
                CALL ICM(JEDN,NWK,NNZERO,NM,NMREJ,PSI,
-     +                  A(LSK),MAXA,A(IROWS),A(LM0),A(LMaxM1),A(LColM),
+     +                  ALSK,MAXA,A(IROWS),A(LM0),A(LMaxM1),A(LColM),
      +                  A(Lr1),A(Lz1),A(Lp1))
                PRINT*, NWK, NNZERO, NM
 C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK I')
@@ -335,7 +336,7 @@ C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK I')
                CALL JEDNA1(A(Lr1),V,JEDN)
 C              EPSILON=1.D-10
                EPSILON=1.D-8
-               CALL ICM_CG(V,A(LSK),MAXA,A(IROWS),A(LM0),A(LMaxM1),
+               CALL ICM_CG(V,ALSK,MAXA,A(IROWS),A(LM0),A(LMaxM1),
      +                  A(LColM),A(Lr1),A(Lz1),A(Lp1),
      +                  JEDN,NWK,NM,EPSILON,TOL,NITER)
 20          ENDIF
@@ -1244,6 +1245,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE ZADATL
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1282,7 +1284,7 @@ C
       IF(INDL.EQ.1) NPRO=NPRO+1
 C
       CALL READDD(A(LZADFM),NPRO/IDVA,IPODS,LMAX13,LDUZI)
-      CALL ZADLEV(A(LSK),A(LMAXA),A(LNZADJ),NZADP)
+      CALL ZADLEV(ALSK,A(LMAXA),A(LNZADJ),NZADP)
       RETURN
       END
 C=======================================================================

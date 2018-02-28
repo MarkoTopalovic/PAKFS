@@ -58,6 +58,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE LEVSTR(NPODS)
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -117,7 +118,7 @@ C
       integer myid, ierr
       DIMENSION NPODS(JPS1,*)
 C
-      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKul')
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKul')
       CALL MPI_COMM_RANK(MPI_COMM_WORLD,myid,ierr)
       IF (myid.ne.0) goto 30
       IF(IDEBUG.GT.0) PRINT *, ' LEVSTR'
@@ -132,8 +133,9 @@ C    5 IF(NGEL.EQ.0) GO TO 10
       IF(KOR.GT.1) THEN
          NUL=NWK
          IF(NBLOCK.GT.1) NUL=KC
-         CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC)
-     1                  ,NBLOCK,LR,IBLK,NUL)
+         ! BLOKOVI SE NE KORISTE
+C         CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC)
+C     1                  ,NBLOCK,LR,IBLK,NUL)
          OPEN (ISCRC,FILE='ZSKLIN',FORM='UNFORMATTED',
      1            STATUS='UNKNOWN')
          REWIND ISCRC
@@ -141,14 +143,14 @@ C    5 IF(NGEL.EQ.0) GO TO 10
          LSKE=LLM+100
          if (IABS(ICCGG).EQ.1) then
            if (iccgg.eq.1) then
-             CALL ISPAK(A(LSK),A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
+             CALL ISPAK(ALSK,A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
            else
-             CALL ISPAKG(A(LSK),A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
+             CALL ISPAKG(ALSK,A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
            endif
          else
-           CALL SPAKUA(A(LSK),A(LMAXA),A(LSKE),A(LLM),ND,1,
+           CALL SPAKUA(ALSK,A(LMAXA),A(LSKE),A(LLM),ND,1,
      &              A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
          endif
 c         CALL SPAKUA(A(LSK),A(LMAXA),A(LSKE),A(LLM),ND,1,
@@ -156,14 +158,15 @@ c     &              A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
          CLOSE (ISCRC,STATUS='KEEP')
       ENDIF
 cc      CALL RSTAZK(NPODS,LSK,35)
-      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07U')
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07U')
         CALL RSTAZK(NPODS,LSK,35)
-      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07R')
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07R')
       GO TO 10
     9 NUL=NWK
       IF(NBLOCK.GT.1) NUL=KC
-      CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC)
-     1                  ,NBLOCK,LR,IBLK,NUL)
+      !BLOKOVI
+C      CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC)
+C     1                  ,NBLOCK,LR,IBLK,NUL)
 C
 CE    READ LINEAR MATRIX M FROM DISK
 CS    UCITAVANJE LINEARNE MATRICE M SA DISKA
@@ -178,16 +181,16 @@ CZILE      IF(IREST.EQ.1.AND.METOD.EQ.-1) RETURN
       write(3,*) 'iskdsk,alfam,betak', iskdsk,alfam,betak
       IF(IMASS.EQ.1) CALL RSTAZK(NPODS,LSKP,54)
       IF(IMASS.EQ.2) CALL RSTAZ(NPODS,LSKP,54)
-        if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKLS')
-        if(jedn.le.30) CALL WRR6(A(LSKP),NWM,'MASA')
+C        if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKLS')
+C        if(jedn.le.30) CALL WRR6(A(LSKP),NWM,'MASA')
       IF(IDAMP.EQ.3) THEN
          A0M=A0+A1*ALFAM
          A0K=1.D0+A1*BETAK
-         IF(IMASS.EQ.1) CALL ZBIRAB(A(LSK),A(LSKP),A0K,A0M,NWK)
-         IF(IMASS.EQ.2) CALL ZBIRKD(A(LSK),A(LSKP),A0K,A0M,NWM,A(LMAXA))
+         IF(IMASS.EQ.1) CALL ZBIRAB(ALSK,A(LSKP),A0K,A0M,NWK)
+         IF(IMASS.EQ.2) CALL ZBIRKD(ALSK,A(LSKP),A0K,A0M,NWM,A(LMAXA))
       ELSE
-         IF(IMASS.EQ.1) CALL ZBIRM(A(LSK),A(LSKP),A0,NWK)
-         IF(IMASS.EQ.2) CALL ZBIRKM(A(LSK),A(LSKP),A0,NWM,A(LMAXA))
+         IF(IMASS.EQ.1) CALL ZBIRM(ALSK,A(LSKP),A0,NWK)
+         IF(IMASS.EQ.2) CALL ZBIRKM(ALSK,A(LSKP),A0,NWM,A(LMAXA))
       ENDIF
 C
 CE    READ LINEAR MATRIX C FROM DISK
@@ -196,16 +199,18 @@ C
       IF(IDAMP.EQ.0) GO TO 20
       IF(IDAMP.EQ.1) CALL RSTAZK(NPODS,LSKP,56)
       IF(IDAMP.EQ.2) CALL RSTAZ(NPODS,LSKP,56)
-      if(idamp.ne.3.and.jedn.le.30) CALL WRR6(A(LSKP),NWD,'D07R')
-      IF(IDAMP.EQ.1) CALL ZBIRM(A(LSK),A(LSKP),A1,NWD)
-      IF(IDAMP.EQ.2) CALL ZBIRKM(A(LSK),A(LSKP),A1,NWD,A(LMAXA))
+C      if(idamp.ne.3.and.jedn.le.30) CALL WRR6(A(LSKP),NWD,'D07R')
+      IF(IDAMP.EQ.1) CALL ZBIRM(ALSK,A(LSKP),A1,NWD)
+      IF(IDAMP.EQ.2) CALL ZBIRKM(ALSK,A(LSKP),A1,NWD,A(LMAXA))
 C
 CE    STORE LINEAR EFFECTIVE MTRIX ON UNIT 7: KE = K + A0*M + A1*C
 CS    ZAPISIVANJE LINEARNE EFEKTIVNE MATRICE : KE = K + A0*M + A1*C
 C
-   20 CALL WSTAZK(NPODS,LSK,58)
-      write(3,*) 'a0,a1',a0,a1
-      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'ZBIR')
+   20 CONTINUE
+      !OVO JE SADA VEC U MODULU
+C      CALL WSTAZK(NPODS,LSK,58)
+C      write(3,*) 'a0,a1',a0,a1
+C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'ZBIR')
 c za proveru
 c	LDUM=1000001
 c      IF(IMASS.NE.2) CALL RSTAZK(NPODS,LDUM,54)
@@ -228,7 +233,7 @@ CE    TRIANGULAR FORM: KE = L*D*LT
 CS    FAKTORIZACIJA LINEARNE EFEKTIVNE MATRICE: KE = K + A0*M + A1*C
 CS    SVODJENJE NA TROUGAONI OBLIK: KE = L*D*LT
 C
-      CALL RESEN(A(LSK),A(LRTDT),A(LMAXA),JEDN,1)
+      CALL RESEN(ALSK,A(LRTDT),A(LMAXA),JEDN,1)
       IF (myid.eq.0) THEN
 C
 CE       STORE TRIANGULARIZE MATRIX ON UNIT 10 : KE = L*D*LT
@@ -237,7 +242,7 @@ C
 C        IF(METOD.EQ.-1) ISKDSK=1
          CALL WSTAZK(NPODS,LSK,60)
 C        ISKDSK=0
-         IF(METOD.EQ.-1.AND.NBLOCK.EQ.1) CALL WRITED(A(LSK),NWK,ILDLT)
+C         IF(METOD.EQ.-1.AND.NBLOCK.EQ.1) CALL WRITED(A(LSK),NWK,ILDLT)
       ENDIF
       CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
       RETURN
@@ -1048,6 +1053,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTNMK(IGRUP,NPODS)
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1132,7 +1138,8 @@ CZILESK
 CZILESK
       GO TO 20
    10 if (myid.ne.0) goto 30
-      CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,NUL)
+      !BLOKOVI
+C      CALL CLEARB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,NUL)
 C      CALL WRR6(A(LSK),NWK,'SLEI')
    20 CALL CLEAR(A(LFTDT),JEDN)
 CZILESK
@@ -1195,7 +1202,7 @@ C        CALL WRR6(A(LSK),NWK,'SLEV')
        IF(NBLOCK.GT.1.AND.(KOR.EQ.1.OR.METOD.NE.-1))THEN
             LLM =LRAD
             LSKE=LLM+100
-            CALL SPAKUA(A(LSK),A(LMAXA),A(LSKE),A(LLM),ND,0,
+            CALL SPAKUA(ALSK,A(LMAXA),A(LSKE),A(LLM),ND,0,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
             CLOSE (ISCRC,STATUS='KEEP')
        ENDIF
@@ -1222,13 +1229,13 @@ C
 40    CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
       CALL MPI_BCAST(IPROL,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
       IF(IPROL.EQ.0) THEN
-         CALL RESEN(A(LSK),A(LRTDT),A(LMAXA),JEDN,1)
+         CALL RESEN(ALSK,A(LRTDT),A(LMAXA),JEDN,1)
          IF (myid.eq.0) THEN
 C           IF(KOR.EQ.1.AND.ITER.EQ.0.AND.METOD.EQ.-1) ISKDSK=1
             CALL WSTAZK(NPODS,LSK,60)
 C           ISKDSK=0
-            IF(KOR.EQ.1.AND.ITER.EQ.0.AND.METOD.EQ.-1.AND.NBLOCK.EQ.1) 
-     +      CALL WRITED(A(LSK),NWK,ILDLT)
+C            IF(KOR.EQ.1.AND.ITER.EQ.0.AND.METOD.EQ.-1.AND.NBLOCK.EQ.1) 
+C     +      CALL WRITED(A(LSK),NWK,ILDLT)
          ENDIF
       ENDIF
 C

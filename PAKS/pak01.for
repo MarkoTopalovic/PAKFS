@@ -1699,7 +1699,7 @@ C      WRITE(3,*) 'RK,NS,LRTD',NS,LRTD
          CALL READDD(A(LRTD),NWP,IPODS,LMAX13,LDUZI)
          LSKG=LRTD+NWP*IDVA
          NWKP=NWK-NWP
-         CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
+C         CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
       ELSE
          IF(ISKDSK.NE.0) THEN
 c        za ljusku mora da se skine komentar
@@ -1707,8 +1707,9 @@ c        za ljusku mora da se skine komentar
             IF(NBLOCK.EQ.1) THEN
                CALL READDD(A(LRTD),NWK,IPODS,LMAX13,LDUZI)
             ELSE
-               CALL READDB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
-     1                     NBLOCK,LR,IBLK,LMAX13)
+               !TOPALOVIC RAD SA BLOKOVIMA JE ZASTAREO PA I OVAJ POZIV 
+C               CALL READDB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
+C    1                     NBLOCK,LR,IBLK,LMAX13)
             ENDIF
          ENDIF
          ENDIF
@@ -1752,7 +1753,7 @@ C
          CALL WRITDD(A(LRTD),NWP,IPODS,LMAX13,LDUZI)
          LSKG=LRTD+NWP*IDVA
          NWKP=NWK-NWP
-         CALL WRITDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
+C         CALL WRITDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
       ELSE
          IF(ISKDSK.NE.0) THEN
 c        za ljusku mora da se skine komentar
@@ -1760,8 +1761,9 @@ c        za ljusku mora da se skine komentar
             IF(NBLOCK.EQ.1) THEN
                CALL WRITDD(A(LRTD),NWK,IPODS,LMAX13,LDUZI)
             ELSE
-               CALL WRITEB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
-     1                     NBLOCK,LR,IBLK,LMAX13)
+                !TOPALOVIC BLOKOVI SU ZASTARELI PA I OVAJ POZIV
+C               CALL WRITEB(A(LSK),A(LMAXA),A(LMNQ),A(LLREC),
+C     1                     NBLOCK,LR,IBLK,LMAX13)
             ENDIF
          ENDIF 
          ENDIF 
