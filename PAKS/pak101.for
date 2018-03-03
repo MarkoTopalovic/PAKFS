@@ -101,6 +101,7 @@ C .
 C ......................................................................
 C=======================================================================
       SUBROUTINE RSOPVR(INDR)
+      USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -219,14 +220,14 @@ CZ
          NBRIS=(LIW-LW)/IDVA
          CALL CLEAR(A(LW),NBRIS)
 CZ
-         CALL RSTAZK(A(LIPODS),LA,35)
-         IF(IMASS.NE.2) CALL RSTAZK(A(LIPODS),LB,54)
-         IF(IMASS.EQ.2) CALL RSTAZ(A(LIPODS),LB,54)
+!         CALL RSTAZK(A(LIPODS),LA,35)
+C         IF(IMASS.NE.2) CALL RSTAZK(A(LIPODS),LB,54)
+C         IF(IMASS.EQ.2) CALL RSTAZ(A(LIPODS),LB,54)
 C
 CE       KORIGOVANJE MATRICA MAKSIMALNIM BROJEM NA DIAGONALI
 CS       KORIGOVANJE MATRICA MAKSIMALNIM BROJEM NA DIAGONALI
-         CALL MAKSIM(A(LA),A(LMAXA),NWK,N,AMAXK)
-         CALL MAKSIM(A(LB),A(LMAXA),NWM,N,AMAXF)
+         CALL MAKSIM(ALSK,A(LMAXA),NWK,N,AMAXK)
+         CALL MAKSIM(ALSM,A(LMAXA),NWM,N,AMAXF)
          IF(AMAXK.GT.AMAXF) THEN
 C           CALL MAXDEL(A(LA),AMAXK,NWK)
 C           CALL MAXDEL(A(LB),AMAXK,NWM)
@@ -234,7 +235,7 @@ C           CALL MAXDEL(A(LB),AMAXK,NWM)
 C           CALL MAXDEL(A(LA),AMAXF,NWK)
 C           CALL MAXDEL(A(LB),AMAXF,NWK)
          ENDIF
-         CALL SOPSVL(A(LA),A(LB),A(LMAXA),A(LW),A(LEIGV),A(LR),A(LIW),
+         CALL SOPSVL(ALSK,ALSM,A(LMAXA),A(LW),A(LEIGV),A(LR),A(LIW),
      1               NW,MAXPRS,NWK,N,LANMAX)
       ELSE
          LR = LMAX
@@ -261,7 +262,7 @@ CZ
          CALL CLEAR(A(LR),NBRIS)
 CZ
 C
-         CALL SOPSTV(A(LA),A(LB),A(LMAXA),A(LR),A(LEIGV),A(LTT),A(LW)
+         CALL SOPSTV(ALSK,ALSM,A(LMAXA),A(LR),A(LEIGV),A(LTT),A(LW)
      1               ,A(LAR),A(LBR),A(LVEC),A(LD),A(LRTOLV),A(LBUP)
      2               ,A(LBLO),A(LBUPC),NN,NWK,NWM,NROOT,RTOL,NC
      3               ,NITEM,IFSS,IFPR)

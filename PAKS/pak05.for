@@ -1830,7 +1830,8 @@ C            CALL CLEAR(A(LAILU),(LMAX-LAILU)/IDVA)
 C              !CALL CLEAR(A(LSK),NWK*I2)
          !KORISTIMO NOVO DINAMICKO ALOCIRANJE
          BRISI=0.0
-         ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
+         !ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
+         ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
       
@@ -1847,7 +1848,8 @@ C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
 C         WRITE(3,*) '54,LSK',LSK
 C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
             IF(IMASS.GE.1) THEN
-          ALLOCATE (ALSM(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+          !ALLOCATE (ALSM(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+          ALLOCATE (ALSM(NWM), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSM Not enough memory ***'
             ENDIF
@@ -1863,7 +1865,8 @@ C            !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
 !               IF(IREST.NE.2.AND.IMASS.EQ.1)
 C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
 C               IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
-               ALLOCATE (ALSC(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+               !ALLOCATE (ALSC(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
+               ALLOCATE (ALSC(NWM), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory ***'
             ENDIF
