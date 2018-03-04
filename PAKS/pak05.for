@@ -323,26 +323,42 @@ c         nwk8=19000000000
          write(3,*) 'alocirao isk - LMAX',LMAX
          write(*,*) 'alocirao isk'
          IF(LMAX.GT.MTOT) CALL ERROR(1)
-         IROWS=LMAX
+               
+         
+        
+         
+         
 c         WRITE(*,*) ' Potreban prostor LMAX',LMAX
 c         WRITE(3,*) ' Potreban prostor LMAX',LMAX
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAX0')
 c        WRITE(3,*) 'pre JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
-         CALL ISPAKUJ(A(IROWS),ISK,MAXA8,NWK8,JEDN)
+         CALL ISPAKUJ(AIROWS,ISK,MAXA8,NWK8,JEDN)
 c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          I2=1
          if(imumps.EQ.1) I2=2 
          IROWS=LMAX
-         LMAX=IROWS+NNZERO*I2
+         !LMAX=IROWS+NNZERO*I2
+         
+         
+          ALLOCATE (AIROWS(NWK*I2), STAT = iAllocateStatus)
+         IF (iAllocateStatus /= 0) write(3,*)'AIROWS Not enough memory'
+         IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
+         write(3,*) 'POSLE AIROWS - LMAX',LMAX
+         write(*,*) 'POSLE AIROWS - LMAX',LMAX
+         IF(LMAX.GT.MTOT) CALL ERROR(1)
+         !IROWS=LMAX
+         
+         
+         
 c         WRITE(*,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
 c         WRITE(3,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
          IF(NNZERO.LT.0) STOP 'NNZERO.LT.0 - PAK05.FOR'
          IF(LMAX.GT.MTOT) CALL ERROR(1)
          IF(ICCGG.EQ.1)THEN
-            CALL FORM(A(IROWS),ISK,MAXA8,JEDN,NNZERO,NWK8)
+            CALL FORM(AIROWS,ISK,MAXA8,JEDN,NNZERO,NWK8)
          ELSE
 c         WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
-            CALL FORM0(A(IROWS),ISK,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
+            CALL FORM0(AIROWS,ISK,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
          ENDIF
          
 !         NWKOLD=NWK
@@ -1698,7 +1714,20 @@ C
      1WRITE(IZLAZ,2100) IMEM
       IF(ISRPS.EQ.1)
      1WRITE(IZLAZ,6100) IMEM
+      IF(ISRPS.EQ.0)
+     1WRITE(*,2100) IMEM
+      IF(ISRPS.EQ.1)
+     1WRITE(*,6100) IMEM
       STOP
+      ELSE
+      IF(ISRPS.EQ.0)
+     1WRITE(IZLAZ,*) 'BROJ CLANOVA U A', IMEM
+      IF(ISRPS.EQ.1)
+     1WRITE(IZLAZ,*) 'USED SPACE IN A', IMEM
+      IF(ISRPS.EQ.0)
+     1WRITE(*,*) 'BROJ CLANOVA U A', IMEM
+      IF(ISRPS.EQ.1)
+     1WRITE(*,*) 'USED SPACE IN A', IMEM
       ENDIF
 C
 CE    CHECK FOR WORK WITH BLOCKS

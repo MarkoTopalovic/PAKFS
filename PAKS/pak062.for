@@ -51,7 +51,7 @@ c         READ(IDRAKCE,1000) ND,(LM(I),I=1,ND)
 C
 C         CALL IIISWR(LM,ND,' LM ')  
 C
-         CALL ISPAKUA(IROW,ISK,MAXA,LM,ND,0,
+         CALL ISPAKUA(ISK,MAXA,LM,ND,0,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC),
      &               NWK,JEDN)
   20  CONTINUE
@@ -66,7 +66,7 @@ C         WRITE(ISCRC)ND,(LM(I),I=1,ND),(SKE(I),I=1,ND*(ND+1)/2)
       RETURN
       END
 C====================
-      SUBROUTINE ISPAKUA(IROW,ISK,MAXA,LM,ND,INDD,
+      SUBROUTINE ISPAKUA(ISK,MAXA,LM,ND,INDD,
      &                  MNQ,LREC,NBLOCK,LR,IBLK,CMPC,MPC,NWK,JEDN)
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
@@ -94,7 +94,7 @@ C
      1                IOPGL(6),KOSI,NDIN,ITEST
       INTEGER*8 MAXA,NWK,MI,KK,KKNWK
       DIMENSION LM(*),MAXA(*),MNQ(*),LREC(*),
-     &          CMPC(MMP,*),MPC(NEZA1,*),IROW(*)
+     &          CMPC(MMP,*),MPC(NEZA1,*)
       INTEGER*1 ISK(1+NWK/7)
       IF(IDEBUG.GT.0) PRINT *, ' SPAKUA'
 C

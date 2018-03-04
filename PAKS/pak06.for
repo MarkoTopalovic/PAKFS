@@ -18,6 +18,7 @@ C                WRITEB
 C
 C=======================================================================
       SUBROUTINE SPAKUJ(SK,MAXA,SKE,LM,ND)
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -49,10 +50,10 @@ CE       WITHOUT BLOCKS
 CS       BEZ BLOKOVA
          IF(IABS(ICCGG).EQ.1)THEN
           IF(ICCGG.EQ.1)THEN
-           CALL ISPAK(SK,A(IROWS),MAXA,SKE,LM,ND,0,
+           CALL ISPAK(SK,AIROWS,MAXA,SKE,LM,ND,0,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
           ELSE
-           CALL ISPAKG(SK,A(IROWS),MAXA,SKE,LM,ND,0,
+           CALL ISPAKG(SK,AIROWS,MAXA,SKE,LM,ND,0,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
           ENDIF
          ELSE
@@ -260,6 +261,7 @@ C
 C=======================================================================
       SUBROUTINE RESEN(B,V,MAXA,NN,KKK)
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -328,7 +330,7 @@ c              PSI=1.D-6
                MAXA(JEDN+1)=MAXA(JEDN)+1
 C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK U')
                CALL ICM(JEDN,NWK,NNZERO,NM,NMREJ,PSI,
-     +                  ALSK,MAXA,A(IROWS),A(LM0),A(LMaxM1),A(LColM),
+     +                  ALSK,MAXA,AIROWS,A(LM0),A(LMaxM1),A(LColM),
      +                  A(Lr1),A(Lz1),A(Lp1))
                PRINT*, NWK, NNZERO, NM
 C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK I')
@@ -336,7 +338,7 @@ C	         CALL DRSWRR(A(LSK),MAXA,A(IROWS),JEDN,'SK I')
                CALL JEDNA1(A(Lr1),V,JEDN)
 C              EPSILON=1.D-10
                EPSILON=1.D-8
-               CALL ICM_CG(V,ALSK,MAXA,A(IROWS),A(LM0),A(LMaxM1),
+               CALL ICM_CG(V,ALSK,MAXA,AIROWS,A(LM0),A(LMaxM1),
      +                  A(LColM),A(Lr1),A(Lz1),A(Lp1),
      +                  JEDN,NWK,NM,EPSILON,TOL,NITER)
 20          ENDIF
@@ -344,7 +346,7 @@ C              EPSILON=1.D-10
             if(imumps.eq.1) then
 c	          if(k.eq.2) then
                     CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-                    CALL dmumps1(A(IROWS),A(IROWS+nwk),B,V,nwk,nn,k)
+                    CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k)
                     IF (myid.ne.0) return
 c	          end if
             else

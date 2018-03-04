@@ -254,6 +254,7 @@ C
 C=======================================================================
       SUBROUTINE VILNEW
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -406,7 +407,7 @@ C        UV=beta*(T)UV
 C        K*beta*(T)UV
          if (IABS(ICCGG).EQ.1) then 
             CALL MAXAPRI(ALSM,A(LVMC),A(LRTDT),
-     1                     JEDN,A(IROWS),A(IROWS+nwk),nwk)
+     1                     JEDN,AIROWS,AIROWS(nwk+1),nwk)
          else
             CALL MAXAPR(ALSM,A(LVMC),A(LRTDT),
      1                     A(LMAXA),JEDN)
@@ -425,7 +426,7 @@ C      if(jedn.le.30) CALL WRR6(A(LSKP),NWM,'M10R')
 C     (T+T)R=(T+T)R+M*UM
       if (IABS(ICCGG).EQ.1) then 
             IF(IMASS.EQ.1) CALL MAXAPRI(ALSM,A(LUMC),A(LRTDT),
-     1                     JEDN,A(IROWS),A(IROWS+nwk),nwk)
+     1                     JEDN,AIROWS,AIROWS(nwk+1),nwk)
       else
             IF(IMASS.EQ.1) CALL MAXAPR(ALSM,A(LUMC),A(LRTDT),
      1                     A(LMAXA),JEDN)
@@ -481,7 +482,7 @@ C      if(idamp.ne.3.and.jedn.le.30) CALL WRR6(A(LSKP),NWD,'D10R')
 C     (T+T)R=(T+T)R+C*UC
       if (IABS(ICCGG).EQ.1) then 
          IF(IDAMP.EQ.1) CALL MAXAPRI(ALSM,A(LUMC),A(LRTDT),
-     1                       JEDN,A(IROWS),A(IROWS+nwk),nwk)
+     1                       JEDN,AIROWS,AIROWS(nwk+1),nwk)
       else
          IF(IDAMP.EQ.1) CALL MAXAPR(ALSM,A(LUMC),A(LRTDT),
      &                       A(LMAXA),JEDN)
@@ -499,6 +500,7 @@ C
 C=======================================================================
       SUBROUTINE CENRAZ
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -584,7 +586,7 @@ c      call iwrr(a(LMAXA),jedn,'MAXA')
 C     (T)R=(T)R+(A0*M+A1*C)*(T-T)UU
       if (IABS(ICCGG).EQ.1) then 
          IF(IMASS.NE.2) CALL MAXAPRI(ALSM,A(LUMC),A(LRTDT),
-     1                       JEDN,A(IROWS),A(IROWS+nwk),nwk)
+     1                       JEDN,AIROWS,AIROWS(nwk+1),nwk)
       else
          IF(IMASS.NE.2) CALL MAXAPR(ALSM,A(LUMC),A(LRTDT),
      &                       A(LMAXA),JEDN)
@@ -608,7 +610,7 @@ c      call wrr6(a(LUMC),jedn,'A2DU')
 C     (T)R=(T)R+A2*M*((T)UU-(T-T)UU)
       if (IABS(ICCGG).EQ.1) then 
             IF(IMASS.NE.2) CALL MAXAPRI(ALSM,A(LUMC),A(LRTDT),
-     1                          JEDN,A(IROWS),A(IROWS+nwk),nwk)
+     1                          JEDN,AIROWS,AIROWS(nwk+1),nwk)
       else
             IF(IMASS.NE.2) CALL MAXAPR(ALSM,A(LUMC),A(LRTDT),
      &                          A(LMAXA),JEDN)

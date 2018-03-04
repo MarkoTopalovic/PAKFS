@@ -59,6 +59,7 @@ C
 C=======================================================================
       SUBROUTINE LEVSTR(NPODS)
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -142,10 +143,10 @@ C    5 IF(NGEL.EQ.0) GO TO 10
          LSKE=LLM+100
          if (IABS(ICCGG).EQ.1) then
            if (iccgg.eq.1) then
-             CALL ISPAK(ALSK,A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
+             CALL ISPAK(ALSK,AIROWS,A(LMAXA),A(LSKE),A(LLM),ND,1,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
            else
-             CALL ISPAKG(ALSK,A(IROWS),A(LMAXA),A(LSKE),A(LLM),ND,1,
+             CALL ISPAKG(ALSK,AIROWS,A(LMAXA),A(LSKE),A(LLM),ND,1,
      &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
            endif
          else
