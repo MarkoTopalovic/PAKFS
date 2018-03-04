@@ -332,7 +332,7 @@ c         WRITE(*,*) ' Potreban prostor LMAX',LMAX
 c         WRITE(3,*) ' Potreban prostor LMAX',LMAX
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAX0')
 c        WRITE(3,*) 'pre JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
-         CALL ISPAKUJ(AIROWS,ISK,MAXA8,NWK8,JEDN)
+         CALL ISPAKUJ(ISK,MAXA8,NWK8,JEDN)
 c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          I2=1
          if(imumps.EQ.1) I2=2 
@@ -367,10 +367,10 @@ c         WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
 !         NNZERO=NWKOLD
 !         CALL IJEDN1(A(LISK),A(IROWS),NWK*I2)
 !         IROWS=LISK
-         LMAX=IROWS+NWK*I2
+!         LMAX=IROWS+NWK*I2
          CALL DELJIV(LMAX,2,INDL)
          IF(INDL.EQ.0) LMAX=LMAX+1
-c         WRITE(3,*) 'DeA  JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+         WRITE(3,*) 'DeA  JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          IF(LMAX.GT.MTOT) CALL ERROR(1)
          DEALLOCATE (ISK)
       else
@@ -1479,6 +1479,7 @@ C
       DIMENSION NPODS(JPS1,*)
 C
       IF(IDEBUG.GT.0) PRINT *, ' FORMGR'
+      write (*,*) 'formgr' 
 C
       NPP=NP
       LMAX13=MAX13
@@ -2090,6 +2091,7 @@ C
       COMMON /CDEBUG/ IDEBUG
       DIMENSION NPODS(JPS1,*)
 C
+      write (*,*) 'formre' 
       IF(IDEBUG.GT.0) PRINT *, ' FORMRE'
       JPSS=JPS1
       IF(JPS.EQ.1) JPSS=1
@@ -2240,7 +2242,12 @@ C
             ENDIF
             NPODS(JPBR,69)=-1
   170    CONTINUE
-      ENDIF
+            ENDIF
+            
+
+      write (*,*) 'READING AND GENERATING OF INPUT DATA IS OVER' 
+      write (3,*) 'READING AND GENERATING OF INPUT DATA IS OVER' 
+            
       IF(IREST.EQ.2) THEN
       IF(ISRPS.EQ.0)
      1WRITE(IZLAZ,2020)

@@ -1,7 +1,7 @@
 C======================================================================
 CE        ALL SUBROUTINES IN THIS FILE ARE PROGRAMD BY DRAKCE
 C======================================================================
-      SUBROUTINE ISPAKUJ(IROW,ISK,MAXA,NWK,JEDN)
+      SUBROUTINE ISPAKUJ(ISK,MAXA,NWK,JEDN)
 C
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
@@ -20,7 +20,7 @@ C
 C
       INTEGER*8 MAXA,NWK,I8,NZERO8
       INTEGER*1 ISK(1+NWK/7)
-      DIMENSION MAXA(*),LM(100),IROW(*)
+      DIMENSION MAXA(*),LM(100)
       IF(IDEBUG.GT.0) PRINT *, ' SPAKUJ'
       NBLOCK=1
       IF(NBLOCK.EQ.1) THEN
@@ -635,6 +635,7 @@ C=======================================================================
       COMMON /smumps/ imumps,ipar
       DIMENSION IROW(*),MAXA(JEDN+1),IVRS(JEDN)
       INTEGER*1 ISK(1+NWK1/7)
+      write (*,*) 'form' 
       DO 10 I=1,JEDN
          IVRS(I)=MAXA(I)+I+1-MAXA(I+1)
          MAXA(I)=MAXA(I+1)-1
