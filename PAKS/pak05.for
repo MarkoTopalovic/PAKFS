@@ -371,6 +371,7 @@ c         WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
          CALL DELJIV(LMAX,2,INDL)
          IF(INDL.EQ.0) LMAX=LMAX+1
          WRITE(3,*) 'DeA  JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+         WRITE(*,*) 'DeA  JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          IF(LMAX.GT.MTOT) CALL ERROR(1)
          DEALLOCATE (ISK)
       else
@@ -384,7 +385,8 @@ c         WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
       DEALLOCATE (MAXA8)
       CLOSE(IDRAKCE,STATUS='DELETE')
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAXa')
-C        WRITE(3,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+        WRITE(*,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+        WRITE(3,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
       RETURN
 C-----------------------------------------------------------------------
  2000 FORMAT(///' V E K T O R   M A X A')
