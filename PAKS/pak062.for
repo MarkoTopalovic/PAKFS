@@ -631,11 +631,13 @@ C
  5000 FORMAT(30I5)
       END
 C=======================================================================
-      SUBROUTINE FORM(IROW,ISK,MAXA,JEDN,NWK,NWK1)
-      COMMON /smumps/ imumps,ipar
-      DIMENSION IROW(*),MAXA(JEDN+1),IVRS(JEDN)
+      SUBROUTINE FORM(IROW,ISK,IVRS,MAXA,JEDN,NWK1)
+      IMPLICIT NONE
+      INTEGER*8 IROW(*),MAXA(*),NWK1,J
+      INTEGER*4 IVRS(*),I,IPOZ,JEDN,IMAX,JJ,IJ
       INTEGER*1 ISK(1+NWK1/7)
-      write (*,*) 'form' 
+      WRITE(*,*) ' FORM'
+      WRITE(3,*) ' FORM'
       DO 10 I=1,JEDN
          IVRS(I)=MAXA(I)+I+1-MAXA(I+1)
          MAXA(I)=MAXA(I+1)-1
@@ -728,11 +730,14 @@ C=======================================================================
       RETURN
       END
 C================================================================	
-      SUBROUTINE FORM0(IROW,ISK,MAXA,MAXA8,JEDN,NWK,NWK1)
+      SUBROUTINE FORM0(IROW,ISK,IVRS,MAXA,MAXA8,JEDN,NWK,NWK1)
       COMMON /smumps/ imumps,ipar
-      INTEGER*8 MAXA8(*),NWK1,J8
-      DIMENSION IROW(*),MAXA(*),IVRS(JEDN)
+      INTEGER*8 IROW(*),MAXA8(*),NWK1,J8
+      INTEGER*4 IVRS(*)
+      INTEGER*4 MAXA(*)
       INTEGER*1 ISK(1+NWK1/7)
+      WRITE(*,*) ' FORM0'
+      WRITE(3,*) ' FORM0'
       IPOZ=1
       DO 20 I=1,JEDN
          IMAX=IPOZ

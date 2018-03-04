@@ -278,7 +278,12 @@ C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
 
 
 
-         ALLOCATE (MAXA8(JEDN+1))
+         ALLOCATE (MAXA8(JEDN+1), STAT = iAllocateStatus)
+         IF (iAllocateStatus /= 0) write(3,*)'MAXA8 Not enough memory'
+         IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
+         ALLOCATE (IVRS(JEDN), STAT = iAllocateStatus)
+         IF (iAllocateStatus /= 0) write(3,*)'IVRS Not enough memory '
+         IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
          
          
          
@@ -350,15 +355,16 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          
          
          
-c         WRITE(*,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
-c         WRITE(3,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
          IF(NNZERO.LT.0) STOP 'NNZERO.LT.0 - PAK05.FOR'
          IF(LMAX.GT.MTOT) CALL ERROR(1)
          IF(ICCGG.EQ.1)THEN
-            CALL FORM(AIROWS,ISK,MAXA8,JEDN,NNZERO,NWK8)
+         WRITE(*,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
+         WRITE(3,*) ' IROWS,NNZERO,I2,LMAX',IROWS,NNZERO,I2,LMAX
+            CALL FORM(AIROWS,ISK,IVRS,MAXA8,JEDN,NWK8)
          ELSE
-c         WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
-            CALL FORM0(AIROWS,ISK,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
+          WRITE(*,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
+          WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
+            CALL FORM0(AIROWS,ISK,IVRS,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
          ENDIF
          
 !         NWKOLD=NWK
