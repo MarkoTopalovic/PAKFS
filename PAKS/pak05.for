@@ -1485,6 +1485,7 @@ C
       COMMON /ODUZPOM/ KODUZ
       COMMON /EXPLICITNA/ INDEXPL
       COMMON /EXPLALOK/ IUBRZ,IBRZINA,IBRZINAIPO,IPOMAK,IMASA,IPRIGUSEN
+      COMMON /smumps/ imumps,ipar
       DIMENSION NPODS(JPS1,*)
 C
       IF(IDEBUG.GT.0) PRINT *, ' FORMGR'
@@ -1850,7 +1851,10 @@ C
             CALL ICLEAR(A(Lz1),LMAX-Lz1)
          ELSE
             LAILU=LMAX
-            LUCG=LAILU+NEED2*IDVA
+            LUCG=LAILU
+            if (imumps.eq.0) then
+               LUCG=LAILU+NEED2*IDVA
+            endif
             LVCG=LUCG+JEDN*IDVA
             LWCG=LVCG+JEDN*IDVA
             LPCG=LWCG+JEDN*IDVA

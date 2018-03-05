@@ -323,6 +323,7 @@ C     CALL SWRR(A(LSK),MAXA,JEDN,'SK U')
       CALL MPI_BCAST(k,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
       IF(IABS(ICCGG).EQ.1) THEN
          IF(ICCGG.EQ.1) THEN
+! iterativni Papadrakakis
             if (myid.ne.0) goto 20
             IF(kkk.EQ.1)THEN
 c              PSI=1.D-6
@@ -344,13 +345,15 @@ C              EPSILON=1.D-10
 20          ENDIF
          ELSE
             if(imumps.eq.1) then
+! MUMPS solver
 c	          if(k.eq.2) then
                     CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
                     CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k)
                     IF (myid.ne.0) return
 c	          end if
             else
-                IF (myid.eq.0) CALL ICCGMA(B,V,MAXA,NWK,NN,
+! iterativni Djordje
+            IF (myid.eq.0) CALL ICCGMA(B,V,MAXA,NWK,NN,
      1                                      K,IZLAZ,TOLG,ALFAG)
             endif
          ENDIF

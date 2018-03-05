@@ -3,7 +3,7 @@ CE    NTOTAL - MAXIMUM TOTAL STORAGE AVAILABLE IN BLANK COMMON A
 CS    NTOTAL - MAKSIMALAN PROSTOR U VEKTORU A
 C
       integer*8 ntotal
-      PARAMETER (ntotal = 400000000)
+      PARAMETER (ntotal = 470000000)
 c academic version
 c      PARAMETER (NTOT =  5000000)
 c for students
