@@ -281,10 +281,11 @@ C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
          ALLOCATE (MAXA8(JEDN+1), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'MAXA8 Not enough memory'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
-         ALLOCATE (IVRS(JEDN), STAT = iAllocateStatus)
-         IF (iAllocateStatus /= 0) write(3,*)'IVRS Not enough memory '
-         IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
-         
+         IF(iccgg.eq.1) then
+           ALLOCATE (IVRS(JEDN), STAT = iAllocateStatus)
+           IF (iAllocateStatus /= 0) write(3,*)'IVRS Not enough memory '
+           IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
+         endif
          
          
          
@@ -345,7 +346,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          !LMAX=IROWS+NNZERO*I2
          
          
-          ALLOCATE (AIROWS(NWK*I2), STAT = iAllocateStatus)
+          ALLOCATE (AIROWS(NNZERO*I2), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'AIROWS Not enough memory'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
          write(3,*) 'POSLE AIROWS - LMAX',LMAX
@@ -364,7 +365,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          ELSE
           WRITE(*,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
           WRITE(3,*) ' IROWS,LMAXA,LMAX',IROWS,LMAXA,LMAX
-            CALL FORM0(AIROWS,ISK,IVRS,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
+            CALL FORM0(AIROWS,ISK,A(LMAXA),MAXA8,JEDN,NNZERO,NWK8)
          ENDIF
          
 !         NWKOLD=NWK
@@ -1758,7 +1759,8 @@ CZILESK
 CZILESK
       I2=1
       IF(ICCGG.EQ.2) I2=2
-      IF((LMAX+(NWM+NWK*I2)*IDVA).LT.(MTOT-NRAD-1)) THEN
+C      IF((LMAX+(NWM+NWK*I2)*IDVA).LT.(MTOT-NRAD-1)) THEN
+      IF(LMAX.LT.(MTOT-NRAD-1)) THEN
         NBLOCK=1
         LMNQ=LMAX
         LICPL=LMAX
@@ -2250,7 +2252,7 @@ C
             ENDIF
             NPODS(JPBR,69)=-1
   170    CONTINUE
-            ENDIF
+      ENDIF
             
 
       write (*,*) 'READING AND GENERATING OF INPUT DATA IS OVER' 

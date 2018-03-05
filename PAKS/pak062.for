@@ -730,14 +730,14 @@ C=======================================================================
       RETURN
       END
 C================================================================	
-      SUBROUTINE FORM0(IROW,ISK,IVRS,MAXA,MAXA8,JEDN,NWK,NWK1)
+      SUBROUTINE FORM0(IROW,ISK,MAXA,MAXA8,JEDN,NWK,NWK1)
       COMMON /smumps/ imumps,ipar
-      INTEGER*8 IROW(*),MAXA8(*),NWK1,J8
-      INTEGER*4 IVRS(*)
-      INTEGER*4 MAXA(*)
+      INTEGER*8 MAXA8(*),NWK1,J8
+      DIMENSION IROW(*),MAXA(*)
+C      DIMENSION IROW(*),MAXA(*),IVRS(JEDN)
       INTEGER*1 ISK(1+NWK1/7)
-      WRITE(*,*) ' FORM0'
-      WRITE(3,*) ' FORM0'
+      WRITE(*,*) ' FORM0 ul'
+      WRITE(3,*) ' FORM0 ul'
       IPOZ=1
       DO 20 I=1,JEDN
          IMAX=IPOZ
@@ -765,6 +765,8 @@ C            ENDIF
    20 CONTINUE
       MAXA(JEDN+1)=IPOZ
 C      CALL IWRR(IROW,NN,'IROW')
+      WRITE(*,*) ' FORM0 iz'
+      WRITE(3,*) ' FORM0 iz'
       RETURN
       END
 C=======================================================================
