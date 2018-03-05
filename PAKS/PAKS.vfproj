@@ -243,5 +243,5 @@
 		<File RelativePath=".\pakn8.for"/>
 		<File RelativePath=".\paku.for"/>
 		<File RelativePath=".\pakx.for"/>
-		<File RelativePath=".\pakzmod.for"/></Filter></Files>
+		<File RelativePath=".\pakzmod.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>
