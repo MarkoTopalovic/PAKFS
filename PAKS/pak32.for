@@ -62,6 +62,8 @@ C
       COMMON /ELEALL/ NETIP,NE,IATYP,NMODM,NGE,ISKNP,LMAX8
 C
       LAU=LMAX
+            WRITE(*,*) 'k21egl'
+            WRITE(3,*) 'k21egl'
 CE    READING DATA FROM RECORDS OF THE FILE (ZIELEM) WRITTEN IN ROUTINE
 CE    (UL3EK)
       CALL READE3(A(LAU))
@@ -150,6 +152,8 @@ C
       DIMENSION AU(*)
       REAL AU
 C
+            WRITE(*,*) 'reade3'
+            WRITE(3,*) 'reade3'
 C     POZIVANJE PROGRAMA ZA ULAZNE PODATKE .
       LSTAZA(1)=LMAX8
       READ(IELEM,REC=LMAX8)
@@ -318,6 +322,8 @@ C
       DIMENSION AE(*),AU(*)
       REAL AE,AU
 C
+            WRITE(*,*) 'siste3'
+            WRITE(3,*) 'siste3'
 CE    NUMBER OF INCOMPATIBLE DISPLACEMENTS
       LA=1
       IF(IALFA.EQ.1) LA=9
@@ -586,6 +592,8 @@ C
      1                          -.774596669241483D0, .774596669241483D0/
 CE    DIMENSION OF ELEMENT STIFFNESS MATRIX - SKE(NWE)
       NWE=ND*(ND+1)/2
+            WRITE(*,*) 'elte3'
+            WRITE(3,*) 'elte3'
 C      IF(IALFA.GE.0.AND.ITER.EQ.0.AND.IILS.NE.-1)
 C     1   CALL JEDNA1(ALFT,ALFE,NE*LA)
 C
@@ -660,7 +668,10 @@ CE	THIS LOOP COVERS THE WHOLE SUBROUTINE
 C
       NNCVE=NCVE
       DO 10 NLM=1,NE
-C         WRITE(3,*) 'NLM',NLM
+         if(nlm.lt.10) then
+            WRITE(*,*) 'NLM',NLM
+            WRITE(3,*) 'NLM',NLM
+         endif
 C        PROMENLJIV BROJ CVOVORA ZA MEHANIKU LOMA
          NCVE=NNOD(NLM)
          ND=NCVE*3
@@ -1067,6 +1078,10 @@ CE       NGAUSX: NUMBER OF INTEGRATION POINTS IN R-DIRECTIONS
 CE       INCOTX: INDICATOR FOR NEWTON-COTES INTEGRATION (=0-NO,>0-YES)
 CE       WR,WS,WT: INTEGRATING COEFFICIENTS
 CE       R,S,T: NATURAL COORDINATES
+         if(nlm.lt.10) then
+            WRITE(*,*) 'pre integracione petlje'
+            WRITE(3,*) 'pre integracione petlje'
+         endif
          PET=5.
          DO 20 NGR=1,NGAUSX
             JGR=NREF(NGAUSX)+NGR
@@ -2300,6 +2315,10 @@ C
 CS-------------------------- KRAJ PETLJE PO GAUSOVIM TACKAMA --------
 CE-------------------------- END OF LOOP-BLOCK FOR INTEGRATING POINTS  --------
 C
+         if(nlm.lt.10) then
+            WRITE(*,*) 'posle integracione petlje'
+            WRITE(3,*) 'posle integracione petlje'
+         endif
 C KOSOVO
 c         IF(NAPON.EQ.1.AND.INDDTH.EQ.1.AND.IPG.GT.0) 
 c         maksimalni napon (sada aktivno gore)
@@ -2357,6 +2376,10 @@ C
 CS       RASPOREDJIVANJE MATRICE KRUTOSTI (SKE)
 CE       ASSEMBLE STIFFNESS MATRIX 
 C
+         if(nlm.lt.10) then
+            WRITE(*,*) 'pre spakuj'
+            WRITE(3,*) 'pre spakuj'
+         endif
          IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
 C
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT
@@ -2395,6 +2418,10 @@ CE       GRMAS: MASS OF ELEMENT GROUP (NGE)
 C
 CELYK    END OF ASSEMBLING IF-BLOCK
 C
+         if(nlm.lt.10) then
+            WRITE(*,*) 'kraj petlje po elementima'
+            WRITE(3,*) 'kraj petlje po elementima'
+         endif
    10 CONTINUE
 C
 CELYK END OF LOOP FOR ELEMENTS
