@@ -119,7 +119,7 @@ C
       integer myid, ierr
       DIMENSION NPODS(JPS1,*)
 C
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKul')
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'SKul')
       CALL MPI_COMM_RANK(MPI_COMM_WORLD,myid,ierr)
       IF (myid.ne.0) goto 30
       IF(IDEBUG.GT.0) PRINT *, ' LEVSTR'
@@ -158,9 +158,9 @@ c     &              A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
          CLOSE (ISCRC,STATUS='KEEP')
       ENDIF
 cc      CALL RSTAZK(NPODS,LSK,35)
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07U')
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'K07U')
 C        CALL RSTAZK(NPODS,LSK,35)
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07R')
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'K07R')
       GO TO 10
     9 NUL=NWK
       IF(NBLOCK.GT.1) NUL=KC
@@ -180,8 +180,8 @@ CZILE      IF(IREST.EQ.1.AND.METOD.EQ.-1) RETURN
       write(3,*) 'iskdsk,alfam,betak', iskdsk,alfam,betak
 C      IF(IMASS.EQ.1) CALL RSTAZK(NPODS,LSKP,54)
 C      IF(IMASS.EQ.2) CALL RSTAZ(NPODS,LSKP,54)
-C        if(jedn.le.30) CALL WRR6(A(LSK),NWK,'SKLS')
-C        if(jedn.le.30) CALL WRR6(A(LSKP),NWM,'MASA')
+        if(jedn.le.30) CALL WRR6(ALSK,NWK,'SKLS')
+        if(jedn.le.30) CALL WRR6(ALSM,NWM,'MASA')
       IF(IDAMP.EQ.3) THEN
          A0M=A0+A1*ALFAM
          A0K=1.D0+A1*BETAK
@@ -208,8 +208,8 @@ C
    20 CONTINUE
       !OVO JE SADA VEC U MODULU
 C      CALL WSTAZK(NPODS,LSK,58)
-C      write(3,*) 'a0,a1',a0,a1
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'ZBIR')
+      write(3,*) 'a0,a1',a0,a1
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'ZBIR')
 c za proveru
 c	LDUM=1000001
 c      IF(IMASS.NE.2) CALL RSTAZK(NPODS,LDUM,54)

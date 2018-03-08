@@ -1699,7 +1699,7 @@ C      WRITE(3,*) 'RK,NS,LRTD',NS,LRTD
          CALL READDD(A(LRTD),NWP,IPODS,LMAX13,LDUZI)
          LSKG=LRTD+NWP*IDVA
          NWKP=NWK-NWP
-C         CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
+         CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
       ELSE
          IF(ISKDSK.NE.0) THEN
 c        za ljusku mora da se skine komentar
