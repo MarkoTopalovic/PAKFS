@@ -28,6 +28,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scalapack", "MUMPS\WinMumps
 EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "scalapack_core", "MUMPS\WinMumps\VisualStudio2005\scalapack_core.vfproj", "{9FE212C3-F32E-4975-9EF1-2347FB6DA0FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cplusplus", "cplusplus\cplusplus.vcxproj", "{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -129,6 +131,18 @@ Global
 		{9FE212C3-F32E-4975-9EF1-2347FB6DA0FD}.Release|Win32.Build.0 = Release|Win32
 		{9FE212C3-F32E-4975-9EF1-2347FB6DA0FD}.Release|x64.ActiveCfg = Release|x64
 		{9FE212C3-F32E-4975-9EF1-2347FB6DA0FD}.Release|x64.Build.0 = Release|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Debug|Win32.Build.0 = Debug|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Debug|x64.ActiveCfg = Debug|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Debug|x64.Build.0 = Debug|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Profile|Win32.ActiveCfg = Release|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Profile|Win32.Build.0 = Release|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Profile|x64.ActiveCfg = Release|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Profile|x64.Build.0 = Release|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Release|Win32.ActiveCfg = Release|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Release|Win32.Build.0 = Release|Win32
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Release|x64.ActiveCfg = Release|x64
+		{13F400E4-9C8E-46EA-926A-3DA1C9CA6913}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
