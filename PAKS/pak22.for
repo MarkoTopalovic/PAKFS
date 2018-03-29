@@ -396,18 +396,10 @@ C
 !       CALL sparseassembler_getsparse(nonzeros,AIROWS,
 !     1 AIROWS(nwk+1),ALSK)
 
-!          write(*,*) 'alsk'
-!           do i=1,93
-!             write(*,*) i, ALSK(i)   
-!                enddo
-!      write(*,*) 'stiff'
-!           do i=1,93
-!             write(*,*) i, stiff(i)   
-!                enddo
-      do i=1,93
+      do i=1,nonzeros
             iirows(i)= rows(i)
             iicolumns(i)=columns(i)
-                enddo
+      enddo
           
           CALL sparseassembler_kill()
       

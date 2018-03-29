@@ -349,32 +349,14 @@ C              EPSILON=1.D-10
 ! MUMPS solver
 c	          if(k.eq.2) then
                 CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-                !WRITE(3,*) 'VEKTOR V'
-                !DO I =1, NN
-                !    WRITE(3,*) I, V(I)
-                !ENDDO
-                !WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
-                !do i=1,93
-                !    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
-                !enddo
+
                 !CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
                 
-                 WRITE(3,*) 'VEKTOR V'
-                DO I =1, NN
-                    WRITE(3,*) I, V(I)
-                ENDDO
-                WRITE(3,*) 'I, rows(I),columns(I), stiff(i)'
-                do i=1,93
-                    WRITE(3,*) I, rows(I),columns(I), stiff(i)
-                enddo
           IF(K.EQ.1) THEN
               stiff_n = JEDN
           ENDIF
                 CALL dmumps1(iirows,iicolumns,stiff,V,
      1           nonzeros,stiff_n,kkk) ! Busarac
-
-                
-!                IF (myid.ne.0) return
 c	          end if
             else
 ! iterativni Djordje
