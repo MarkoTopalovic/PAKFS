@@ -51,6 +51,9 @@
         integer*8 :: nonzeros
         integer*8,dimension(:),allocatable :: rows
         integer*8,dimension(:),allocatable :: columns
+        !ova druga 2 su privremena dok ne regulisem razliku izmedju integer 4 i 8
+        integer*4,dimension(:),allocatable :: iirows
+        integer*4,dimension(:),allocatable :: iicolumns
         double precision,dimension(:),allocatable :: stiff
       end module STIFFNESS
       

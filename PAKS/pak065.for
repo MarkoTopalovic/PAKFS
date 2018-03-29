@@ -4,9 +4,7 @@
       INCLUDE 'dmumps_struc.h'
       TYPE (DMUMPS_STRUC) mumps_par
 c      common /mumps/ mumps_par
-!      INTEGER IERR,I,j,n,nz,irn(nz),jcn(nz),kkk,memsk,iAllocateStatus
-      INTEGER IERR,I,j,n,nz,kkk,memsk,iAllocateStatus
-      integer*8 irn(nz),jcn(nz)
+      INTEGER IERR,I,j,n,nz,irn(nz),jcn(nz),kkk,memsk,iAllocateStatus
       double precision a,rhs,amax
       dimension a(nz),rhs(n)
 c      amax=a(1)

@@ -384,8 +384,10 @@ C
             call sparseassembler_getnz(nonzeros)
             allocate(rows(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating rows'
+             allocate(iirows(nonzeros),STAT=istat)
             allocate(columns(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating columns'
+            allocate(iicolumns(nonzeros),STAT=istat)
             allocate(stiff(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating stiff'
           endif
@@ -402,6 +404,10 @@ C
 !           do i=1,93
 !             write(*,*) i, stiff(i)   
 !                enddo
+      do i=1,93
+            iirows(i)= rows(i)
+            iicolumns(i)=columns(i)
+                enddo
           
           CALL sparseassembler_kill()
       
