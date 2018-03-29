@@ -352,7 +352,9 @@ void AddVal(int64_t row, int64_t col, Tinfo val)
 	if ((pNode->keyRow == row)&& (pNode->keyCol == col))
 	{
 		pNode->info += val;
-		if (pNode->info == 0) rb_delete(pNode);
+		//if (pNode->info == 0) rb_delete(pNode);
+		//ovo iznad je pod komentarom da ne brise clanove matrice ako im u nekom trenutku
+		//vrednost postane 0
 	}
 	else insert(row, col, val);
 }
@@ -370,18 +372,38 @@ void sparseassembler_init_(int *symetric)
 	RBInit();
 	bSymetric = *symetric;
 }
-
 void sparseassembler_addelemmatrix_(int *n, int64_t *indices, double *vals)
+//void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 {
-    int64_t i,j, nn = *n;
+   int64_t i,j, nn = *n;
+	int64_t indicesi, indicesj;
+//	int i, j, nn = *n;
+//	int indicesi, indicesj;
+	double valsi;
 	for(i=0;i<nn;i++)
 	{
 		for(j=(bSymetric ? i : 0);j<nn;j++)
 		{
-			if ((indices[i] <= indices[j]) || (!bSymetric))
-				AddVal(indices[i], indices[j], vals[i*nn+j]);
+			if ((indices[i] < indices[j]) || (!bSymetric))
+			{
+				indicesi = indices[i];
+				indicesj = indices[j];
+				if ((indicesi != 0) && (indicesj != 0))
+				{
+					valsi = vals[i*nn + j];
+					AddVal(indices[i], indices[j], vals[i*nn + j]);
+				}
+			}
 			else
-				AddVal(indices[j], indices[i], vals[i*nn+j]);
+			{
+				indicesi = indices[i];
+				indicesj = indices[j];
+				if ((indicesi != 0) && (indicesj != 0))
+				{
+					valsi = vals[i*nn + j];
+					AddVal(indices[j], indices[i], vals[i*nn + j]);
+				}
+			}
 		}
 	}
 }

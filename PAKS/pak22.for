@@ -237,6 +237,9 @@ C
       END
 C======================================================================
       SUBROUTINE SISTTE(AE,AU)
+      USE STIFFNESS
+      USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CS     GLAVNI UPRAVLJACKI PROGRAM  ZA MATRICE ELEMENATA I SISTEMA
@@ -375,6 +378,35 @@ C
      6A(LZAPS),A(LNPRZ),INDZS,A(LGUSM),LA,AE(LCEGE),AU(LESILA),
      7AE(LSKS),AE(LSKES),NDNDS,AE(LHS),AE(LQS),AE(LPS),A(LID),A(LDEFOR),
      8AU(LNNOD),au(lngg),AU(LTBTH))
+      
+      
+      if(.not.allocated(rows)) then
+            call sparseassembler_getnz(nonzeros)
+            allocate(rows(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating rows'
+            allocate(columns(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating columns'
+            allocate(stiff(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating stiff'
+          endif
+
+      CALL sparseassembler_getsparse(nonzeros,rows,columns,stiff)
+!       CALL sparseassembler_getsparse(nonzeros,AIROWS,
+!     1 AIROWS(nwk+1),ALSK)
+
+!          write(*,*) 'alsk'
+!           do i=1,93
+!             write(*,*) i, ALSK(i)   
+!                enddo
+!      write(*,*) 'stiff'
+!           do i=1,93
+!             write(*,*) i, stiff(i)   
+!                enddo
+          
+          CALL sparseassembler_kill()
+      
+
+      
       ELSE
       CALL ELTE2B(AE(LBET),AE(LSKE),AE(LUEL),AE(LLM),AU(LNEL),AU(LNMAT),
      1AU(LTHID),AE(LHE),A(KORD),A(LUPRI),A(LRTDT),A(LFTDT),A(LSIGMA),
@@ -440,6 +472,7 @@ C=======================================================================
      1                GEEK,NCVE2,IALFA,COR0,TEMGT,CORGT,AU,TSG2,N45,
      1                ZAPS,NPRZ,INDZS,GUSM,LA,CEGE,ESILA,
      1                SKS,SKES,NDNDS,HS,QS,PS,ID,DEF,NNOD,ngg,TBTH)
+      USE STIFFNESS
       USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C      
@@ -526,13 +559,13 @@ C
      1          THID(NE,*),CORD(NP,*),HE(NCVE,*),IPGC(*),UPRI(*),
      1          LMEL(NDNDS,*),RTDT(*),FTDT(*),TAU(N45,NGS12,NE,*),
      1          TEMGT(NGS12,*),CORGT(3,NGS12,*),SKP(ND,*),SKP1(NDNDS,*),
-     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),
+     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),LM2(44),
      1          ELAS(KK,*),NSLOJ(*),MATSL(MSLOJ,*),BBET(MSLOJ,*),
      1          DSLOJ(MSLOJ,*),BET0(*),ESILA(ND,*),
      1          ZAPS(*),NPRZ(*),GUSM(50,*),AMASC(9),ID(NP,*),
      1          ALFE(LA,*),HAEM(LA,*),HINV(LA,LA,*),GEEK(LA,NCVE2,*),
      1          DEF(N45,NGS12,NE,*),NNOD(*),ngg(*),TBTH(*)
-      DIMENSION STRAIN(6),STRESS(8),TA(6)
+      DIMENSION STRAIN(6),STRESS(8),TA(6), SKEF(8,8) !todo hardkodovano
       DIMENSION XG(55),WGT(55),NREF(11),XNC(15),WNC(15)
       DIMENSION XG5(5),YG5(5),WG5(5)
       DIMENSION TTE(2,3),CORDL(2,9),A12(3),A13(3),EN(3),Y(3),FTDTL(40),
@@ -604,6 +637,7 @@ C
 c
       DIMENSION DL(NCVE),TEMPL(NCVE,3)
 C
+      INTEGER*8 LM2
       DLMIN=1.D+10
 
       IF(IDEBUG.GT.0) PRINT *, ' ELTE  '
@@ -734,7 +768,10 @@ C
       ENDIF
 C
       IF(ISKNP.NE.2) THEN
-c      call iwrr(lm,NDD,'LM0 ')
+      !call iwrr(lm,NDD,'LM0 ')
+      do i=1,NDD
+      LM2(I)=LM(I)
+      enddo
 c      WRITE(3,*) 'LLM,LSKE,NWE',LLM,LSKE,NWE
          CALL CLEAR(SKE,NWE)
 c      call iwrr(lm,NDD,'LM1 ')
@@ -2070,7 +2107,26 @@ C
             ENDIF
             IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
          ELSE
-            IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,NDD)
+            IF(ISKNP.NE.2) THEN
+           !     write(*,*) 'ALSK0'
+           !do i=1,93
+           !  write(*,*) i, ALSK(i)   
+           !     enddo 
+            CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,NDD)
+          !     write(*,*) 'SKE'
+           ! do i=1,nwe
+           !  write(*,*) i, SKE(i)   
+           ! enddo
+           !  write(*,*) 'ALSK2'
+           !do i=1,93
+           !  write(*,*) i, ALSK(i)   
+           !     enddo     
+                
+              CALL REVERSEPSKEFN(SKEF,SKE,NDD)
+      !                      MATRICA,NIZ,DIMENZIJA
+             CALL sparseassembler_addelemmatrix(NDD,LM2,SKEF)
+!             call sparseassembler_getnz(nonzeros)
+             ENDIF
 c            IF(nlm.eq.1) THEN
 c               NDUM=NDD*(NDD+1)/2
 c               write(3,*) 'nlm,ndd,neq',nlm,ndd,jedn

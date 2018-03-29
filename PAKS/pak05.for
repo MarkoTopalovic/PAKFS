@@ -20,6 +20,8 @@ C=======================================================================
 C
 C     
       SUBROUTINE UCELEM
+      USE STIFFNESS
+      USE MATRICA
       USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
@@ -97,6 +99,7 @@ c     NELUK - broj elemenata za koje je zapisan LM()na disk IDRAKCE
       IDRAKCE=39
       OPEN(IDRAKCE,FILE='FDRAK',STATUS='UNKNOWN',
      1      FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
+      CALL sparseassembler_init(1)
       IKONVP=1
       IF(IDEBUG.GT.0) PRINT *, ' UCELEM'
       IF(NULAZ.EQ.1.OR.NULAZ.EQ.3) THEN
@@ -276,8 +279,8 @@ CE        CALCULATING ACTIVE COLUMN HEIGHTS AND ADDRESSES OF DIAGONAL
 CE        ELEMENTS IN SKYLINE STIFFNESS MATRIX
 C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
 
-
-
+          
+!        pocetak starog drakcetovog tackanja
          ALLOCATE (MAXA8(JEDN+1), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'MAXA8 Not enough memory'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
@@ -344,7 +347,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          if(imumps.EQ.1) I2=2 
          IROWS=LMAX
          !LMAX=IROWS+NNZERO*I2
-         
+
          
           ALLOCATE (AIROWS(NNZERO*I2), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'AIROWS Not enough memory'
@@ -394,6 +397,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAXa')
         WRITE(*,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
         WRITE(3,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+!     kraj starog Drakcetovog tackanja        
       RETURN
 C-----------------------------------------------------------------------
  2000 FORMAT(///' V E K T O R   M A X A')
@@ -1380,6 +1384,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE FORMGR(NPODS,LMM)
+      USE STIFFNESS
       USE MATRICA
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       REAL*8 BRISI
@@ -1876,6 +1881,7 @@ C              !CALL CLEAR(A(LSK),NWK*I2)
          !KORISTIMO NOVO DINAMICKO ALOCIRANJE
          BRISI=0.0
          !ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
+
          ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'

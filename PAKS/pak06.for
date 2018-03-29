@@ -260,6 +260,7 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE RESEN(B,V,MAXA,NN,KKK)
+      USE STIFFNESS
       USE MATRICA
       USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
@@ -302,7 +303,7 @@ C
       if ( myid .ne. 0 ) goto 10
       k=kkk
 C
-c      write(3,*)'kkk',kkk
+      write(3,*)'kkk',kkk
       IF(IDEBUG.GT.0) PRINT *, ' RESEN'
       IF(ISRPS.EQ.0.AND.INDBG.EQ.0)
      1WRITE(*,2000) KKK
@@ -347,9 +348,32 @@ C              EPSILON=1.D-10
             if(imumps.eq.1) then
 ! MUMPS solver
 c	          if(k.eq.2) then
-                    CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-                    CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k)
-                    IF (myid.ne.0) return
+                CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
+                !WRITE(3,*) 'VEKTOR V'
+                !DO I =1, NN
+                !    WRITE(3,*) I, V(I)
+                !ENDDO
+                !WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
+                !do i=1,93
+                !    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
+                !enddo
+                !CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
+                
+                 WRITE(3,*) 'VEKTOR V'
+                DO I =1, NN
+                    WRITE(3,*) I, V(I)
+                ENDDO
+                WRITE(3,*) 'I, rows(I),columns(I), stiff(i)'
+                do i=1,93
+                    WRITE(3,*) I, rows(I),columns(I), stiff(i)
+                enddo
+          IF(K.EQ.1) THEN
+              stiff_n = JEDN
+          ENDIF
+                CALL dmumps1(rows,columns,stiff,V,nonzeros,stiff_n,kkk) ! Busarac
+
+                
+!                IF (myid.ne.0) return
 c	          end if
             else
 ! iterativni Djordje

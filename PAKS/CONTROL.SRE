@@ -1,15 +1,13 @@
 
 
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
+ S T E P  N U M B E R =    1                      T I M E = 1.00000E+00
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =    12   MAX DISPL  =  3.0732E-01
+
+
+     END OF JOB .....................................  9:39:20.95   29/ 3/2018
 
 
 
-
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
-
-
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
