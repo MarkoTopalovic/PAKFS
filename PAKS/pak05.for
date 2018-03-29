@@ -97,9 +97,13 @@ C
 c     NELUK - broj elemenata za koje je zapisan LM()na disk IDRAKCE
       NELUK=0
       IDRAKCE=39
+      TIPTACKANJA = 2
+      IF (TIPTACKANJA.EQ.1) THEN
       OPEN(IDRAKCE,FILE='FDRAK',STATUS='UNKNOWN',
      1      FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
+      ELSE
       CALL sparseassembler_init(1)
+      ENDIF
       IKONVP=1
       IF(IDEBUG.GT.0) PRINT *, ' UCELEM'
       IF(NULAZ.EQ.1.OR.NULAZ.EQ.3) THEN
@@ -281,6 +285,8 @@ C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
 
           
 !        pocetak starog drakcetovog tackanja
+          IF(TIPTACKANJA.EQ.1)THEN
+              
          ALLOCATE (MAXA8(JEDN+1), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'MAXA8 Not enough memory'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
@@ -299,7 +305,10 @@ C          write(3,*) 'maxa8',(maxa8(i),i=1,4)
         ENDIF
 C
         LMAXA=LMHT
-
+        
+        ENDIF !TIPTACKANJA
+        
+        
         IF(NEQ.GT.NDOD) STOP 'NEQ.GT.NDOD'
 C
         IF(NCXFEM.GT.0.and.JEDN.GT.NEQ) NEQ=JEDN
@@ -316,10 +325,14 @@ C
         NGENN=NGENN+NGENL
         LMAX=LID
    10 CONTINUE
+       IF(TIPTACKANJA.EQ.1)THEN
+      
       IF(IABS(ICCGG).EQ.1) THEN
 !         LISK=LMAX
 !         LMAX=LISK+1+NWK8/28
 c         nwk8=19000000000
+          
+               
          write(3,*) 'pre alociranja isk - LMAX',LMAX
          write(*,*) 'pre alociranja isk'
          memisk=(4*(1+NWK8/28))/1000000
@@ -397,6 +410,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAXa')
         WRITE(*,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
         WRITE(3,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+      ENDIF
 !     kraj starog Drakcetovog tackanja        
       RETURN
 C-----------------------------------------------------------------------

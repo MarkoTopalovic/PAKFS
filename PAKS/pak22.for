@@ -379,7 +379,7 @@ C
      7AE(LSKS),AE(LSKES),NDNDS,AE(LHS),AE(LQS),AE(LPS),A(LID),A(LDEFOR),
      8AU(LNNOD),au(lngg),AU(LTBTH))
       
-      
+       IF (TIPTACKANJA.NE.1) THEN
       if(.not.allocated(rows)) then
             call sparseassembler_getnz(nonzeros)
             allocate(rows(nonzeros),STAT=istat)
@@ -402,7 +402,7 @@ C
       enddo
           
           CALL sparseassembler_kill()
-      
+      ENDIF
 
       
       ELSE
@@ -472,6 +472,7 @@ C=======================================================================
      1                SKS,SKES,NDNDS,HS,QS,PS,ID,DEF,NNOD,ngg,TBTH)
       USE STIFFNESS
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C      
       include 'pakxfem.inc'
@@ -2106,24 +2107,14 @@ C
             IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
          ELSE
             IF(ISKNP.NE.2) THEN
-           !     write(*,*) 'ALSK0'
-           !do i=1,93
-           !  write(*,*) i, ALSK(i)   
-           !     enddo 
+             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,NDD)
-          !     write(*,*) 'SKE'
-           ! do i=1,nwe
-           !  write(*,*) i, SKE(i)   
-           ! enddo
-           !  write(*,*) 'ALSK2'
-           !do i=1,93
-           !  write(*,*) i, ALSK(i)   
-           !     enddo     
+            ELSE
                 
               CALL REVERSEPSKEFN(SKEF,SKE,NDD)
       !                      MATRICA,NIZ,DIMENZIJA
              CALL sparseassembler_addelemmatrix(NDD,LM2,SKEF)
-!             call sparseassembler_getnz(nonzeros)
+            ENDIF
              ENDIF
 c            IF(nlm.eq.1) THEN
 c               NDUM=NDD*(NDD+1)/2

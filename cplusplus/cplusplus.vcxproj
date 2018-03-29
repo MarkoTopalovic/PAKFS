@@ -135,16 +135,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pakTimeSeries.cpp" />
     <ClCompile Include="sparse_assembler.c" />
-    <ClCompile Include="TimeSeries.cpp" />
-    <ClCompile Include="TSValue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NamingStrategy.h" />
     <ClInclude Include="redblack_t.h" />
-    <ClInclude Include="TimeSeries.h" />
-    <ClInclude Include="TSValue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

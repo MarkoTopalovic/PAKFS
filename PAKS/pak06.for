@@ -349,14 +349,15 @@ C              EPSILON=1.D-10
 ! MUMPS solver
 c	          if(k.eq.2) then
                 CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-
-                !CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
-                
+                 IF (TIPTACKANJA.EQ.1) THEN
+                CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
+                ELSE
           IF(K.EQ.1) THEN
               stiff_n = JEDN
           ENDIF
                 CALL dmumps1(iirows,iicolumns,stiff,V,
      1           nonzeros,stiff_n,kkk) ! Busarac
+                ENDIF
 c	          end if
             else
 ! iterativni Djordje
