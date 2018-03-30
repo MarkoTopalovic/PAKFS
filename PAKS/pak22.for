@@ -246,7 +246,10 @@ CS     GLAVNI UPRAVLJACKI PROGRAM  ZA MATRICE ELEMENATA I SISTEMA
 CE     MAIN MANAGEMENT  PROGRAM  FOR ELEMENT MATRIX
 C
       include 'paka.inc'
-      
+      COMMON /GLAVNI/ NP,NGELEM,NMATM,NPER,
+     1                IOPGL(6),KOSI,NDIN,ITEST
+      COMMON /DINAMI/ IMASS,IDAMP,PIP,DIP,MDVI
+      COMMON /SOPSVR/ ISOPS,ISTYP,NSOPV,ISTSV,IPROV,IPROL
       COMMON /IZOL4B/ NGS12,ND,MSLOJ,MXS,MSET,LNSLOJ,LMATSL,LDSLOJ,LBBET
       COMMON /REPERI/ LCORD,LID,LMAXA,LMHT
       COMMON /SISTEM/ LSK,LRTDT,NWK,JEDN,LFTDT
@@ -380,21 +383,39 @@ C
      8AU(LNNOD),au(lngg),AU(LTBTH))
       
        IF (TIPTACKANJA.NE.1) THEN
+           
       if(.not.allocated(rows)) then
             call sparseassembler_getnz(nonzeros)
             allocate(rows(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating rows'
-             allocate(iirows(nonzeros),STAT=istat)
+            allocate(iirows(nonzeros),STAT=istat)
             allocate(columns(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating columns'
             allocate(iicolumns(nonzeros),STAT=istat)
-            allocate(stiff(nonzeros),STAT=istat)
+            allocate(ALSK(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating stiff'
+!             ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
+!      IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
+!      IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
+              IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
+                IF(IMASS.GE.1) THEN
+              ALLOCATE (ALSM(nonzeros), STAT = iAllocateStatus)
+          IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory *'
+          IF (iAllocateStatus /= 0) STOP '*** ALSM Not enough memory *'
+                ENDIF
+             ENDIF
+             IF(NDIN.GT.0) THEN
+                IF(IDAMP.GT.0) THEN
+                   ALLOCATE (ALSC(nonzeros), STAT = iAllocateStatus)
+          IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory *'
+          IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory *'
+                ENDIF
+             ENDIF
+            
+            
           endif
 
-      CALL sparseassembler_getsparse(nonzeros,rows,columns,stiff)
-!       CALL sparseassembler_getsparse(nonzeros,AIROWS,
-!     1 AIROWS(nwk+1),ALSK)
+      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK)
 
       do i=1,nonzeros
             iirows(i)= rows(i)
@@ -558,13 +579,13 @@ C
      1          THID(NE,*),CORD(NP,*),HE(NCVE,*),IPGC(*),UPRI(*),
      1          LMEL(NDNDS,*),RTDT(*),FTDT(*),TAU(N45,NGS12,NE,*),
      1          TEMGT(NGS12,*),CORGT(3,NGS12,*),SKP(ND,*),SKP1(NDNDS,*),
-     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),LM2(44),
+     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),LM2(100),
      1          ELAS(KK,*),NSLOJ(*),MATSL(MSLOJ,*),BBET(MSLOJ,*),
      1          DSLOJ(MSLOJ,*),BET0(*),ESILA(ND,*),
      1          ZAPS(*),NPRZ(*),GUSM(50,*),AMASC(9),ID(NP,*),
      1          ALFE(LA,*),HAEM(LA,*),HINV(LA,LA,*),GEEK(LA,NCVE2,*),
      1          DEF(N45,NGS12,NE,*),NNOD(*),ngg(*),TBTH(*)
-      DIMENSION STRAIN(6),STRESS(8),TA(6), SKEF(8,8) !todo hardkodovano
+      DIMENSION STRAIN(6),STRESS(8),TA(6), SKEF(100,100) !todo hardkodovano
       DIMENSION XG(55),WGT(55),NREF(11),XNC(15),WNC(15)
       DIMENSION XG5(5),YG5(5),WG5(5)
       DIMENSION TTE(2,3),CORDL(2,9),A12(3),A13(3),EN(3),Y(3),FTDTL(40),

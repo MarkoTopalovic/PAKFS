@@ -98,6 +98,7 @@ c     NELUK - broj elemenata za koje je zapisan LM()na disk IDRAKCE
       NELUK=0
       IDRAKCE=39
       TIPTACKANJA = 2
+!      1=drakce 2=busy      
       IF (TIPTACKANJA.EQ.1) THEN
       OPEN(IDRAKCE,FILE='FDRAK',STATUS='UNKNOWN',
      1      FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
@@ -1400,6 +1401,7 @@ C=======================================================================
       SUBROUTINE FORMGR(NPODS,LMM)
       USE STIFFNESS
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       REAL*8 BRISI
 C
@@ -1893,13 +1895,11 @@ C            CALL CLEAR(A(LAILU),(LMAX-LAILU)/IDVA)
          !UMESTO STAROG PISANJA MATRICE NA DISK
 C              !CALL CLEAR(A(LSK),NWK*I2)
          !KORISTIMO NOVO DINAMICKO ALOCIRANJE
-         BRISI=0.0
-         !ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
-
+         IF (TIPTACKANJA.EQ.1) THEN
          ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
-      
+         ENDIF
          NPODS(JPBR,35)=LMAX13+1
          !STARO PISANJE PO DISKU
 C         !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)       
@@ -1912,7 +1912,7 @@ C              IF(IREST.NE.2.AND.IMASS.EQ.1)
 C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
 C         WRITE(3,*) '54,LSK',LSK
 C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
-            IF(IMASS.GE.1) THEN
+            IF((IMASS.GE.1).AND.(TIPTACKANJA.EQ.1)) THEN
           !ALLOCATE (ALSM(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
           ALLOCATE (ALSM(NWM), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory ***'
@@ -1924,7 +1924,7 @@ C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
             NPODS(JPBR,58)=LMAX13+1
             !TOPALOVIC EFEKTIVNA MATRICA KE ZAUZIMA ISTO MESTO KAO I K
 C            !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
-            IF(IDAMP.GT.0) THEN
+            IF((IDAMP.GT.0).AND.(TIPTACKANJA.EQ.1)) THEN
                NPODS(JPBR,56)=LMAX13+1
                !TOPALOVIC MATRICA PRIGUSENJA C
 !               IF(IREST.NE.2.AND.IMASS.EQ.1)

@@ -355,7 +355,7 @@ c	          if(k.eq.2) then
           IF(K.EQ.1) THEN
               stiff_n = JEDN
           ENDIF
-                CALL dmumps1(iirows,iicolumns,stiff,V,
+                CALL dmumps1(iirows,iicolumns,ALSK,V,
      1           nonzeros,stiff_n,kkk) ! Busarac
                 ENDIF
 c	          end if

@@ -418,7 +418,7 @@ void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, doubl
 	rb_callback_func = SnimiElem_callback;
 	inorder(root);
     *nz = snimout;
-    printf("Nonzero count: %d\n", *nz);
+    //printf("Nonzero count: %d\n", *nz);
 }
 
 void sparseassembler_getnz_(int64_t *nz)

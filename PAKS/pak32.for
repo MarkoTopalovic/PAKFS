@@ -255,6 +255,9 @@ CE    POINTER FOR INTEGRATION POINTS COORDINATES
 C======================================================================
       SUBROUTINE SIST3E(AE,AU)
       USE PLAST3D
+      USE STIFFNESS
+      USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -280,6 +283,10 @@ C ......................................................................
 C
       include 'paka.inc'
       
+      COMMON /GLAVNI/ NP,NGELEM,NMATM,NPER,
+     1                IOPGL(6),KOSI,NDIN,ITEST
+      COMMON /DINAMI/ IMASS,IDAMP,PIP,DIP,MDVI
+      COMMON /SOPSVR/ ISOPS,ISTYP,NSOPV,ISTSV,IPROV,IPROL
       COMMON /IZOL4B/ NGS12,ND,MSLOJ,MXS,MSET,LNSLOJ,LMATSL,LDSLOJ,LBBET
       COMMON /REPERI/ LCORD,LID,LMAXA,LMHT
       COMMON /SISTEM/ LSK,LRTDT,NWK,JEDN,LFTDT
@@ -364,6 +371,52 @@ C
      3A(LCOR0),A(LTEMGT),A(LCORGT),A(LAU),A(LZAPS),A(LNPRZ),INDZS,
      1A(LGUSM),LA,AE(LCEGE),AU(LESILA),A(LID),A(LDEFOR),
      8AU(LNNOD),AU(LALFT),AU(LINDBEL),AU(LBIRTHC),AU(LTBTH),AU(LCEL))
+      
+      
+        IF (TIPTACKANJA.NE.1) THEN
+           
+      if(.not.allocated(rows)) then
+            call sparseassembler_getnz(nonzeros)
+            allocate(rows(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating rows'
+            allocate(iirows(nonzeros),STAT=istat)
+            allocate(columns(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating columns'
+            allocate(iicolumns(nonzeros),STAT=istat)
+            allocate(ALSK(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating stiff'
+!             ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
+!      IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
+!      IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
+              IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
+                IF(IMASS.GE.1) THEN
+              ALLOCATE (ALSM(nonzeros), STAT = istat)
+          IF (istat /= 0) write(3,*)'ALSM Not enough memory *'
+          IF (istat /= 0) STOP '*** ALSM Not enough memory *'
+                ENDIF
+             ENDIF
+             IF(NDIN.GT.0) THEN
+                IF(IDAMP.GT.0) THEN
+                   ALLOCATE (ALSC(nonzeros), STAT = iAllocateStatus)
+          IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory *'
+          IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory *'
+                ENDIF
+             ENDIF
+            
+            
+          endif
+
+      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK)
+
+      do i=1,nonzeros
+            iirows(i)= rows(i)
+            iicolumns(i)=columns(i)
+      enddo
+          
+          CALL sparseassembler_kill()
+      ENDIF
+      
+      
       ELSE
       CALL ELTE3B(AE(LBET),AE(LSKE),AE(LUEL),AE(LLM),AU(LNEL),AU(LNMAT),
      1AU(LTHID),AE(LHE),A(KORD),A(LUPRI),A(LRTDT),A(LFTDT),A(LSIGMA),
@@ -428,6 +481,7 @@ C=======================================================================
       USE PLAST3D
       USE STIFFNESS
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -513,9 +567,9 @@ C
      1          TEMGT(NGS12,*),CORGT(3,NGS12,*),ZAPS(*),NPRZ(*),
      1          GUSM(50,*),AMASC(21),TSS(6,6),TBETA(6,6),ESILA(ND,*),
      1          ALFE(LA,*),HAEM(LA,*),HINV(LA,LA,*),GEEK(LA,24,*),
-     1          DEF(NLD,NGS12,*),NNOD(*),ID(NP,*),ALFT(LA,*)
+     1          DEF(NLD,NGS12,*),NNOD(*),ID(NP,*),ALFT(LA,*),LM2(100)
       DIMENSION INDBEL(*),BIRTHC(NE,*),TBTH(*),MCVEL(*)
-      DIMENSION STRAIN(6),STRESS(6),TA(6),SKEF(ND,ND)
+      DIMENSION STRAIN(6),STRESS(6),TA(6),SKEF(100,100)
       DIMENSION XG(55),WGT(55),NREF(11),XNC(15),WNC(15)
       DIMENSION XG9(9),YG9(9),ZG9(9),WG9(9)
       DIMENSION COR(21,3),CORT(21,3),CON(21,3),COR0(NE,3,*),
@@ -591,6 +645,9 @@ C
      1                          -.774596669241483D0, .774596669241483D0,
      1                          -.774596669241483D0, .774596669241483D0,
      1                          -.774596669241483D0, .774596669241483D0/
+      
+      INTEGER*8 LM2
+      
 CE    DIMENSION OF ELEMENT STIFFNESS MATRIX - SKE(NWE)
       NWE=ND*(ND+1)/2
             WRITE(*,*) 'elte3'
@@ -836,7 +893,12 @@ CE    SKE(NWK): ELEMENT STIFFNESS MATRIX
 CE    AMASC(NCVE): NODAL MASSES OF ELEMENT
 CE    BLT(6,ND): STRAIN-DISPLACEMENT MATRIX
 CE    HE(NCVE,4): SHAPE FUNCTIONS AND THEIR DERIVATIVES
-      IF(ISKNP.NE.2) CALL CLEAR(SKE,NWE)
+      IF(ISKNP.NE.2) THEN
+          do i=1,ND
+             LM2(I)=LM(I)
+          enddo
+      CALL CLEAR(SKE,NWE)
+      ENDIF
       CALL CLEAR(FE,ND)
       CALL CLEAR(AMASC,21)
       CALL CLEAR(BLT,6*ND)
@@ -2382,10 +2444,13 @@ C
             WRITE(3,*) 'pre spakuj'
          endif
          IF(ISKNP.NE.2) THEN
+             IF (TIPTACKANJA.EQ.1) THEN
              CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
+             ELSE
              CALL REVERSEPSKEFN(SKEF,SKE,ND)
       !                      MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(ND,LM,SKEF)
+             CALL sparseassembler_addelemmatrix(ND,LM2,SKEF)
+             ENDIF
          ENDIF
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT
 CE       ASSEMBLE INTERNAL FORCE VECTOR

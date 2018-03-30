@@ -1919,6 +1919,7 @@
 
            NUMBER OF STEPS FOR FILTRATION FORCES ......... ICERNE =        0
                 EQ.0; NO FILTRATION FORCES
+ USED SPACE IN A       11636
 
 
 
@@ -1932,22 +1933,22 @@
 
            NUMBER OF EQUATIONS ......................... JEDN =       193
 
-           NUMBER OF ELEMENTS IN THE SYSTEM MATRIX ...... NWK =     17773
+           NUMBER OF ELEMENTS IN THE SYSTEM MATRIX ...... NWK =         0
 
-           MAXIMUM HEIGHT COLUMN IN THE SYSTEM MATRIX ... MHC =       182
+           MAXIMUM HEIGHT COLUMN IN THE SYSTEM MATRIX ... MHC =         0
 
-           REQUIRED DIMENSION IN THE WORKING ARRAY ..... LMAX =     82570
+           REQUIRED DIMENSION IN THE WORKING ARRAY ..... LMAX =     12622
 
-           MAXIMUM TOTAL STORAGE AVAILABLE ............. MTOT = 400000000
-
-
-
- NGE,GRZAP,ITER           1  1.000000000000002E-003           0
- NGE,GRZAP,ITER           2  1.000000000000001E-003           0
- NGE,GRZAP,ITER           3  1.000000000000002E-003           0
- NGE,GRZAP,ITER           4  1.000000000000001E-003           0
- NGE,GRZAP,ITER           5  1.000000000000002E-003           0
- iskdsk           0
+           MAXIMUM TOTAL STORAGE AVAILABLE ............. MTOT = 470000000
 
 
- R E P O R T   O N   E N D   O F   P R O G R A M
+
+ READING AND GENERATING OF INPUT DATA IS OVER
+ k21egl
+ reade3
+ siste3
+ elte3
+ NLM           1
+ pre integracione petlje
+ posle integracione petlje
+ pre spakuj
