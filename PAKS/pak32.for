@@ -567,7 +567,7 @@ C
      1          TEMGT(NGS12,*),CORGT(3,NGS12,*),ZAPS(*),NPRZ(*),
      1          GUSM(50,*),AMASC(21),TSS(6,6),TBETA(6,6),ESILA(ND,*),
      1          ALFE(LA,*),HAEM(LA,*),HINV(LA,LA,*),GEEK(LA,24,*),
-     1          DEF(NLD,NGS12,*),NNOD(*),ID(NP,*),ALFT(LA,*),LM2(100)
+     1          DEF(NLD,NGS12,*),NNOD(*),ID(NP,*),ALFT(LA,*)
       DIMENSION INDBEL(*),BIRTHC(NE,*),TBTH(*),MCVEL(*)
       DIMENSION STRAIN(6),STRESS(6),TA(6),SKEF(100,100)
       DIMENSION XG(55),WGT(55),NREF(11),XNC(15),WNC(15)
@@ -646,8 +646,7 @@ C
      1                          -.774596669241483D0, .774596669241483D0,
      1                          -.774596669241483D0, .774596669241483D0/
       
-      INTEGER*8 LM2
-      
+
 CE    DIMENSION OF ELEMENT STIFFNESS MATRIX - SKE(NWE)
       NWE=ND*(ND+1)/2
             WRITE(*,*) 'elte3'
@@ -894,10 +893,7 @@ CE    AMASC(NCVE): NODAL MASSES OF ELEMENT
 CE    BLT(6,ND): STRAIN-DISPLACEMENT MATRIX
 CE    HE(NCVE,4): SHAPE FUNCTIONS AND THEIR DERIVATIVES
       IF(ISKNP.NE.2) THEN
-          do i=1,ND
-             LM2(I)=LM(I)
-          enddo
-      CALL CLEAR(SKE,NWE)
+         CALL CLEAR(SKE,NWE)
       ENDIF
       CALL CLEAR(FE,ND)
       CALL CLEAR(AMASC,21)
@@ -2449,7 +2445,7 @@ C
              ELSE
              CALL REVERSEPSKEFN(SKEF,SKE,ND)
       !                      MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(ND,LM2,SKEF)
+             CALL sparseassembler_addelemmatrix(ND,LM,SKEF)
              ENDIF
          ENDIF
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT

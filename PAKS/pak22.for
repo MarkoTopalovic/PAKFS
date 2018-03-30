@@ -579,7 +579,7 @@ C
      1          THID(NE,*),CORD(NP,*),HE(NCVE,*),IPGC(*),UPRI(*),
      1          LMEL(NDNDS,*),RTDT(*),FTDT(*),TAU(N45,NGS12,NE,*),
      1          TEMGT(NGS12,*),CORGT(3,NGS12,*),SKP(ND,*),SKP1(NDNDS,*),
-     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),LM2(100),
+     1          SKS(*),SKES(NDS,*),HS(KK,*),QS(*),PS(NDS,*),
      1          ELAS(KK,*),NSLOJ(*),MATSL(MSLOJ,*),BBET(MSLOJ,*),
      1          DSLOJ(MSLOJ,*),BET0(*),ESILA(ND,*),
      1          ZAPS(*),NPRZ(*),GUSM(50,*),AMASC(9),ID(NP,*),
@@ -657,7 +657,6 @@ C
 c
       DIMENSION DL(NCVE),TEMPL(NCVE,3)
 C
-      INTEGER*8 LM2
       DLMIN=1.D+10
 
       IF(IDEBUG.GT.0) PRINT *, ' ELTE  '
@@ -789,9 +788,6 @@ C
 C
       IF(ISKNP.NE.2) THEN
       !call iwrr(lm,NDD,'LM0 ')
-      do i=1,NDD
-      LM2(I)=LM(I)
-      enddo
 c      WRITE(3,*) 'LLM,LSKE,NWE',LLM,LSKE,NWE
          CALL CLEAR(SKE,NWE)
 c      call iwrr(lm,NDD,'LM1 ')
@@ -2142,7 +2138,7 @@ C
                 
               CALL REVERSEPSKEFN(SKEF,SKE,NDD)
       !                      MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(NDD,LM2,SKEF)
+             CALL sparseassembler_addelemmatrix(NDD,LM,SKEF)
             ENDIF
              ENDIF
 c            IF(nlm.eq.1) THEN
