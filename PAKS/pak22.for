@@ -2130,6 +2130,14 @@ C
             IF(ISKNP.NE.2) THEN
              IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,NDD)
+            !     write(*,*) 'SKE'
+           ! do i=1,nwe
+           !  write(*,*) i, SKE(i)   
+           ! enddo
+         !  write(*,*) 'ALSK2'
+           !do i=1,93
+           !  write(*,*) i, ALSK(i)   
+           !     enddo     
             ELSE
                 
               CALL REVERSEPSKEFN(SKEF,SKE,NDD)
