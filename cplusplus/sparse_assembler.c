@@ -372,7 +372,7 @@ void sparseassembler_init_(int *symetric)
 	RBInit();
 	bSymetric = *symetric;
 }
-void sparseassembler_addelemmatrix_(int *n, int64_t *indices, double *vals)
+void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 //void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 {
    int64_t i,j, nn = *n;

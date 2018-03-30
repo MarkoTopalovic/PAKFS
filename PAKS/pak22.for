@@ -2142,7 +2142,7 @@ C
                 
               CALL REVERSEPSKEFN(SKEF,SKE,NDD)
       !                      MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(NDD,LM2,SKEF)
+             CALL sparseassembler_addelemmatrix(NDD,LM,SKEF)
             ENDIF
              ENDIF
 c            IF(nlm.eq.1) THEN

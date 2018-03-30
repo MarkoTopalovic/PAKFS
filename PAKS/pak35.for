@@ -325,7 +325,7 @@ C
               CALL SPAKUJ(ALSM,A(LMAXA),SKE,LM,NCVE3)
           !ELSE
           !    CALL REVERSEPSKEFN(SKEF,SKE,NCVE3)
-          !    CALL sparseassembler_addelemmatrix(NCVE3,LM2,SKEF)        
+          !    CALL sparseassembler_addelemmatrix(NCVE3,LM,SKEF)        
           !ENDIF
       ENDIF
       
