@@ -208,7 +208,7 @@ C
       COMMON /CDEBUG/ IDEBUG
 C
       DIMENSION SKE(*),LM(*),NEL(NE,*),NMAT(*),
-     1CORD(NP,*),HE(NCVE,*),BET(3,*),IPGC(*),
+     1CORD(NP,*),HE(NCVE,*),BET(3,*),IPGC(*),LM2(100),
      1LMEL(NCVE3,*),GUSM(50,*),CMC(21),SKEF(100,100)
 C
       DIMENSION XG(55),WGT(55),NREF(11),XGG(15)
@@ -258,6 +258,8 @@ C
      2         -1.000000000000000,-0.333333333333333, 0.333333333333333,
      3          1.000000000000000,-1.000000000000000,-0.500000000000000,
      4          0.000000000000000, 0.500000000000000, 1.000000000000000/
+
+      INTEGER*8 LM2
 C
 C     FORMIRANJE VEKTORA LM
 C
@@ -265,6 +267,7 @@ C
 C
       DO 10 NC=1,NCVE3
       LM(NC)=LMEL(NC,NLM)
+      LM2(NC)=LM(NC)
    10 CONTINUE
 C
 C     PETLJA PO GAUSOVIM TACKAMA
@@ -322,7 +325,7 @@ C
               CALL SPAKUJ(ALSM,A(LMAXA),SKE,LM,NCVE3)
           !ELSE
           !    CALL REVERSEPSKEFN(SKEF,SKE,NCVE3)
-          !    CALL sparseassembler_addelemmatrix(NCVE3,LM,SKEF)        
+          !    CALL sparseassembler_addelemmatrix(NCVE3,LM2,SKEF)        
           !ENDIF
       ENDIF
       
