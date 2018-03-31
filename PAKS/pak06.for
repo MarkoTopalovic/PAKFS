@@ -354,6 +354,10 @@ c	          if(k.eq.2) then
                 DO I =1, NN
                     WRITE(3,*) I, V(I)
                 ENDDO
+                WRITE(3,*) 'MAXA'
+                DO I =1, NN
+                    WRITE(3,*) I, MAXA(I)
+                ENDDO
                 WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
                 do i=1,NN
                     WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
@@ -363,6 +367,10 @@ c	          if(k.eq.2) then
                     WRITE(3,*) 'VEKTOR V'
                 DO I =1, NN
                     WRITE(3,*) I, V(I)
+                ENDDO
+                WRITE(3,*) 'MAXA'
+                DO I =1, NN
+                    WRITE(3,*) I, MAXA(I)
                 ENDDO
                 WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
                 do i=1,NN
@@ -396,7 +404,11 @@ c              if(nn.le.30) call wrr6(V,NN,'V-  ')
                IF(ICCGG.EQ.2) THEN
                   CALL UACTCF(B,C(1),V,MAXA,NN,K)
                ELSE
+                   IF (TIPTACKANJA.EQ.1) THEN
                   CALL RESENA(B,V,MAXA,NN,IZLAZ,K)
+                   ELSE
+                       CALL RESENA(ALSK,V,MAXA,NN,IZLAZ,K)
+                       ENDIF
                ENDIF
 c              if(nn.le.30) call swrr(B,MAXA,NN,'B+  ')
 c              call wrr6(B,NWK,'B+  ')
@@ -813,7 +825,7 @@ C-----------------------------------------------------------------------
      2  D20.12)
  6001 FORMAT(' DIAGONAL STIFFNESS MATRIX = 0 FOR EQUATION',I8)
 C-----------------------------------------------------------------------
-        END
+       END
 C=======================================================================
 C
 C=======================================================================
