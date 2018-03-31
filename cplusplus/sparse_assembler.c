@@ -68,7 +68,7 @@ void insert2(RBNode_t * q)
 	{
 		r = p;
 		//if (q->key<p->key) p = p->leftson; else p = p->rightson;
-		if ((q->keyCol < p->keyCol) ||  ( (q->keyCol == p->keyCol) && (q->keyRow < p->keyRow)) )
+		if ((q->keyCol < p->keyCol) ||  ( (q->keyCol == p->keyCol) && (q->keyRow > p->keyRow)) )
 		{
 			p = p->leftson;
 		}
@@ -82,7 +82,7 @@ void insert2(RBNode_t * q)
 	q->rightson = nil;
 	if (r==nil) root = q;
 	//else if (q->key<r->key)
-	else if ((q->keyCol < r->keyCol) || ((q->keyCol == r->keyCol) && (q->keyRow < r->keyRow)))
+	else if ((q->keyCol < r->keyCol) || ((q->keyCol == r->keyCol) && (q->keyRow > r->keyRow)))
 	{
 		r->leftson = q;
 	}
@@ -99,7 +99,7 @@ RBNode_t * search(RBNode_t *p, Tkey kRow, Tkey kCol)
 		//if (k==p->key) break;
 		if ((kCol == p->keyCol) && (kRow == p->keyRow))break;
 		//if (k < p->key)
-		if ((kCol < p->keyCol) || ((kCol == p->keyCol) && (kRow < p->keyRow)))
+		if ((kCol < p->keyCol) || ((kCol == p->keyCol) && (kRow > p->keyRow)))
 		{
 			p = p->leftson;
 		}
