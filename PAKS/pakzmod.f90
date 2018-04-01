@@ -55,7 +55,6 @@
         !ova druga 2 su privremena dok ne regulisem razliku izmedju integer 4 i 8
         integer*4,dimension(:),allocatable :: iirows
         integer*4,dimension(:),allocatable :: iicolumns
-        double precision,dimension(:),allocatable :: stiff
       end module STIFFNESS
       
       module ELEMENTS

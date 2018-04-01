@@ -97,7 +97,7 @@ C
 c     NELUK - broj elemenata za koje je zapisan LM()na disk IDRAKCE
       NELUK=0
       IDRAKCE=39
-      TIPTACKANJA = 2
+      TIPTACKANJA = 1
 !      1=drakce 2=busy      
       IF (TIPTACKANJA.EQ.1) THEN
       OPEN(IDRAKCE,FILE='FDRAK',STATUS='UNKNOWN',

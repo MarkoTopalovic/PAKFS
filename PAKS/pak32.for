@@ -384,10 +384,14 @@ C
             if(istat.ne.0) stop 'error allocating columns'
             allocate(iicolumns(nonzeros),STAT=istat)
             allocate(ALSK(nonzeros),STAT=istat)
-            if(istat.ne.0) stop 'error allocating stiff'
+            if(istat.ne.0) stop 'error allocating ALSK'
 !             ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
 !      IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
 !      IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
+              ALLOCATE (AIROWS(nonzeros*2), STAT = istat)
+         if(istat.ne.0) stop 'error allocating AIROWS'
+            
+            
               IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
                 IF(IMASS.GE.1) THEN
               ALLOCATE (ALSM(nonzeros), STAT = istat)
@@ -411,6 +415,8 @@ C
       do i=1,nonzeros
             iirows(i)= rows(i)
             iicolumns(i)=columns(i)
+            AIROWS(i)= rows(i)
+            AIROWS(nonzeros+i)=columns(i)
       enddo
           
           CALL sparseassembler_kill()
