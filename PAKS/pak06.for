@@ -350,35 +350,35 @@ C              EPSILON=1.D-10
 c	          if(k.eq.2) then
                 CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
                  IF (TIPTACKANJA.EQ.1) THEN
-                     WRITE(3,*) 'VEKTOR V'
-                DO I =1, NN
-                    WRITE(3,*) I, V(I)
-                ENDDO
-                WRITE(3,*) 'MAXA'
-                DO I =1, NN
-                    WRITE(3,*) I, MAXA(I)
-                ENDDO
-                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
-                do i=1,NN
-                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
-                enddo
+!                     WRITE(3,*) 'VEKTOR V'
+!                DO I =1, NN
+!                    WRITE(3,*) I, V(I)
+!                ENDDO
+!                WRITE(3,*) 'MAXA'
+!                DO I =1, NN
+!                    WRITE(3,*) I, MAXA(I)
+!                ENDDO
+!                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
+!                do i=1,200
+!                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
+!                enddo
                 CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
                 ELSE
-                    WRITE(3,*) 'VEKTOR V'
-                DO I =1, NN
-                    WRITE(3,*) I, V(I)
-                ENDDO
-                WRITE(3,*) 'MAXA'
-                DO I =1, NN
-                    WRITE(3,*) I, MAXA(I)
-                ENDDO
-                WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
-                do i=1,NN
-                    WRITE(3,*) I, rows(I),columns(I), ALSK(i)
-                enddo
-          IF(K.EQ.1) THEN
-              stiff_n = JEDN
-          ENDIF
+!                    WRITE(3,*) 'VEKTOR V'
+!                DO I =1, NN
+!                    WRITE(3,*) I, V(I)
+!                ENDDO
+!                WRITE(3,*) 'MAXA'
+!                DO I =1, NN
+!                    WRITE(3,*) I, MAXA(I)
+!                ENDDO
+!                WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
+!                do i=1,NN
+!                    WRITE(3,*) I, rows(I),columns(I), ALSK(i)
+!                enddo
+                          IF(K.EQ.1) THEN
+                              stiff_n = JEDN
+                          ENDIF
                 CALL dmumps1(iirows,iicolumns,ALSK,V,
      1           nonzeros,stiff_n,kkk) ! Busarac
                 ENDIF
@@ -403,16 +403,8 @@ C              call wrr6(B,36,'B-  ')
 c              if(nn.le.30) call wrr6(V,NN,'V-  ')
                IF(ICCGG.EQ.2) THEN
                   CALL UACTCF(B,C(1),V,MAXA,NN,K)
-               ELSE
-                   IF (TIPTACKANJA.EQ.1) THEN
-                        WRITE(3,*) 'MAXA'
-                DO I =1, NN+2
-                    WRITE(3,*) I, MAXA(I)
-                ENDDO
+               ELSE        
                   CALL RESENA(B,V,MAXA,NN,IZLAZ,K)
-                   ELSE
-                       CALL RESENA(ALSK,V,MAXA,NN,IZLAZ,K)
-                       ENDIF
                ENDIF
 c              if(nn.le.30) call swrr(B,MAXA,NN,'B+  ')
 c              call wrr6(B,NWK,'B+  ')
