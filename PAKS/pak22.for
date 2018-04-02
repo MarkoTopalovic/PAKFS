@@ -392,6 +392,8 @@ C
             allocate(columns(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating columns'
             allocate(iicolumns(nonzeros),STAT=istat)
+            allocate(IMAXA(JEDN+1),STAT=istat)
+            if(istat.ne.0) stop 'error allocating IMAXA'
             allocate(ALSK(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating ALSK'
 !             ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
@@ -417,7 +419,7 @@ C
             
           endif
 
-      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK)
+      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK,IMAXA)
 
       do i=1,nonzeros
             iirows(i)= rows(i)

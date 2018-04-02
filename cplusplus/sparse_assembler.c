@@ -8,6 +8,7 @@
 char linija[1024];
 
 int64_t snimout;
+int64_t maxabrojac;
 int percout;
 double mtx_min, mtx_max, mtx_epsilon;
 int mtx_count = 0;
@@ -23,6 +24,7 @@ RBNode_t nilObj;
 
 int64_t * packRow;
 int64_t * packCol;
+int64_t * packMaxa;
 double * packVal;
 
 void CountNode_callback(RBNode_t * pNode) {nCounter++;}
@@ -340,6 +342,11 @@ void SnimiElem_callback(RBNode_t * pNod)
 	//packCol[snimout] = *((int64_t*)&pNod->key);
 	packCol[snimout] = pNod->keyCol;
 	packVal[snimout] = pNod->info;
+	if ((packRow[snimout])==(packCol[snimout]))
+	{
+		packMaxa[maxabrojac] = snimout+1;
+		maxabrojac++;
+	}
 	snimout++;
 }
 
@@ -408,13 +415,15 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 	}
 }
 
-void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, double *vals)
+void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, double *vals, int64_t *IMAXA)
 {
 	packRow = rows;
 	packCol = cols;
 	packVal = vals;
+	packMaxa = IMAXA;
         
 	snimout=0;
+	maxabrojac = 0;
 	rb_callback_func = SnimiElem_callback;
 	inorder(root);
     *nz = snimout;

@@ -55,6 +55,8 @@
         !ova druga 2 su privremena dok ne regulisem razliku izmedju integer 4 i 8
         integer*4,dimension(:),allocatable :: iirows
         integer*4,dimension(:),allocatable :: iicolumns
+        integer*8,dimension(:),allocatable :: IMAXA
+        integer*8,dimension(:),allocatable :: IMHT
       end module STIFFNESS
       
       module ELEMENTS
@@ -70,10 +72,6 @@
         double precision, dimension(:,:),allocatable :: CORD
       end module NODES
       
-      module MATRIXINIT
-        integer*8,dimension(:),allocatable :: MAXA
-        integer*8,dimension(:),allocatable :: MHT
-      end module MATRIXINIT
       
       module PREDISCRIBED
         integer*8,dimension(:),allocatable :: NZADC

@@ -405,6 +405,10 @@ c              if(nn.le.30) call wrr6(V,NN,'V-  ')
                   CALL UACTCF(B,C(1),V,MAXA,NN,K)
                ELSE
                    IF (TIPTACKANJA.EQ.1) THEN
+                        WRITE(3,*) 'MAXA'
+                DO I =1, NN+2
+                    WRITE(3,*) I, MAXA(I)
+                ENDDO
                   CALL RESENA(B,V,MAXA,NN,IZLAZ,K)
                    ELSE
                        CALL RESENA(ALSK,V,MAXA,NN,IZLAZ,K)
