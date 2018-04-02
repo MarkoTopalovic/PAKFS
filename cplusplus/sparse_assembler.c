@@ -382,16 +382,17 @@ void sparseassembler_init_(int *symetric)
 void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 //void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 {
-   int64_t i,j, nn = *n;
+   int64_t i,j,brojac, nn = *n;
 	int64_t indicesi, indicesj;
 //	int i, j, nn = *n;
 //	int indicesi, indicesj;
-	double valsi;
+//	double valsi;
+	brojac = 0;
 	for(i=0;i<nn;i++)
 	{
 		for(j=(bSymetric ? i : 0);j<nn;j++)
 		{
-			if ((indices[i] < indices[j]) || (!bSymetric))
+			/*if ((indices[i] < indices[j]) || (!bSymetric))
 			{
 				indicesi = indices[i];
 				indicesj = indices[j];
@@ -410,7 +411,19 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 					valsi = vals[i*nn + j];
 					AddVal(indices[j], indices[i], vals[i*nn + j]);
 				}
+			}*/
+			if ((indices[i] != 0) && (indices[j] != 0))
+			{
+				if ((indices[i] < indices[j]) || (!bSymetric))
+				{
+					AddVal(indices[i], indices[j], vals[brojac]);
+				}
+				else
+				{
+					AddVal(indices[j], indices[i], vals[brojac]);
+				}
 			}
+			brojac++;
 		}
 	}
 }

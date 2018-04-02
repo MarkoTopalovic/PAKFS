@@ -2451,9 +2451,9 @@ C
              IF (TIPTACKANJA.EQ.1) THEN
              CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
              ELSE
-             CALL REVERSEPSKEFN(SKEF,SKE,ND)
-      !                      MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(ND,LM,SKEF)
+!             CALL REVERSEPSKEFN(SKEF,SKE,ND)
+!                             MATRICA,NIZ,DIMENZIJA
+             CALL sparseassembler_addelemmatrix(ND,LM,SKE)
              ENDIF
          ENDIF
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT

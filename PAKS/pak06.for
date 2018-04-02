@@ -359,7 +359,7 @@ c	          if(k.eq.2) then
 !                    WRITE(3,*) I, MAXA(I)
 !                ENDDO
 !                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
-!                do i=1,200
+!                do i=1,NN
 !                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
 !                enddo
                 CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
