@@ -1,0 +1,720 @@
+   -1
+  100
+  Jednosni pritisak                                                             
+4.4,
+   -1
+   -1
+   401
+   1, 124,   0,   1,   0,
+ MAT   1
+  3.10000E+04,  3.10000E+04,  3.10000E+04,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  1.80000E-01,  1.80000E-01,  1.80000E-01,
+  3.36600E+04,  7.38877E+03,  7.38877E+03,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  3.36600E+04,  7.38877E+03,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  3.36600E+04,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  1.31356E+04,  0.00000E+00,  0.00000E+00,  1.31356E+04,  0.00000E+00,
+  1.31356E+04,
+  3.20380E+04,  5.76685E+03,  0.00000E+00,  3.20380E+04,  0.00000E+00,
+  1.31356E+04,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,
+   0,   0,   0,   0,   0,
+   0,   0,   0,   0,   0,   0,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,  0.00000E+00,
+  0.00000E+00,  0.00000E+00,
+   0,   0,   0,   0,
+   0,   0,   0,   0,
+   -1
+   -1
+   403
+         1,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  2.54000E+01,  0.00000E+00,  0.00000E+00, 0,
+         2,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  2.54000E+01,  2.54000E+01,  0.00000E+00, 0,
+         3,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  0.00000E+00,  2.54000E+01,  0.00000E+00, 0,
+         4,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  0.00000E+00,  0.00000E+00,  0.00000E+00, 0,
+         5,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  2.54000E+01,  0.00000E+00,  2.54000E+01, 0,
+         6,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  2.54000E+01,  2.54000E+01,  2.54000E+01, 0,
+         7,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  0.00000E+00,  2.54000E+01,  2.54000E+01, 0,
+         8,  0,  0,  1, 46,  0,  0,  0,  1,  1,  1,  0.00000E+00,  0.00000E+00,  2.54000E+01, 0,
+   -1
+   -1
+   406
+     1,
+  constraint
+         1, 120,  1,  1,  1,  1,  0,  0,  0,
+         2, 120,  1,  1,  0,  1,  0,  0,  0,
+         3, 120,  1,  0,  0,  1,  0,  0,  0,
+         4, 120,  1,  0,  1,  1,  0,  0,  0,
+         5, 120,  1,  1,  1,  0,  0,  0,  0,
+         6, 120,  1,  1,  0,  0,  0,  0,  0,
+         8, 120,  1,  0,  1,  0,  0,  0,  0,
+        -1,  -1, -1,  0,  0,  0,  0,  0,  0,
+        -1,  -1, -1,
+   -1
+   -1
+  402
+   1, 124,   1,  25,   1,   0,
+ PRO   1
+   0,   0,   0,   0,
+   0,
+   0,
+   -1
+   -1
+  404
+         1, 124,   1,  25,   8,   1,   0,   0,
+         4,         1,         2,         3,         8,         5,         6,         7,         0,         0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0., 0., 0.,
+ 0., 0., 0.,
+ 0., 0., 0.,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+   -1
+   -1
+   450
+    1,
+CASE
+    9,   10,
+ 1.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    2,
+CASE
+    9,   10,
+ 2.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    3,
+CASE
+    9,   10,
+ 3.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    4,
+CASE
+    9,   10,
+ 4.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    5,
+CASE
+    9,   10,
+ 5.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    6,
+CASE
+    9,   10,
+ 6.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    7,
+CASE
+    9,   10,
+ 7.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    8,
+CASE
+    9,   10,
+ 8.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+    9,
+CASE
+    9,   10,
+ 9.0000E+00,
+    1,
+  Jednosni pritisak                                                             
+   10,
+CASE
+    9,   10,
+ 1.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   11,
+CASE
+    9,   10,
+ 1.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   12,
+CASE
+    9,   10,
+ 1.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   13,
+CASE
+    9,   10,
+ 1.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   14,
+CASE
+    9,   10,
+ 1.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   15,
+CASE
+    9,   10,
+ 1.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   16,
+CASE
+    9,   10,
+ 1.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   17,
+CASE
+    9,   10,
+ 1.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   18,
+CASE
+    9,   10,
+ 1.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   19,
+CASE
+    9,   10,
+ 1.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   20,
+CASE
+    9,   10,
+ 2.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   21,
+CASE
+    9,   10,
+ 2.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   22,
+CASE
+    9,   10,
+ 2.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   23,
+CASE
+    9,   10,
+ 2.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   24,
+CASE
+    9,   10,
+ 2.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   25,
+CASE
+    9,   10,
+ 2.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   26,
+CASE
+    9,   10,
+ 2.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   27,
+CASE
+    9,   10,
+ 2.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   28,
+CASE
+    9,   10,
+ 2.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   29,
+CASE
+    9,   10,
+ 2.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   30,
+CASE
+    9,   10,
+ 3.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   31,
+CASE
+    9,   10,
+ 3.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   32,
+CASE
+    9,   10,
+ 3.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   33,
+CASE
+    9,   10,
+ 3.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   34,
+CASE
+    9,   10,
+ 3.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   35,
+CASE
+    9,   10,
+ 3.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   36,
+CASE
+    9,   10,
+ 3.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   37,
+CASE
+    9,   10,
+ 3.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   38,
+CASE
+    9,   10,
+ 3.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   39,
+CASE
+    9,   10,
+ 3.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   40,
+CASE
+    9,   10,
+ 4.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   41,
+CASE
+    9,   10,
+ 4.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   42,
+CASE
+    9,   10,
+ 4.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   43,
+CASE
+    9,   10,
+ 4.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   44,
+CASE
+    9,   10,
+ 4.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   45,
+CASE
+    9,   10,
+ 4.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   46,
+CASE
+    9,   10,
+ 4.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   47,
+CASE
+    9,   10,
+ 4.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   48,
+CASE
+    9,   10,
+ 4.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   49,
+CASE
+    9,   10,
+ 4.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   50,
+CASE
+    9,   10,
+ 5.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   51,
+CASE
+    9,   10,
+ 5.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   52,
+CASE
+    9,   10,
+ 5.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   53,
+CASE
+    9,   10,
+ 5.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   54,
+CASE
+    9,   10,
+ 5.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   55,
+CASE
+    9,   10,
+ 5.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   56,
+CASE
+    9,   10,
+ 5.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   57,
+CASE
+    9,   10,
+ 5.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   58,
+CASE
+    9,   10,
+ 5.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   59,
+CASE
+    9,   10,
+ 5.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   60,
+CASE
+    9,   10,
+ 6.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   61,
+CASE
+    9,   10,
+ 6.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   62,
+CASE
+    9,   10,
+ 6.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   63,
+CASE
+    9,   10,
+ 6.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   64,
+CASE
+    9,   10,
+ 6.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   65,
+CASE
+    9,   10,
+ 6.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   66,
+CASE
+    9,   10,
+ 6.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   67,
+CASE
+    9,   10,
+ 6.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   68,
+CASE
+    9,   10,
+ 6.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   69,
+CASE
+    9,   10,
+ 6.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   70,
+CASE
+    9,   10,
+ 7.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   71,
+CASE
+    9,   10,
+ 7.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   72,
+CASE
+    9,   10,
+ 7.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   73,
+CASE
+    9,   10,
+ 7.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   74,
+CASE
+    9,   10,
+ 7.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   75,
+CASE
+    9,   10,
+ 7.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   76,
+CASE
+    9,   10,
+ 7.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   77,
+CASE
+    9,   10,
+ 7.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   78,
+CASE
+    9,   10,
+ 7.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   79,
+CASE
+    9,   10,
+ 7.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   80,
+CASE
+    9,   10,
+ 8.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   81,
+CASE
+    9,   10,
+ 8.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   82,
+CASE
+    9,   10,
+ 8.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   83,
+CASE
+    9,   10,
+ 8.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   84,
+CASE
+    9,   10,
+ 8.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   85,
+CASE
+    9,   10,
+ 8.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   86,
+CASE
+    9,   10,
+ 8.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   87,
+CASE
+    9,   10,
+ 8.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   88,
+CASE
+    9,   10,
+ 8.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   89,
+CASE
+    9,   10,
+ 8.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+   90,
+CASE
+    9,   10,
+ 9.0000E+01,
+    1,
+  Jednosni pritisak                                                             
+   91,
+CASE
+    9,   10,
+ 9.1000E+01,
+    1,
+  Jednosni pritisak                                                             
+   92,
+CASE
+    9,   10,
+ 9.2000E+01,
+    1,
+  Jednosni pritisak                                                             
+   93,
+CASE
+    9,   10,
+ 9.3000E+01,
+    1,
+  Jednosni pritisak                                                             
+   94,
+CASE
+    9,   10,
+ 9.4000E+01,
+    1,
+  Jednosni pritisak                                                             
+   95,
+CASE
+    9,   10,
+ 9.5000E+01,
+    1,
+  Jednosni pritisak                                                             
+   96,
+CASE
+    9,   10,
+ 9.6000E+01,
+    1,
+  Jednosni pritisak                                                             
+   97,
+CASE
+    9,   10,
+ 9.7000E+01,
+    1,
+  Jednosni pritisak                                                             
+   98,
+CASE
+    9,   10,
+ 9.8000E+01,
+    1,
+  Jednosni pritisak                                                             
+   99,
+CASE
+    9,   10,
+ 9.9000E+01,
+    1,
+  Jednosni pritisak                                                             
+  100,
+CASE
+    9,   10,
+ 1.0000E+02,
+    1,
+  Jednosni pritisak                                                             
+   -1
+   -1
+   451
+    1,   41,    1,
+TOTAL APPLIED FORCE
+  0.0000E+00,  0.0000E+00,  0.0000E+00,
+   42,   43,   44,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    3,    7,
+    1,    1,    1,
+-1,  0.0000E+00,
+    1,   42,    1,
+T1 APPLIED FORCE
+  0.0000E+00,  0.0000E+00,  0.0000E+00,
+   42,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    3,    7,
+    0,    1,    1,
+-1,  0.0000E+00,
+    1,   43,    1,
+T2 APPLIED FORCE
+  0.0000E+00,  0.0000E+00,  0.0000E+00,
+    0,   43,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    3,    7,
+    0,    1,    1,
+-1,  0.0000E+00,
+    1,   44,    1,
+T3 APPLIED FORCE
+  0.0000E+00,  0.0000E+00,  0.0000E+00,
+    0,    0,   44,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    3,    7,
+    0,    1,    1,
+-1,  0.0000E+00,
