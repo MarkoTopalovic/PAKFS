@@ -350,32 +350,32 @@ C              EPSILON=1.D-10
 c	          if(k.eq.2) then
                 CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
                  IF (TIPTACKANJA.EQ.1) THEN
-                     WRITE(3,*) 'VEKTOR V'
-                DO I =1, 12
-                    WRITE(3,*) I, V(I)
-                ENDDO
-                WRITE(3,*) 'MAXA'
-                DO I =1, 13
-                    WRITE(3,*) I, MAXA(I)
-                ENDDO
-                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
-                do i=1,78
-                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
-                enddo
+!                     WRITE(3,*) 'VEKTOR V'
+!                DO I =1, 12
+!                    WRITE(3,*) I, V(I)
+!                ENDDO
+!                WRITE(3,*) 'MAXA'
+!                DO I =1, 13
+!                    WRITE(3,*) I, MAXA(I)
+!                ENDDO
+!                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
+!                do i=1,78
+!                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
+!                enddo
                 CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
                 ELSE
-                    WRITE(3,*) 'VEKTOR V'
-                DO I =1, 12
-                    WRITE(3,*) I, V(I)
-                ENDDO
-                WRITE(3,*) 'MAXA'
-                DO I =1, 13
-                    WRITE(3,*) I, MAXA(I)
-                ENDDO
-                WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
-                do i=1,78
-                    WRITE(3,*) I, rows(I),columns(I), ALSK(i)
-                enddo
+!                    WRITE(3,*) 'VEKTOR V'
+!                DO I =1, 12
+!                    WRITE(3,*) I, V(I)
+!                ENDDO
+!                WRITE(3,*) 'IMAXA'
+!                DO I =1, 13
+!                    WRITE(3,*) I, IMAXA(I)
+!                ENDDO
+!                WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
+!                do i=1,78
+!                    WRITE(3,*) I, rows(I),columns(I), ALSK(i)
+!                enddo
                           IF(K.EQ.1) THEN
                               stiff_n = JEDN
                           ENDIF
@@ -1283,6 +1283,8 @@ C
 C=======================================================================
       SUBROUTINE ZADATL
       USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1321,7 +1323,11 @@ C
       IF(INDL.EQ.1) NPRO=NPRO+1
 C
       CALL READDD(A(LZADFM),NPRO/IDVA,IPODS,LMAX13,LDUZI)
+      IF (TIPTACKANJA.EQ.1) THEN
       CALL ZADLEV(ALSK,A(LMAXA),A(LNZADJ),NZADP)
+      ELSE
+         CALL ZADLEV(ALSK,IMAXA,A(LNZADJ),NZADP) 
+      ENDIF
       RETURN
       END
 C=======================================================================

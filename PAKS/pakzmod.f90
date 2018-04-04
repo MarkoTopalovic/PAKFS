@@ -55,8 +55,8 @@
         !ova druga 2 su privremena dok ne regulisem razliku izmedju integer 4 i 8
         integer*4,dimension(:),allocatable :: iirows
         integer*4,dimension(:),allocatable :: iicolumns
-        integer*8,dimension(:),allocatable :: IMAXA
-        integer*8,dimension(:),allocatable :: IMHT
+        integer*4,dimension(:),allocatable :: IMAXA
+        integer*4,dimension(:),allocatable :: IMHT
       end module STIFFNESS
       
       module ELEMENTS

@@ -24,7 +24,7 @@ RBNode_t nilObj;
 
 int64_t * packRow;
 int64_t * packCol;
-int64_t * packMaxa;
+int * packMaxa;
 double * packVal;
 
 void CountNode_callback(RBNode_t * pNode) {nCounter++;}
@@ -428,7 +428,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals)
 	}
 }
 
-void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, double *vals, int64_t *IMAXA)
+void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, double *vals, int *IMAXA)
 {
 	packRow = rows;
 	packCol = cols;

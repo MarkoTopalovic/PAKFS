@@ -1053,6 +1053,8 @@ C
 C=======================================================================
       SUBROUTINE INTNMK(IGRUP,NPODS)
       USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1227,7 +1229,11 @@ C
 40    CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
       CALL MPI_BCAST(IPROL,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
       IF(IPROL.EQ.0) THEN
+         IF (TIPTACKANJA.EQ.1) THEN 
          CALL RESEN(ALSK,A(LRTDT),A(LMAXA),JEDN,1)
+         ELSE
+             CALL RESEN(ALSK,A(LRTDT),IMAXA,JEDN,1)
+         ENDIF
          IF (myid.eq.0) THEN
 C           IF(KOR.EQ.1.AND.ITER.EQ.0.AND.METOD.EQ.-1) ISKDSK=1
 C            CALL WSTAZK(NPODS,LSK,60)

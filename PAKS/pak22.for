@@ -420,7 +420,7 @@ C
           endif
 
       CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK,IMAXA)
-
+      IMAXA(JEDN+1) = nonzeros+1
       do i=1,nonzeros
             iirows(i)= rows(i)
             iicolumns(i)=columns(i)
