@@ -377,6 +377,7 @@ C
            
       if(.not.allocated(rows)) then
             call sparseassembler_getnz(nonzeros)
+            if (nonzeros.ge.((2**32)-1)) stop 'izmeni imaxa u 64bit'
             allocate(rows(nonzeros),STAT=istat)
             if(istat.ne.0) stop 'error allocating rows'
             allocate(iirows(nonzeros),STAT=istat)

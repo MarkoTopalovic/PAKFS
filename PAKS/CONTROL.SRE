@@ -4,10 +4,60 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    10   MAX DISPL  =  4.7667E-05
+ NODE =  3087   MAX DISPL  =  3.2659E-05
 
 
-     END OF JOB ..................................... 10:15:41.27    4/ 4/2018
 
+
+ S T E P  N U M B E R =    2                      T I M E = 2.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  6.5428E-05
+
+
+
+
+ S T E P  N U M B E R =    3                      T I M E = 3.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  9.8208E-05
+
+
+
+
+ S T E P  N U M B E R =    4                      T I M E = 4.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  1.3123E-04
+
+
+
+
+ S T E P  N U M B E R =    5                      T I M E = 5.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  1.6420E-04
+
+
+
+
+ S T E P  N U M B E R =    6                      T I M E = 6.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  1.9751E-04
+
+
+
+
+ S T E P  N U M B E R =    7                      T I M E = 7.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =  3087   MAX DISPL  =  2.3162E-04
 
 
