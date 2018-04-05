@@ -125,6 +125,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTKM(IGRUP)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -155,12 +158,18 @@ C
       CALL ELEME(NETIP,5)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTKMC(IGRUP)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -191,6 +200,9 @@ C
       CALL ELEME(NETIP,6)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================
@@ -1289,6 +1301,9 @@ C
       END
 C=======================================================================
       SUBROUTINE CONCOR(IGRUP,IND)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1320,6 +1335,9 @@ C.. SAMO ZA KONTAKTNE ELEMENTE ( 10 = 2D , 11 = 3D )
          CALL ELEME(NETIP,IND)
        ENDIF
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================

@@ -2419,6 +2419,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE DRV000(IGRUP,NPODS,KAKO6,CORD,NCVEL,ID)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C  JEDINICNI VEKTORI U NULTOM TRENUTKU
@@ -2474,6 +2477,9 @@ C
         ENDIF
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
 C PRIVREMENO ZBOG VAGONA
       IF(IREST.EQ.2.AND.IOPGL(6).EQ.1) THEN
          WRITE(IZLAZ,1011) 

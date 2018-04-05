@@ -1293,4 +1293,72 @@ C
  5010 FORMAT(A4)
  5000 FORMAT(30G10.3)
       END
-	
+C=======================================================================
+      SUBROUTINE BUSYMATRICA()
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+C
+C ......................................................................
+C .
+CE.   OVO JE SUBRUTINA KOJA SE KORISTI ZA FORMIRANJE MATRICE KRUTOSTI    
+CS    UMESTO DRAKCETOVOG TACKANJA. PROBLEM JE STO SE POZIVA NA VISE MESTA    
+C .   NAKON PETLJI PO GRUPAMA ELEMENATA, TAKO DA JE TESKA ZA TESTIRANJE
+C ......................................................................
+      include 'paka.inc'
+      COMMON /GLAVNI/ NP,NGELEM,NMATM,NPER,
+     1                IOPGL(6),KOSI,NDIN,ITEST
+      COMMON /DINAMI/ IMASS,IDAMP,PIP,DIP,MDVI
+      COMMON /SOPSVR/ ISOPS,ISTYP,NSOPV,ISTSV,IPROV,IPROL
+      COMMON /SISTEM/ LSK,LRTDT,NWK,JEDN,LFTDT
+      COMMON /CDEBUG/ IDEBUG
+C
+      IF(IDEBUG.GT.0) PRINT *, ' BUSYMATRICA'  
+      if(.not.allocated(rows)) then
+            call sparseassembler_getnz(nonzeros)
+            if (nonzeros.ge.2147483647) stop 'izmeni imaxa u 64bit'
+! 2147483647 =(2**32)-1)/2 Maximum value for a variable of type int.
+! pored imaxa svuda gde se koristi neki clan niza mora da bude int64  
+            
+            allocate(rows(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating rows'
+            allocate(iirows(nonzeros),STAT=istat)
+            allocate(columns(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating columns'
+            allocate(iicolumns(nonzeros),STAT=istat)
+            allocate(IMAXA(JEDN+1),STAT=istat)
+            if(istat.ne.0) stop 'error allocating IMAXA'
+            allocate(ALSK(nonzeros),STAT=istat)
+            if(istat.ne.0) stop 'error allocating ALSK'
+             ALLOCATE (AIROWS(nonzeros*2), STAT = istat)
+         if(istat.ne.0) stop 'error allocating AIROWS'
+              IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
+                IF(IMASS.GE.1) THEN
+              ALLOCATE (ALSM(nonzeros), STAT = iAllocateStatus)
+          IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory *'
+          IF (iAllocateStatus /= 0) STOP '*** ALSM Not enough memory *'
+                ENDIF
+             ENDIF
+             IF(NDIN.GT.0) THEN
+                IF(IDAMP.GT.0) THEN
+                   ALLOCATE (ALSC(nonzeros), STAT = iAllocateStatus)
+          IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory *'
+          IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory *'
+                ENDIF
+             ENDIF
+          endif
+
+      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK,IMAXA)
+      IMAXA(JEDN+1) = nonzeros+1
+      do i=1,nonzeros
+            iirows(i)= rows(i)
+            iicolumns(i)=columns(i)
+            AIROWS(i)= rows(i)
+            AIROWS(nonzeros+i)=columns(i)
+      enddo
+   
+          CALL sparseassembler_kill()
+          
+      RETURN
+      END

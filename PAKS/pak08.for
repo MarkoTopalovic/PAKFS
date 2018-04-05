@@ -1133,6 +1133,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTMNJ(IGRUP,NPODS)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C     PETLJA PO GRUPAMA ELEMENATA RADI RACUNANJA NAPONA I UNUTRASNJIH
@@ -1191,6 +1194,9 @@ C
       CALL ELEME(NETIP,3)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       IF(NBLOCK.GT.1) CLOSE (ISCRC,STATUS='KEEP')
       RETURN
       END
@@ -1341,6 +1347,9 @@ C
       CALL ELEME(NETIP,2)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       IF(NBLOCK.GT.1)THEN
         LLM =LRAD
         LSKE=LLM+100
