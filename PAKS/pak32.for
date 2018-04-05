@@ -372,60 +372,6 @@ C
      1A(LGUSM),LA,AE(LCEGE),AU(LESILA),A(LID),A(LDEFOR),
      8AU(LNNOD),AU(LALFT),AU(LINDBEL),AU(LBIRTHC),AU(LTBTH),AU(LCEL))
       
-      
-        IF (TIPTACKANJA.NE.1) THEN
-           
-      if(.not.allocated(rows)) then
-            call sparseassembler_getnz(nonzeros)
-            if (nonzeros.ge.((2**32)-1)) stop 'izmeni imaxa u 64bit'
-            allocate(rows(nonzeros),STAT=istat)
-            if(istat.ne.0) stop 'error allocating rows'
-            allocate(iirows(nonzeros),STAT=istat)
-            allocate(columns(nonzeros),STAT=istat)
-            if(istat.ne.0) stop 'error allocating columns'
-            allocate(iicolumns(nonzeros),STAT=istat)
-            allocate(IMAXA(JEDN+1),STAT=istat)
-            if(istat.ne.0) stop 'error allocating IMAXA'
-            allocate(ALSK(nonzeros),STAT=istat)
-            if(istat.ne.0) stop 'error allocating ALSK'
-!             ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
-!      IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
-!      IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
-              ALLOCATE (AIROWS(nonzeros*2), STAT = istat)
-         if(istat.ne.0) stop 'error allocating AIROWS'
-            
-            
-              IF(NDIN.GT.0.OR.ISOPS.GT.0) THEN 
-                IF(IMASS.GE.1) THEN
-              ALLOCATE (ALSM(nonzeros), STAT = istat)
-          IF (istat /= 0) write(3,*)'ALSM Not enough memory *'
-          IF (istat /= 0) STOP '*** ALSM Not enough memory *'
-                ENDIF
-             ENDIF
-             IF(NDIN.GT.0) THEN
-                IF(IDAMP.GT.0) THEN
-                   ALLOCATE (ALSC(nonzeros), STAT = iAllocateStatus)
-          IF (iAllocateStatus /= 0) write(3,*)'ALSC Not enough memory *'
-          IF (iAllocateStatus /= 0) STOP '*** ALSC Not enough memory *'
-                ENDIF
-             ENDIF
-            
-            
-          endif
-
-      CALL sparseassembler_getsparse(nonzeros,rows,columns,ALSK,IMAXA)
-      IMAXA(JEDN+1) = nonzeros+1
-      do i=1,nonzeros
-            iirows(i)= rows(i)
-            iicolumns(i)=columns(i)
-            AIROWS(i)= rows(i)
-            AIROWS(nonzeros+i)=columns(i)
-      enddo
-          
-          CALL sparseassembler_kill()
-      ENDIF
-      
-      
       ELSE
       CALL ELTE3B(AE(LBET),AE(LSKE),AE(LUEL),AE(LLM),AU(LNEL),AU(LNMAT),
      1AU(LTHID),AE(LHE),A(KORD),A(LUPRI),A(LRTDT),A(LFTDT),A(LSIGMA),

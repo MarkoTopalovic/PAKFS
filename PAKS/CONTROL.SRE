@@ -4,7 +4,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  3.2659E-05
+ NODE =     7   MAX DISPL  =  1.3105E-03
 
 
 
@@ -13,7 +13,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  6.5428E-05
+ NODE =     7   MAX DISPL  =  2.6210E-03
 
 
 
@@ -22,7 +22,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  9.8208E-05
+ NODE =     7   MAX DISPL  =  3.9315E-03
 
 
 
@@ -31,7 +31,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  1.3123E-04
+ NODE =     7   MAX DISPL  =  5.2420E-03
 
 
 
@@ -40,7 +40,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  1.6420E-04
+ NODE =     7   MAX DISPL  =  6.5525E-03
 
 
 
@@ -49,7 +49,7 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  1.9751E-04
+ NODE =     7   MAX DISPL  =  7.8630E-03
 
 
 
@@ -58,6 +58,847 @@
 
 
  MAXIMUM DISPLACEMENT:
- NODE =  3087   MAX DISPL  =  2.3162E-04
+ NODE =     7   MAX DISPL  =  9.1735E-03
+
+
+
+
+ S T E P  N U M B E R =    8                      T I M E = 8.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0484E-02
+
+
+
+
+ S T E P  N U M B E R =    9                      T I M E = 9.00000E+00
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1795E-02
+
+
+
+
+ S T E P  N U M B E R =   10                      T I M E = 1.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3115E-02
+
+
+
+
+ S T E P  N U M B E R =   11                      T I M E = 1.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4536E-02
+
+
+
+
+ S T E P  N U M B E R =   12                      T I M E = 1.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6009E-02
+
+
+
+
+ S T E P  N U M B E R =   13                      T I M E = 1.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.7501E-02
+
+
+
+
+ S T E P  N U M B E R =   14                      T I M E = 1.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.9005E-02
+
+
+
+
+ S T E P  N U M B E R =   15                      T I M E = 1.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.0519E-02
+
+
+
+
+ S T E P  N U M B E R =   16                      T I M E = 1.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.2043E-02
+
+
+
+
+ S T E P  N U M B E R =   17                      T I M E = 1.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.3574E-02
+
+
+
+
+ S T E P  N U M B E R =   18                      T I M E = 1.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.5112E-02
+
+
+
+
+ S T E P  N U M B E R =   19                      T I M E = 1.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.6656E-02
+
+
+
+
+ S T E P  N U M B E R =   20                      T I M E = 2.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.8206E-02
+
+
+
+
+ S T E P  N U M B E R =   21                      T I M E = 2.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  2.9762E-02
+
+
+
+
+ S T E P  N U M B E R =   22                      T I M E = 2.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.1323E-02
+
+
+
+
+ S T E P  N U M B E R =   23                      T I M E = 2.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.2888E-02
+
+
+
+
+ S T E P  N U M B E R =   24                      T I M E = 2.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.4459E-02
+
+
+
+
+ S T E P  N U M B E R =   25                      T I M E = 2.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.6033E-02
+
+
+
+
+ S T E P  N U M B E R =   26                      T I M E = 2.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.7613E-02
+
+
+
+
+ S T E P  N U M B E R =   27                      T I M E = 2.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  3.9197E-02
+
+
+
+
+ S T E P  N U M B E R =   28                      T I M E = 2.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.0785E-02
+
+
+
+
+ S T E P  N U M B E R =   29                      T I M E = 2.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.2378E-02
+
+
+
+
+ S T E P  N U M B E R =   30                      T I M E = 3.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.3975E-02
+
+
+
+
+ S T E P  N U M B E R =   31                      T I M E = 3.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.5576E-02
+
+
+
+
+ S T E P  N U M B E R =   32                      T I M E = 3.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.7182E-02
+
+
+
+
+ S T E P  N U M B E R =   33                      T I M E = 3.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  4.8792E-02
+
+
+
+
+ S T E P  N U M B E R =   34                      T I M E = 3.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.0406E-02
+
+
+
+
+ S T E P  N U M B E R =   35                      T I M E = 3.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.2026E-02
+
+
+
+
+ S T E P  N U M B E R =   36                      T I M E = 3.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.3650E-02
+
+
+
+
+ S T E P  N U M B E R =   37                      T I M E = 3.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.5277E-02
+
+
+
+
+ S T E P  N U M B E R =   38                      T I M E = 3.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.6912E-02
+
+
+
+
+ S T E P  N U M B E R =   39                      T I M E = 3.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  5.8549E-02
+
+
+
+
+ S T E P  N U M B E R =   40                      T I M E = 4.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.0190E-02
+
+
+
+
+ S T E P  N U M B E R =   41                      T I M E = 4.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.1836E-02
+
+
+
+
+ S T E P  N U M B E R =   42                      T I M E = 4.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.3487E-02
+
+
+
+
+ S T E P  N U M B E R =   43                      T I M E = 4.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.5142E-02
+
+
+
+
+ S T E P  N U M B E R =   44                      T I M E = 4.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.6801E-02
+
+
+
+
+ S T E P  N U M B E R =   45                      T I M E = 4.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  6.8466E-02
+
+
+
+
+ S T E P  N U M B E R =   46                      T I M E = 4.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.0135E-02
+
+
+
+
+ S T E P  N U M B E R =   47                      T I M E = 4.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.1808E-02
+
+
+
+
+ S T E P  N U M B E R =   48                      T I M E = 4.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.3487E-02
+
+
+
+
+ S T E P  N U M B E R =   49                      T I M E = 4.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.5170E-02
+
+
+
+
+ S T E P  N U M B E R =   50                      T I M E = 5.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.6859E-02
+
+
+
+
+ S T E P  N U M B E R =   51                      T I M E = 5.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  7.8552E-02
+
+
+
+
+ S T E P  N U M B E R =   52                      T I M E = 5.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.0250E-02
+
+
+
+
+ S T E P  N U M B E R =   53                      T I M E = 5.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.1953E-02
+
+
+
+
+ S T E P  N U M B E R =   54                      T I M E = 5.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.3657E-02
+
+
+
+
+ S T E P  N U M B E R =   55                      T I M E = 5.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.5369E-02
+
+
+
+
+ S T E P  N U M B E R =   56                      T I M E = 5.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.7088E-02
+
+
+
+
+ S T E P  N U M B E R =   57                      T I M E = 5.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  8.8812E-02
+
+
+
+
+ S T E P  N U M B E R =   58                      T I M E = 5.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.0542E-02
+
+
+
+
+ S T E P  N U M B E R =   59                      T I M E = 5.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.2277E-02
+
+
+
+
+ S T E P  N U M B E R =   60                      T I M E = 6.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.4018E-02
+
+
+
+
+ S T E P  N U M B E R =   61                      T I M E = 6.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.5764E-02
+
+
+
+
+ S T E P  N U M B E R =   62                      T I M E = 6.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.7516E-02
+
+
+
+
+ S T E P  N U M B E R =   63                      T I M E = 6.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  9.9274E-02
+
+
+
+
+ S T E P  N U M B E R =   64                      T I M E = 6.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0104E-01
+
+
+
+
+ S T E P  N U M B E R =   65                      T I M E = 6.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0281E-01
+
+
+
+
+ S T E P  N U M B E R =   66                      T I M E = 6.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0458E-01
+
+
+
+
+ S T E P  N U M B E R =   67                      T I M E = 6.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0636E-01
+
+
+
+
+ S T E P  N U M B E R =   68                      T I M E = 6.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0815E-01
+
+
+
+
+ S T E P  N U M B E R =   69                      T I M E = 6.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.0994E-01
+
+
+
+
+ S T E P  N U M B E R =   70                      T I M E = 7.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1174E-01
+
+
+
+
+ S T E P  N U M B E R =   71                      T I M E = 7.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1355E-01
+
+
+
+
+ S T E P  N U M B E R =   72                      T I M E = 7.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1536E-01
+
+
+
+
+ S T E P  N U M B E R =   73                      T I M E = 7.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1718E-01
+
+
+
+
+ S T E P  N U M B E R =   74                      T I M E = 7.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.1901E-01
+
+
+
+
+ S T E P  N U M B E R =   75                      T I M E = 7.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.2083E-01
+
+
+
+
+ S T E P  N U M B E R =   76                      T I M E = 7.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.2267E-01
+
+
+
+
+ S T E P  N U M B E R =   77                      T I M E = 7.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.2451E-01
+
+
+
+
+ S T E P  N U M B E R =   78                      T I M E = 7.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.2636E-01
+
+
+
+
+ S T E P  N U M B E R =   79                      T I M E = 7.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.2821E-01
+
+
+
+
+ S T E P  N U M B E R =   80                      T I M E = 8.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3007E-01
+
+
+
+
+ S T E P  N U M B E R =   81                      T I M E = 8.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3194E-01
+
+
+
+
+ S T E P  N U M B E R =   82                      T I M E = 8.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3381E-01
+
+
+
+
+ S T E P  N U M B E R =   83                      T I M E = 8.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3570E-01
+
+
+
+
+ S T E P  N U M B E R =   84                      T I M E = 8.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3758E-01
+
+
+
+
+ S T E P  N U M B E R =   85                      T I M E = 8.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.3948E-01
+
+
+
+
+ S T E P  N U M B E R =   86                      T I M E = 8.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4138E-01
+
+
+
+
+ S T E P  N U M B E R =   87                      T I M E = 8.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4328E-01
+
+
+
+
+ S T E P  N U M B E R =   88                      T I M E = 8.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4519E-01
+
+
+
+
+ S T E P  N U M B E R =   89                      T I M E = 8.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4711E-01
+
+
+
+
+ S T E P  N U M B E R =   90                      T I M E = 9.00000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.4904E-01
+
+
+
+
+ S T E P  N U M B E R =   91                      T I M E = 9.10000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.5097E-01
+
+
+
+
+ S T E P  N U M B E R =   92                      T I M E = 9.20000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.5291E-01
+
+
+
+
+ S T E P  N U M B E R =   93                      T I M E = 9.30000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.5486E-01
+
+
+
+
+ S T E P  N U M B E R =   94                      T I M E = 9.40000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.5681E-01
+
+
+
+
+ S T E P  N U M B E R =   95                      T I M E = 9.50000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.5877E-01
+
+
+
+
+ S T E P  N U M B E R =   96                      T I M E = 9.60000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6073E-01
+
+
+
+
+ S T E P  N U M B E R =   97                      T I M E = 9.70000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6270E-01
+
+
+
+
+ S T E P  N U M B E R =   98                      T I M E = 9.80000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6468E-01
+
+
+
+
+ S T E P  N U M B E R =   99                      T I M E = 9.90000E+01
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6666E-01
+
+
+
+
+ S T E P  N U M B E R =  100                      T I M E = 1.00000E+02
+
+
+ MAXIMUM DISPLACEMENT:
+ NODE =     7   MAX DISPL  =  1.6865E-01
+
+
+     END OF JOB .....................................  7:56:20.30    5/ 4/2018
+
 
 
