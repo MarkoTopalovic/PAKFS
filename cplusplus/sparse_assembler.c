@@ -354,7 +354,7 @@ void AddVal(int64_t row, int64_t col, Tinfo val)
 {
 	RBNode_t * pNode;
 	//Tkey index;
-	if (val == 0) return;
+	//if (val == 0) return;
 	pNode = search(root, row, col);
 	if ((pNode->keyRow == row)&& (pNode->keyCol == col))
 	{
