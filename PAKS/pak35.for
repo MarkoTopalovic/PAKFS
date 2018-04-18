@@ -319,12 +319,12 @@ C
 C     PAKOVANJE KONZISTENTNE MATRICE ELEMENTA U MATRICU SISTEMA
 C
       IF(IMASS.EQ.1) THEN
-          !IF (TIPTACKANJA.EQ.1) THEN
+          IF (TIPTACKANJA.EQ.1) THEN
               CALL SPAKUJ(ALSM,A(LMAXA),SKE,LM,NCVE3)
-          !ELSE
+          ELSE
           !    CALL REVERSEPSKEFN(SKEF,SKE,NCVE3)
-          !    CALL sparseassembler_addelemmatrix(NCVE3,LM,SKEF)        
-          !ENDIF
+              CALL sparseassembler_addelemmatrix(NCVE3,LM,SKE)        
+          ENDIF
       ENDIF
       
       RETURN

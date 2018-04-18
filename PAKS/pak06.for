@@ -303,7 +303,7 @@ C
       if ( myid .ne. 0 ) goto 10
       k=kkk
 C
-      write(3,*)'kkk',kkk
+c      write(3,*)'kkk',kkk
       IF(IDEBUG.GT.0) PRINT *, ' RESEN'
       IF(ISRPS.EQ.0.AND.INDBG.EQ.0)
      1WRITE(*,2000) KKK
