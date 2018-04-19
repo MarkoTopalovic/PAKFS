@@ -187,6 +187,7 @@ C=======================================================================
       SUBROUTINE ELTM3(SKE,LM,NEL,NMAT,HE,BET,CORD,IPGC,LMEL,GUSM,NCVE3)
       USE MATRICA
       USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 CS     INTEGRACIJA MATRICE MASA 3D ELEMENATA
