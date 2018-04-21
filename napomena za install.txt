@@ -1,1 +1,4 @@
-pre kompajliranja instalirati MPICH2!
+pre kompajliranja instalirati 
+.NET framework (NetFx64)
+a potom
+MPICH2 (mpich2-1.4.1p1-win-x86-64)

@@ -170,7 +170,7 @@ C
          LSKB=LSKG+JEDNP*IDVA
 C         CALL READDD(A(LSKG),JEDN,IPODS,LMAX13,LDUZI)
          NWKP=JEDN-JEDNP
-C         CALL JEDNA1(A(LRTDB),A(LSKB),NWKP)
+         CALL JEDNA1(A(LRTDB),A(LSKB),NWKP)
       ENDIF
 C
       IF(IDIREK.LE.0) THEN
@@ -343,6 +343,8 @@ C
 C=======================================================================
       SUBROUTINE INTKK(IGRUP,NPODS)
       USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -401,6 +403,13 @@ C
          CALL ELEME(NETIP,2)
 C
   100 CONTINUE
+      
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
+      
+      
+      
       ISKDSK=0
       IF(NBLOCK.GT.1)THEN
         LLM =LRAD
@@ -414,7 +423,7 @@ CS    WRITE LINEAR MATRIX K ON DISK
 CS    ZAPISIVANJE LINEARNE MATRICE K NA DISK
 C     SADA SE ZAPISUJE U MODUL
 C      CALL WSTAZK(NPODS,LSK,35)
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K07W')
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'K07W')
       RETURN
       END
 C=======================================================================

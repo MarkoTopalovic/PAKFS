@@ -62,8 +62,8 @@ C
       COMMON /ELEALL/ NETIP,NE,IATYP,NMODM,NGE,ISKNP,LMAX8
 C
       LAU=LMAX
-            WRITE(*,*) 'k21egl'
-            WRITE(3,*) 'k21egl'
+!            WRITE(*,*) 'k21egl'
+!            WRITE(3,*) 'k21egl'
 CE    READING DATA FROM RECORDS OF THE FILE (ZIELEM) WRITTEN IN ROUTINE
 CE    (UL3EK)
       CALL READE3(A(LAU))
@@ -152,8 +152,8 @@ C
       DIMENSION AU(*)
       REAL AU
 C
-            WRITE(*,*) 'reade3'
-            WRITE(3,*) 'reade3'
+!            WRITE(*,*) 'reade3'
+!            WRITE(3,*) 'reade3'
 C     POZIVANJE PROGRAMA ZA ULAZNE PODATKE .
       LSTAZA(1)=LMAX8
       READ(IELEM,REC=LMAX8)
@@ -255,6 +255,9 @@ CE    POINTER FOR INTEGRATION POINTS COORDINATES
 C======================================================================
       SUBROUTINE SIST3E(AE,AU)
       USE PLAST3D
+      USE STIFFNESS
+      USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -280,6 +283,10 @@ C ......................................................................
 C
       include 'paka.inc'
       
+      COMMON /GLAVNI/ NP,NGELEM,NMATM,NPER,
+     1                IOPGL(6),KOSI,NDIN,ITEST
+      COMMON /DINAMI/ IMASS,IDAMP,PIP,DIP,MDVI
+      COMMON /SOPSVR/ ISOPS,ISTYP,NSOPV,ISTSV,IPROV,IPROL
       COMMON /IZOL4B/ NGS12,ND,MSLOJ,MXS,MSET,LNSLOJ,LMATSL,LDSLOJ,LBBET
       COMMON /REPERI/ LCORD,LID,LMAXA,LMHT
       COMMON /SISTEM/ LSK,LRTDT,NWK,JEDN,LFTDT
@@ -322,8 +329,8 @@ C
       DIMENSION AE(*),AU(*)
       REAL AE,AU
 C
-            WRITE(*,*) 'siste3'
-            WRITE(3,*) 'siste3'
+!            WRITE(*,*) 'siste3'
+!            WRITE(3,*) 'siste3'
 CE    NUMBER OF INCOMPATIBLE DISPLACEMENTS
       LA=1
       IF(IALFA.EQ.1) LA=9
@@ -364,6 +371,7 @@ C
      3A(LCOR0),A(LTEMGT),A(LCORGT),A(LAU),A(LZAPS),A(LNPRZ),INDZS,
      1A(LGUSM),LA,AE(LCEGE),AU(LESILA),A(LID),A(LDEFOR),
      8AU(LNNOD),AU(LALFT),AU(LINDBEL),AU(LBIRTHC),AU(LTBTH),AU(LCEL))
+      
       ELSE
       CALL ELTE3B(AE(LBET),AE(LSKE),AE(LUEL),AE(LLM),AU(LNEL),AU(LNMAT),
      1AU(LTHID),AE(LHE),A(KORD),A(LUPRI),A(LRTDT),A(LFTDT),A(LSIGMA),
@@ -426,7 +434,9 @@ C=======================================================================
      1                COR0,TEMGT,CORGT,AU,ZAPS,NPRZ,INDZS,GUSM,LA,CEGE,
      1                ESILA,ID,DEF,NNOD,ALFT,INDBEL,BIRTHC,TBTH,MCVEL)
       USE PLAST3D
+      USE STIFFNESS
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -514,7 +524,7 @@ C
      1          ALFE(LA,*),HAEM(LA,*),HINV(LA,LA,*),GEEK(LA,24,*),
      1          DEF(NLD,NGS12,*),NNOD(*),ID(NP,*),ALFT(LA,*)
       DIMENSION INDBEL(*),BIRTHC(NE,*),TBTH(*),MCVEL(*)
-      DIMENSION STRAIN(6),STRESS(6),TA(6)
+      DIMENSION STRAIN(6),STRESS(6),TA(6),SKEF(100,100)
       DIMENSION XG(55),WGT(55),NREF(11),XNC(15),WNC(15)
       DIMENSION XG9(9),YG9(9),ZG9(9),WG9(9)
       DIMENSION COR(21,3),CORT(21,3),CON(21,3),COR0(NE,3,*),
@@ -590,10 +600,12 @@ C
      1                          -.774596669241483D0, .774596669241483D0,
      1                          -.774596669241483D0, .774596669241483D0,
      1                          -.774596669241483D0, .774596669241483D0/
+      
+      
 CE    DIMENSION OF ELEMENT STIFFNESS MATRIX - SKE(NWE)
       NWE=ND*(ND+1)/2
-            WRITE(*,*) 'elte3'
-            WRITE(3,*) 'elte3'
+!            WRITE(*,*) 'elte3'
+!            WRITE(3,*) 'elte3'
 C      IF(IALFA.GE.0.AND.ITER.EQ.0.AND.IILS.NE.-1)
 C     1   CALL JEDNA1(ALFT,ALFE,NE*LA)
 C
@@ -669,8 +681,8 @@ C
       NNCVE=NCVE
       DO 10 NLM=1,NE
          if(nlm.lt.10) then
-            WRITE(*,*) 'NLM',NLM
-            WRITE(3,*) 'NLM',NLM
+!            WRITE(*,*) 'NLM',NLM
+!            WRITE(3,*) 'NLM',NLM
          endif
 C        PROMENLJIV BROJ CVOVORA ZA MEHANIKU LOMA
          NCVE=NNOD(NLM)
@@ -835,7 +847,9 @@ CE    SKE(NWK): ELEMENT STIFFNESS MATRIX
 CE    AMASC(NCVE): NODAL MASSES OF ELEMENT
 CE    BLT(6,ND): STRAIN-DISPLACEMENT MATRIX
 CE    HE(NCVE,4): SHAPE FUNCTIONS AND THEIR DERIVATIVES
-      IF(ISKNP.NE.2) CALL CLEAR(SKE,NWE)
+      IF(ISKNP.NE.2) THEN
+         CALL CLEAR(SKE,NWE)
+      ENDIF
       CALL CLEAR(FE,ND)
       CALL CLEAR(AMASC,21)
       CALL CLEAR(BLT,6*ND)
@@ -1079,8 +1093,8 @@ CE       INCOTX: INDICATOR FOR NEWTON-COTES INTEGRATION (=0-NO,>0-YES)
 CE       WR,WS,WT: INTEGRATING COEFFICIENTS
 CE       R,S,T: NATURAL COORDINATES
          if(nlm.lt.10) then
-            WRITE(*,*) 'pre integracione petlje'
-            WRITE(3,*) 'pre integracione petlje'
+!            WRITE(*,*) 'pre integracione petlje'
+!            WRITE(3,*) 'pre integracione petlje'
          endif
          PET=5.
          DO 20 NGR=1,NGAUSX
@@ -2316,8 +2330,8 @@ CS-------------------------- KRAJ PETLJE PO GAUSOVIM TACKAMA --------
 CE-------------------------- END OF LOOP-BLOCK FOR INTEGRATING POINTS  --------
 C
          if(nlm.lt.10) then
-            WRITE(*,*) 'posle integracione petlje'
-            WRITE(3,*) 'posle integracione petlje'
+!            WRITE(*,*) 'posle integracione petlje'
+!            WRITE(3,*) 'posle integracione petlje'
          endif
 C KOSOVO
 c         IF(NAPON.EQ.1.AND.INDDTH.EQ.1.AND.IPG.GT.0) 
@@ -2377,11 +2391,18 @@ CS       RASPOREDJIVANJE MATRICE KRUTOSTI (SKE)
 CE       ASSEMBLE STIFFNESS MATRIX 
 C
          if(nlm.lt.10) then
-            WRITE(*,*) 'pre spakuj'
-            WRITE(3,*) 'pre spakuj'
+!            WRITE(*,*) 'pre spakuj'
+!            WRITE(3,*) 'pre spakuj'
          endif
-         IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
-C
+         IF(ISKNP.NE.2) THEN
+             IF (TIPTACKANJA.EQ.1) THEN
+             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
+             ELSE
+!             CALL REVERSEPSKEFN(SKEF,SKE,ND)
+!                             MATRICA,NIZ,DIMENZIJA
+             CALL sparseassembler_addelemmatrix(ND,LM,SKE)
+             ENDIF
+         ENDIF
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT
 CE       ASSEMBLE INTERNAL FORCE VECTOR
 C
@@ -2419,8 +2440,8 @@ C
 CELYK    END OF ASSEMBLING IF-BLOCK
 C
          if(nlm.lt.10) then
-            WRITE(*,*) 'kraj petlje po elementima'
-            WRITE(3,*) 'kraj petlje po elementima'
+!            WRITE(*,*) 'kraj petlje po elementima'
+!            WRITE(3,*) 'kraj petlje po elementima'
          endif
    10 CONTINUE
 C
@@ -3993,3 +4014,20 @@ C-----------------------------------------------------------------------
      5       10X,'DET=',D12.5)
 C-----------------------------------------------------------------------
       END
+C=========================================================================
+      SUBROUTINE REVERSEPSKEFN(SKEF,SKEFN,NDES)
+      !                      MATRICA,NIZ,DIMENZIJA
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+       DIMENSION SKEF(NDES,*),SKEFN(*)
+
+	 K=0
+       DO I=1,NDES
+        DO J=I,NDES
+          K=K+1
+         	SKEF(I,J)=SKEFN(K)
+          SKEF(J,I)=SKEF(I,J)
+        ENDDO
+       ENDDO
+
+      END
+C==========================================================================

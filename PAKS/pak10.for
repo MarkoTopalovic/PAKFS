@@ -84,7 +84,7 @@ C
    20 CONTINUE !IF(IMASS.EQ.1) CALL WSTAZK(A(LIPODS),LSK,54)
 C      IF(IMASS.EQ.2) CALL WSTAZ(A(LIPODS),LSK,54)
 C      WRITE(3,*) 'LSK',LSK
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWM,'MASW')
+      if(jedn.le.30) CALL WRR6(ALSM,NWM,'MASW')
 c      CALL WRR6(A(IMASA),JEDN,'IMASA')
 C
 CE    LOOP FOR GROUPS OF ELEMENTS TO INTEGRATION MATRIX C
@@ -125,6 +125,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTKM(IGRUP)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -155,12 +158,18 @@ C
       CALL ELEME(NETIP,5)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTKMC(IGRUP)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -191,6 +200,9 @@ C
       CALL ELEME(NETIP,6)
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================
@@ -308,9 +320,9 @@ CSKDISK
       LSKP=LSK+NWK*IDVA
 C      LDUM =LSKP+NWK*IDVA
 C      IF(IMASS.EQ.2.AND.(IDAMP.EQ.0.OR.IDAMP.EQ.2)LDUM =LSKP+JEDN*IDVA 
-C      if(jedn.le.30) CALL WRR6(A(LSK),NWK,'K-10')
+      if(jedn.le.30) CALL WRR6(ALSK,NWK,'K-10')
 C      CALL RSTAZK(A(LIPODS),LSKP,35)
-C      if(jedn.le.30) CALL WRR6(A(LSKP),NWK,'K10R')
+      if(jedn.le.30) CALL WRR6(ALSM,NWK,'K10R')
 CSKDISK
       LMAX=LRAD
       LUMC=LMAX
@@ -341,8 +353,8 @@ C       (T+�T)R=�*(T+T)R+(1-�)*(T)R
       ELSE
 C       NEWMARK
 C       (T+T)R
-C        IF(ITERGL.EQ.0) CALL RSTAZ(A(LIPODS),LRTDT,38)
-C        CALL WRR6(A(LRTDT),JEDN,'RUF0')
+        IF(ITERGL.EQ.0) CALL RSTAZ(A(LIPODS),LRTDT,38)
+        CALL WRR6(A(LRTDT),JEDN,'RUF0')
       ENDIF
 C
 CE    FORMIRANJE VEKTORA DESNE STRANE USLED MASA
@@ -422,7 +434,7 @@ CE    READ LINEAR MATRIX M FROM UNIT 11
 CS    UCITAVANJE LINEARNE MATRICE M SA DISKA 11
 C      IF(IMASS.EQ.1) CALL RSTAZK(A(LIPODS),LSKP,54)
 C      IF(IMASS.EQ.2) CALL RSTAZ(A(LIPODS),LSKP,54)
-C      if(jedn.le.30) CALL WRR6(A(LSKP),NWM,'M10R')
+      if(jedn.le.30) CALL WRR6(ALSM,NWM,'M10R')
 C     (T+T)R=(T+T)R+M*UM
       if (IABS(ICCGG).EQ.1) then 
             IF(IMASS.EQ.1) CALL MAXAPRI(ALSM,A(LUMC),A(LRTDT),
@@ -490,7 +502,7 @@ C     (T+T)R=(T+T)R+C*UC
       IF(IDAMP.EQ.2) CALL MNOZMU(A(LRTDT),ALSM,A(LUMC),JEDN)
 C
 C     (T+T)R
-   10 CONTINUE !IF(ITERGL.EQ.0) CALL WSTAZ(A(LIPODS),LRTDT,38)
+   10 IF(ITERGL.EQ.0) CALL WSTAZ(A(LIPODS),LRTDT,38)
       LMAX=LUMC
       IF(ICONT.GT.0) JEDN=NEQ+NEQC
       RETURN
@@ -1289,6 +1301,9 @@ C
       END
 C=======================================================================
       SUBROUTINE CONCOR(IGRUP,IND)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1320,6 +1335,9 @@ C.. SAMO ZA KONTAKTNE ELEMENTE ( 10 = 2D , 11 = 3D )
          CALL ELEME(NETIP,IND)
        ENDIF
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       RETURN
       END
 C=======================================================================

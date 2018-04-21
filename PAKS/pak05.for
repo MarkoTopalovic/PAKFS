@@ -20,6 +20,8 @@ C=======================================================================
 C
 C     
       SUBROUTINE UCELEM
+      USE STIFFNESS
+      USE MATRICA
       USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
@@ -95,8 +97,13 @@ C
 c     NELUK - broj elemenata za koje je zapisan LM()na disk IDRAKCE
       NELUK=0
       IDRAKCE=39
+    
+      IF (TIPTACKANJA.EQ.1) THEN
       OPEN(IDRAKCE,FILE='FDRAK',STATUS='UNKNOWN',
      1      FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
+      ELSE
+      CALL sparseassembler_init(1)
+      ENDIF
       IKONVP=1
       IF(IDEBUG.GT.0) PRINT *, ' UCELEM'
       IF(NULAZ.EQ.1.OR.NULAZ.EQ.3) THEN
@@ -276,8 +283,10 @@ CE        CALCULATING ACTIVE COLUMN HEIGHTS AND ADDRESSES OF DIAGONAL
 CE        ELEMENTS IN SKYLINE STIFFNESS MATRIX
 C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
 
-
-
+          
+!        pocetak starog drakcetovog tackanja
+          IF(TIPTACKANJA.EQ.1)THEN
+              
          ALLOCATE (MAXA8(JEDN+1), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'MAXA8 Not enough memory'
          IF (iAllocateStatus /= 0) STOP '*** Not enough memory ***'
@@ -296,7 +305,10 @@ C          write(3,*) 'maxa8',(maxa8(i),i=1,4)
         ENDIF
 C
         LMAXA=LMHT
-
+        
+        ENDIF !TIPTACKANJA
+        
+        
         IF(NEQ.GT.NDOD) STOP 'NEQ.GT.NDOD'
 C
         IF(NCXFEM.GT.0.and.JEDN.GT.NEQ) NEQ=JEDN
@@ -313,10 +325,14 @@ C
         NGENN=NGENN+NGENL
         LMAX=LID
    10 CONTINUE
+       IF(TIPTACKANJA.EQ.1)THEN
+      
       IF(IABS(ICCGG).EQ.1) THEN
 !         LISK=LMAX
 !         LMAX=LISK+1+NWK8/28
 c         nwk8=19000000000
+          
+               
          write(3,*) 'pre alociranja isk - LMAX',LMAX
          write(*,*) 'pre alociranja isk'
          memisk=(4*(1+NWK8/28))/1000000
@@ -344,7 +360,7 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
          if(imumps.EQ.1) I2=2 
          IROWS=LMAX
          !LMAX=IROWS+NNZERO*I2
-         
+
          
           ALLOCATE (AIROWS(NNZERO*I2), STAT = iAllocateStatus)
          IF (iAllocateStatus /= 0) write(3,*)'AIROWS Not enough memory'
@@ -394,6 +410,8 @@ c        WRITE(3,*) 'pos JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
 C		CALL IWRR(A(LMAXA),JEDN+1,'MAXa')
         WRITE(*,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
         WRITE(3,*) 'izl1 JEDN,NEQ,NDOD,nwk8,nwk',JEDN,NEQ,NDOD,nwk8,nwk
+      ENDIF
+!     kraj starog Drakcetovog tackanja        
       RETURN
 C-----------------------------------------------------------------------
  2000 FORMAT(///' V E K T O R   M A X A')
@@ -1380,7 +1398,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE FORMGR(NPODS,LMM)
+      USE STIFFNESS
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       REAL*8 BRISI
 C
@@ -1874,12 +1894,11 @@ C            CALL CLEAR(A(LAILU),(LMAX-LAILU)/IDVA)
          !UMESTO STAROG PISANJA MATRICE NA DISK
 C              !CALL CLEAR(A(LSK),NWK*I2)
          !KORISTIMO NOVO DINAMICKO ALOCIRANJE
-         BRISI=0.0
-         !ALLOCATE (ALSK(NWK*I2),SOURCE=BRISI, STAT = iAllocateStatus)
+         IF (TIPTACKANJA.EQ.1) THEN
          ALLOCATE (ALSK(NWK*I2), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSK Not enough memory ***'
       IF (iAllocateStatus /= 0) STOP '*** ALSK Not enough memory ***'
-      
+         ENDIF
          NPODS(JPBR,35)=LMAX13+1
          !STARO PISANJE PO DISKU
 C         !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)       
@@ -1892,7 +1911,7 @@ C              IF(IREST.NE.2.AND.IMASS.EQ.1)
 C     +               CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
 C         WRITE(3,*) '54,LSK',LSK
 C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
-            IF(IMASS.GE.1) THEN
+            IF((IMASS.GE.1).AND.(TIPTACKANJA.EQ.1)) THEN
           !ALLOCATE (ALSM(NWM),SOURCE=BRISI, STAT = iAllocateStatus)
           ALLOCATE (ALSM(NWM), STAT = iAllocateStatus)
       IF (iAllocateStatus /= 0) write(3,*)'ALSM Not enough memory ***'
@@ -1904,7 +1923,7 @@ C            IF(IMASS.EQ.2) CALL WRITDD(A(LSK),NWM,IPODS,LMAX13,LDUZI)
             NPODS(JPBR,58)=LMAX13+1
             !TOPALOVIC EFEKTIVNA MATRICA KE ZAUZIMA ISTO MESTO KAO I K
 C            !IF(IREST.NE.2)CALL WRITDD(A(LSK),NWK,IPODS,LMAX13,LDUZI)
-            IF(IDAMP.GT.0) THEN
+            IF((IDAMP.GT.0).AND.(TIPTACKANJA.EQ.1)) THEN
                NPODS(JPBR,56)=LMAX13+1
                !TOPALOVIC MATRICA PRIGUSENJA C
 !               IF(IREST.NE.2.AND.IMASS.EQ.1)
@@ -2400,6 +2419,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE DRV000(IGRUP,NPODS,KAKO6,CORD,NCVEL,ID)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C  JEDINICNI VEKTORI U NULTOM TRENUTKU
@@ -2455,6 +2477,9 @@ C
         ENDIF
 C
   100 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
 C PRIVREMENO ZBOG VAGONA
       IF(IREST.EQ.2.AND.IOPGL(6).EQ.1) THEN
          WRITE(IZLAZ,1011) 
