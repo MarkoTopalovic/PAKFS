@@ -1,120 +1,54 @@
 
 
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
+ S T E P  N U M B E R =    1                      T I M E = 1.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  1.0778E-04
 
 
 
 
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
-
-
- S T E P  N U M B E R =    1                      T I M E = 1.00000E-04
-
-
- S T E P  N U M B E R =    2                      T I M E = 2.00000E-04
+ S T E P  N U M B E R =    2                      T I M E = 2.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  2.1557E-04
 
 
 
 
- S T E P  N U M B E R =    2                      T I M E = 2.00000E-04
-
-
- S T E P  N U M B E R =    2                      T I M E = 2.00000E-04
-
-
- S T E P  N U M B E R =    3                      T I M E = 3.00000E-04
+ S T E P  N U M B E R =    3                      T I M E = 3.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  3.2335E-04
 
 
 
 
- S T E P  N U M B E R =    3                      T I M E = 3.00000E-04
-
-
- S T E P  N U M B E R =    3                      T I M E = 3.00000E-04
-
-
- S T E P  N U M B E R =    4                      T I M E = 4.00000E-04
+ S T E P  N U M B E R =    4                      T I M E = 4.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  4.3114E-04
 
 
 
 
- S T E P  N U M B E R =    4                      T I M E = 4.00000E-04
-
-
- S T E P  N U M B E R =    4                      T I M E = 4.00000E-04
-
-
- S T E P  N U M B E R =    5                      T I M E = 5.00000E-04
+ S T E P  N U M B E R =    5                      T I M E = 5.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  5.3892E-04
 
 
 
 
- S T E P  N U M B E R =    5                      T I M E = 5.00000E-04
-
-
- S T E P  N U M B E R =    5                      T I M E = 5.00000E-04
-
-
- S T E P  N U M B E R =    6                      T I M E = 6.00000E-04
+ S T E P  N U M B E R =    6                      T I M E = 6.00000E-01
 
 
  MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
+ NODE =     6   MAX DISPL  =  6.4772E-04
 
 
-
-
- S T E P  N U M B E R =    6                      T I M E = 6.00000E-04
-
-
- S T E P  N U M B E R =    6                      T I M E = 6.00000E-04
-
-
- S T E P  N U M B E R =    7                      T I M E = 7.00000E-04
-
-
- MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
-
-
-
-
- S T E P  N U M B E R =    7                      T I M E = 7.00000E-04
-
-
- S T E P  N U M B E R =    7                      T I M E = 7.00000E-04
-
-
- S T E P  N U M B E R =    8                      T I M E = 8.00000E-04
-
-
- MAXIMUM DISPLACEMENT:
- NODE =    16   MAX DISPL  =  2.1699E-01
-
-
-
-
- S T E P  N U M B E R =    8                      T I M E = 8.00000E-04
-
-
- S T E P  N U M B E R =    8                      T I M E = 8.00000E-04
