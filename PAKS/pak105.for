@@ -3,6 +3,7 @@ C
 C=======================================================================
       SUBROUTINE MIKA(NPODS)
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -130,7 +131,11 @@ C
             CALL READDD(A(LSKG),NWKP,IPODS,LMAX13,LDUZI)
             LMAX13=NPODS(JPBR,27)-1
             CALL IREADD(A(LLMG),JED,IPODS,LMAX13,LDUZI)
+            IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(JMAXA),A(LSKG),A(LLMG),JED)
+            ELSE
+         CALL sparseassembler_addelemmatrix(JED,A(LLMG),A(LSKG))
+            ENDIF
   400    CONTINUE
          JPBR=JPS1
          JEDN=JEDNG

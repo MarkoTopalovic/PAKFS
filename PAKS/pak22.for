@@ -2077,7 +2077,13 @@ C
                   SKP1(J,I1)=SKP1(I1,J)
   483          CONTINUE
             ENDIF
-            IF(ISKNP.NE.2) CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
+            IF(ISKNP.NE.2) THEN
+                IF (TIPTACKANJA.EQ.1) THEN
+                CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
+                ELSE
+         CALL sparseassembler_addelemmatrix(NDNDS,LM,SKP1)
+            ENDIF
+                ENDIF
          ELSE
             IF(ISKNP.NE.2) THEN
              IF (TIPTACKANJA.EQ.1) THEN

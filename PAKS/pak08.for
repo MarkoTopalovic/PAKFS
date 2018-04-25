@@ -1440,6 +1440,7 @@ C
 C=======================================================================
       SUBROUTINE FRESIF(NPODS)
       USE MATRICA
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       include 'paka.inc'
       
@@ -1551,7 +1552,11 @@ C
                CALL READDD(A(LRTG),JEDN,IPODS,LMAX13,LDUZI)
                LMAX13=NPODS(JPBR,27)-1
                CALL IREADD(A(LLMG),JED,IPODS,LMAX13,LDUZI)
+               IF (TIPTACKANJA.EQ.1) THEN
                CALL SPAKUJ(ALSK,A(JMAXA),A(LSKG),A(LLMG),JED)
+               ELSE
+         CALL sparseassembler_addelemmatrix(JED,A(LLMG),A(LSKG))
+            ENDIF
                LRTG=LRTG+JEDNP*IDVA
                CALL SPAKUD(A(LRTDT),A(LRTG),A(LLMG),JED)
   400       CONTINUE

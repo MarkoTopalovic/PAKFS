@@ -302,11 +302,11 @@ C          CALL IWRR(A(LMHT),JEDN+1,'MHT ')
          IF(NWK8.LT.0) STOP 'NWK8.LT.0 - PAK05.FOR'
 C          CALL IWRR(A(LMAXA),JEDN+1,'MAXA')
 C          write(3,*) 'maxa8',(maxa8(i),i=1,4)
-        ENDIF
+        ENDIF !TIPTACKANJA
 C
         LMAXA=LMHT
         
-        ENDIF !TIPTACKANJA
+        ENDIF 
         
         
         IF(NEQ.GT.NDOD) STOP 'NEQ.GT.NDOD'
