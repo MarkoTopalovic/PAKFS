@@ -1053,6 +1053,8 @@ C
 C=======================================================================
       SUBROUTINE INTNMK(IGRUP,NPODS)
       USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1193,7 +1195,12 @@ CE         AND ADD TO GLOBAL SYSTEM MATRIX
 C
            CALL ELEME(NETIP,2)
 C
-  100  CONTINUE
+  100 CONTINUE
+      
+       IF (TIPTACKANJA.NE.1) THEN
+       CALL BUSYMATRICA()    
+       ENDIF
+
 C        CALL WRR6(A(LFTDT),JEDN,'FLEV')
 C        CALL WRR6(A(LRTDT),JEDN,'RLEV')
 C        CALL WRR6(A(LSK),NWK,'SLEV')
@@ -1227,7 +1234,11 @@ C
 40    CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
       CALL MPI_BCAST(IPROL,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
       IF(IPROL.EQ.0) THEN
+         IF (TIPTACKANJA.EQ.1) THEN 
          CALL RESEN(ALSK,A(LRTDT),A(LMAXA),JEDN,1)
+         ELSE
+             CALL RESEN(ALSK,A(LRTDT),IMAXA,JEDN,1)
+         ENDIF
          IF (myid.eq.0) THEN
 C           IF(KOR.EQ.1.AND.ITER.EQ.0.AND.METOD.EQ.-1) ISKDSK=1
 C            CALL WSTAZK(NPODS,LSK,60)
@@ -1366,6 +1377,9 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE INTNAP(IGRUP)
+      USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1433,6 +1447,9 @@ CE       STRESS CALCULATION AT INTEGRATION POINTS OF ELEMENTS
          CALL ELEME(NETIP,3)
 C
   380 CONTINUE
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
       IF(NBLOCK.GT.1) CLOSE (ISCRC,STATUS='KEEP')
       RETURN
       END

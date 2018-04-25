@@ -343,6 +343,8 @@ C
 C=======================================================================
       SUBROUTINE INTKK(IGRUP,NPODS)
       USE MATRICA
+      USE STIFFNESS
+      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -401,6 +403,13 @@ C
          CALL ELEME(NETIP,2)
 C
   100 CONTINUE
+      
+      IF (TIPTACKANJA.NE.1) THEN
+      CALL BUSYMATRICA()
+      ENDIF
+      
+      
+      
       ISKDSK=0
       IF(NBLOCK.GT.1)THEN
         LLM =LRAD
