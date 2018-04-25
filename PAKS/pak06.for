@@ -260,7 +260,6 @@ C=======================================================================
 C
 C=======================================================================
       SUBROUTINE RESEN(B,V,MAXA,NN,KKK)
-      USE STIFFNESS
       USE MATRICA
       USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
@@ -348,40 +347,9 @@ C              EPSILON=1.D-10
             if(imumps.eq.1) then
 ! MUMPS solver
 c	          if(k.eq.2) then
-                CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-                 IF (TIPTACKANJA.EQ.1) THEN
-!                     WRITE(3,*) 'VEKTOR V'
-!                DO I =1, 12
-!                    WRITE(3,*) I, V(I)
-!                ENDDO
-!                WRITE(3,*) 'MAXA'
-!                DO I =1, 13
-!                    WRITE(3,*) I, MAXA(I)
-!                ENDDO
-!                WRITE(3,*) 'I, AIROWS(I),AIROWS(nwk+I), B(i)'
-!                do i=1,78
-!                    WRITE(3,*) I, AIROWS(I),AIROWS(nwk+I), B(i)
-!                enddo
-                CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k) ! Drakce
-                ELSE
-!                    WRITE(3,*) 'VEKTOR V'
-!                DO I =1, 12
-!                    WRITE(3,*) I, V(I)
-!                ENDDO
-!                WRITE(3,*) 'IMAXA'
-!                DO I =1, 13
-!                    WRITE(3,*) I, IMAXA(I)
-!                ENDDO
-!                WRITE(3,*) 'I, rows(I),columns(I), ALSK(i)'
-!                do i=1,78
-!                    WRITE(3,*) I, rows(I),columns(I), ALSK(i)
-!                enddo
-                          IF(K.EQ.1) THEN
-                              stiff_n = JEDN
-                          ENDIF
-                CALL dmumps1(iirows,iicolumns,ALSK,V,
-     1           nonzeros,stiff_n,kkk) ! Busarac
-                ENDIF
+                    CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
+                    CALL dmumps1(AIROWS,AIROWS(nwk+1),B,V,nwk,nn,k)
+                    IF (myid.ne.0) return
 c	          end if
             else
 ! iterativni Djordje
@@ -403,7 +371,7 @@ C              call wrr6(B,36,'B-  ')
 c              if(nn.le.30) call wrr6(V,NN,'V-  ')
                IF(ICCGG.EQ.2) THEN
                   CALL UACTCF(B,C(1),V,MAXA,NN,K)
-               ELSE        
+               ELSE
                   CALL RESENA(B,V,MAXA,NN,IZLAZ,K)
                ENDIF
 c              if(nn.le.30) call swrr(B,MAXA,NN,'B+  ')
@@ -821,7 +789,7 @@ C-----------------------------------------------------------------------
      2  D20.12)
  6001 FORMAT(' DIAGONAL STIFFNESS MATRIX = 0 FOR EQUATION',I8)
 C-----------------------------------------------------------------------
-       END
+        END
 C=======================================================================
 C
 C=======================================================================
@@ -1283,8 +1251,6 @@ C
 C=======================================================================
       SUBROUTINE ZADATL
       USE MATRICA
-      USE STIFFNESS
-      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C
 C ......................................................................
@@ -1323,11 +1289,7 @@ C
       IF(INDL.EQ.1) NPRO=NPRO+1
 C
       CALL READDD(A(LZADFM),NPRO/IDVA,IPODS,LMAX13,LDUZI)
-      IF (TIPTACKANJA.EQ.1) THEN
       CALL ZADLEV(ALSK,A(LMAXA),A(LNZADJ),NZADP)
-      ELSE
-         CALL ZADLEV(ALSK,IMAXA,A(LNZADJ),NZADP) 
-      ENDIF
       RETURN
       END
 C=======================================================================

@@ -205,9 +205,6 @@ C=======================================================================
       SUBROUTINE INT3M(ID,IMAT,NEL,NAPV,CORD,DEB,SKEM,F,SKEB,DD,SK,FUE,
      1                 SIGB,EMB,EN,MAXA,ELK,
      1                 NSLOJ,MATSL,BBET,DSLOJ,BET0)
-      USE MATRICA
-      USE STIFFNESS
-      USE DRAKCE8
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
 C***********************************************************************
 C   ********   GLAVNI PODPROGRAM ZA INTEGRALJENJE    *******************
@@ -714,11 +711,7 @@ C....
    15 NDFE = NPP * 6
 C
 C....  RAZMESTANJE U MATRICU KRUTOSTI  S I S T E M A
-      IF (TIPTACKANJA.EQ.1) THEN
       CALL SPAKUJ(SK, MAXA,SKE,LM,NDFE)
-      ELSE
-         CALL sparseassembler_addelemmatrix(NDFE,LM,SKE)
-      ENDIF
 C
 C....  KRAJ PETLJE PO SLOJEVIMA
 C
