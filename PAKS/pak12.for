@@ -198,7 +198,7 @@ C
       IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),AE(LSKE),AE(LLM),ND)
       ELSE
-         CALL sparseassembler_addelemmatrix(ND,AE(LLM),AE(LSKE))
+         CALL SPAKUJMT(ALSK,A(LMAXA),AE(LSKE),AE(LLM),ND)
       ENDIF
   100 CONTINUE
 

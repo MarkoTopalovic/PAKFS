@@ -2242,15 +2242,15 @@ C
                IF (TIPTACKANJA.EQ.1) THEN    
                CALL SPAKUJ(SKEL,MAEL,SKE,LME,NCVJ+ND)
                ELSE
-         CALL sparseassembler_addelemmatrix(NCVJ+ND,LME,SKE)
-            ENDIF
+               CALL SPAKUJMT(SKEL,MAEL,SKE,LME,NCVJ+ND)
+               ENDIF
                ENDIF
                IF(JEDPP.EQ.0) THEN
                    IF (TIPTACKANJA.EQ.1) THEN
                CALL SPAKUJ(SK,MAXA,SKE,LM,ND)
                ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKE)
-            ENDIF
+               CALL SPAKUJMT(SK,MAXA,SKE,LM,ND)
+               ENDIF
                ENDIF
             ENDIF
 C
@@ -2411,7 +2411,7 @@ C PROVERITI OVO PAKOVANJE , MOZDA MORA RUCNO PREPISIVANJE
              IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(SK,MAXA,SKE,LMU,JEDNN)
             ELSE
-         CALL sparseassembler_addelemmatrix(JEDNN,LMU,SKE)
+            CALL SPAKUJMT(SK,MAXA,SKE,LMU,JEDNN)
             ENDIF
 C            IF(IST.EQ.0) CALL WRR(SK,NWK,'SKKK')
          ENDIF

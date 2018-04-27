@@ -134,7 +134,7 @@ C
             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(JMAXA),A(LSKG),A(LLMG),JED)
             ELSE
-         CALL sparseassembler_addelemmatrix(JED,A(LLMG),A(LSKG))
+            CALL SPAKUJMT(ALSK,A(JMAXA),A(LSKG),A(LLMG),JED)
             ENDIF
   400    CONTINUE
          JPBR=JPS1

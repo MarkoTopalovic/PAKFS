@@ -2081,9 +2081,9 @@ C
                 IF (TIPTACKANJA.EQ.1) THEN
                 CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
                 ELSE
-         CALL sparseassembler_addelemmatrix(NDNDS,LM,SKP1)
-            ENDIF
+                CALL SPAKUJMT(ALSK,A(LMAXA),SKP1,LM,NDNDS)
                 ENDIF
+            ENDIF
          ELSE
             IF(ISKNP.NE.2) THEN
              IF (TIPTACKANJA.EQ.1) THEN
@@ -2100,7 +2100,7 @@ C
                 
 !              CALL REVERSEPSKEFN(SKEF,SKE,NDD)
 !                              MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(NDD,LM,SKE)
+             CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,NDD)
             ENDIF
              ENDIF
 c            IF(nlm.eq.1) THEN

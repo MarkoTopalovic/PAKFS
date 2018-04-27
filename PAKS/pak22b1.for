@@ -1498,7 +1498,7 @@ C
                 IF (TIPTACKANJA.EQ.1) THEN
                 CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,NDNDS)
                 ELSE
-                CALL sparseassembler_addelemmatrix(NDNDS,LM,SKP1)
+                CALL SPAKUJMT(ALSK,A(LMAXA),SKP1,LM,NDNDS)
                 ENDIF
             ENDIF
          ELSE
@@ -1506,8 +1506,8 @@ C
                 IF (TIPTACKANJA.EQ.1) THEN
                 CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
                 ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKE)
-            ENDIF
+                CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,ND)
+                ENDIF
             ENDIF
          ENDIF
 C        RASPOREDJIVANJE KONCENTRISANIH MATRICE MASA AMASC U VEKTOR ZAPS

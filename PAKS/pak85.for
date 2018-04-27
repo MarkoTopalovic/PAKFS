@@ -518,8 +518,8 @@ C      CALL WRR(SKE,NWE,'SKE ')
       IF (TIPTACKANJA.EQ.1) THEN
       CALL SPAKUJ(SK ,A(LMAXA),SKE,LM,ND)
       ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKE)
-            ENDIF
+      CALL SPAKUJMT(SK ,A(LMAXA),SKE,LM,ND)
+      ENDIF
 C      CALL IWRR(A(LMAXA),JEDN,'MAX ')
 C      CALL WRR(SK,NWK,'M  ')
 C

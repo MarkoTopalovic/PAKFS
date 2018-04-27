@@ -405,7 +405,7 @@ C
       IF (TIPTACKANJA.EQ.1) THEN
       CALL SPAKUJ(ALSK,MAXA,SKE,LM(1,NLM),6*NTE)
       ELSE
-      CALL sparseassembler_addelemmatrix(6*NTE,LM(1,NLM),SKE)
+      CALL SPAKUJMT(ALSK,MAXA,SKE,LM(1,NLM),6*NTE)
       ENDIF
 C
 C     GO TO 10

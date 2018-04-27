@@ -758,9 +758,9 @@ C       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
 C   PAKOVANJE KONTAKTNE KRUTOSTI U GLOBALNI SISTEM
       IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
-         ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
-            ENDIF
+      ELSE
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
+      ENDIF
 C
 C VELIKE DEFORMACIJE SE UZIMAJU U OBZIR (2D kontaktna krutost u pravcu noramle) 16.01.06
         IF((IATYP.GE.3).AND.(MAXCE.EQ.2)) THEN
@@ -814,7 +814,7 @@ C   PAKOVANJE KONTAKTNE KRUTOSTI U GLOBALNI SISTEM
       IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
          ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 C
 	  ENDIF
@@ -897,7 +897,7 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
          IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
          ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 C IZRACUNAVANJE SILE U TANGENCIJALNOJ RAVNI
 	   DG(1)=R0-ALFK(1,NLM)
@@ -968,7 +968,7 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
             ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+            CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 C sila
              TTRRSN(2)= TTRRSN(2)*AMETRIC1(1,1)
@@ -1032,7 +1032,7 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
             ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+            CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 c       WRITE(3,*)'TTRRSN(1), TTRRSN(2)',TTRRSN(1),TTRRSN(2)           
 	   ENDIF
@@ -1087,8 +1087,8 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
          IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
          ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
-            ENDIF
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
+         ENDIF
 C	  ENDDO
 C IZRACUNAVANJE SILE U TANGENCIJALNOJ RAVNI
 C R0 i S0 = KSI(n+1)
@@ -1168,7 +1168,7 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
             ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+            CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 C
          DO I=1,2
@@ -1259,7 +1259,7 @@ c       WRITE(3,*)'SKE(KL), KL',SKE(KL),KL
             IF (TIPTACKANJA.EQ.1) THEN
             CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,MDIM)
             ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM,SKE)
+            CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,MDIM)
             ENDIF
 C
          DO I=1,2

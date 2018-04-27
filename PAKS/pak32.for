@@ -2400,7 +2400,7 @@ C
              ELSE
 !             CALL REVERSEPSKEFN(SKEF,SKE,ND)
 !                             MATRICA,NIZ,DIMENZIJA
-             CALL sparseassembler_addelemmatrix(ND,LM,SKE)
+             CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,ND)
              ENDIF
          ENDIF
 CS       RAZMESTANJE UNUTRASNJIH SILA FE U GLOBALNI VEKTOR FTDT

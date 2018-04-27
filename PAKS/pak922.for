@@ -202,8 +202,8 @@ C
        IF (TIPTACKANJA.EQ.1) THEN
        CALL SPAKUJ(ALSK,A(LMAXA),AE(LSKE),AE(LLM),MDIM)
        ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,AE(LLM),AE(LSKE))
-            ENDIF
+       CALL SPAKUJMT(ALSK,A(LMAXA),AE(LSKE),AE(LLM),MDIM)
+       ENDIF
   100  CONTINUE
 C       WRITE(3,*)'NWK,NWKC,NEQC,NEQ',NWK,NWKC,NEQC,NEQ
 C       call WRR(A(LSK),NWK,'SKC ')

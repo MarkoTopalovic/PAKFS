@@ -508,8 +508,8 @@ C
        IF (TIPTACKANJA.EQ.1) THEN
        CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM3,MDIM)
        ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM3,SKE)
-            ENDIF
+       CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM3,MDIM)
+       ENDIF
 C
        DO 30 J=1,3
         IJ=LM3(J)
@@ -626,8 +626,8 @@ C
          IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM(KK),MDIM)
          ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM(KK),SKE)
-            ENDIF
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM(KK),MDIM)
+         ENDIF
    56  CONTINUE
       ENDIF
 C           SILE NA CILJNIM CVOROVIMA
@@ -674,8 +674,8 @@ C         CALL IWRR(LM(KK),MDIM,'LM**')
          IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM(KK),MDIM)
          ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM(KK),SKE)
-            ENDIF
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM(KK),MDIM)
+         ENDIF
          LM(KK1)=LMDUM
   258  CONTINUE
        MDIM=2
@@ -694,8 +694,8 @@ C         CALL IWRR(LM3,MDIM,'LM3*')
        IF (TIPTACKANJA.EQ.1) THEN
        CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM3,MDIM)
        ELSE
-         CALL sparseassembler_addelemmatrix(MDIM,LM3,SKE)
-            ENDIF
+       CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM3,MDIM)
+       ENDIF
       ENDIF
 C
 C          KONTAKTNE SILE PRI KLIZANJU

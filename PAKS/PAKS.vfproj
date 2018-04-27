@@ -64,6 +64,7 @@
 		<File RelativePath=".\pak061a.for"/>
 		<File RelativePath=".\pak062.for"/>
 		<File RelativePath=".\pak062a.for"/>
+		<File RelativePath=".\pak062mt.for"/>
 		<File RelativePath=".\pak065.for"/>
 		<File RelativePath=".\pak07.for"/>
 		<File RelativePath=".\pak071.for"/>

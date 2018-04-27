@@ -1299,7 +1299,7 @@ C
              IF (TIPTACKANJA.EQ.1) THEN
          CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
          ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKE)
+         CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,ND)
             ENDIF
          ENDIF
          CALL SILPAK(FTDT,FE,LM,ND,A(LCMPC),A(LMPC))

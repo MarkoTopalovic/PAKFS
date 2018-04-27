@@ -1743,9 +1743,9 @@ C
                 IF (TIPTACKANJA.EQ.1) THEN
                 CALL SPAKUJ(ALSK,A(LMAXA),SKP1,LM,ND)
                 ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKP1)
-            ENDIF
+                CALL SPAKUJMT(ALSK,A(LMAXA),SKP1,LM,ND)
                 ENDIF
+           ENDIF
          ELSE
 	WRITE(3,*)'NLM',NLM
 	CALL IWRR(LM,ND,'LM  ')
@@ -1754,9 +1754,9 @@ C
                 IF (TIPTACKANJA.EQ.1) THEN
                 CALL SPAKUJ(ALSK,A(LMAXA),SKE,LM,ND)
                 ELSE
-         CALL sparseassembler_addelemmatrix(ND,LM,SKE)
-            ENDIF
+                CALL SPAKUJMT(ALSK,A(LMAXA),SKE,LM,ND)
                 ENDIF
+            ENDIF
          ENDIF 
   20      continue
   25     continue 
