@@ -941,6 +941,9 @@ C                PRINT *,KSS,KK
       MI=MAXA(II)-MXMN
       KS=I
       IVRS=0
+      
+      
+      
       DO 220 J=1,ND
       JJ=LM(J)
       IF(JJ.GT.0)IVRS=IVRS+1
