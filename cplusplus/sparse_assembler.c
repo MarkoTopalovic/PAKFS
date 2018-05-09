@@ -381,62 +381,86 @@ void sparseassembler_init_(int *symetric)
 }
 void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int nezav, int nmpc, double *cmpc, int *mpc)
 {
-   int64_t i,j,l,k,iip,jjp,ll,kk,jj,ij, icm, jcm,brojac, nn = *n;
+   int64_t i,j,l,k,iip,jjp,ii,kk,jj,ij, icm, jcm,brojac, nn = *n;
 	int64_t indicesi, indicesj;
 	double cmi,cmj;
 	brojac = 0;
 	int mnq0 = 0;
+	cmi = 1;
+	cmj = 1;
 	for(i=0;i<nn;i++)
 	{
-		for(j=(bSymetric ? i : 0);j<nn;j++)
+		if (indices[i] < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
-			if ((indices[i] != 0) && (indices[j] != 0))
+			iip = -indices[i]; //IIP=-II
+			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
+			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
 			{
-				cmi = 1;
-				cmj = 1;
-				//if (indices[i] < 0) //IF(II.LT.0)THEN pak062 ispakg
-				//{
-				//	iip = -indices[i]; //IIP=-II
-				//	icm = mpc[iip-1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
-				//	for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
-				//	{
-				//		ll = mpc[l*nmpc+iip-1]; //II=MPC(L+1,IIP)
-				//		if (ll>=mnq0) //IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 320
-				//		{
-				//			cmi = cmi*cmpc[(icm-1)*nezav + l-1]; //CMI=CMPC(ICM,L)
-				//		}//izmnozimo sve koeficijente cmi pa onda pomnozimo sa clanom matrice
-				//	}    // u Drakcetovom tackanju je dodavan svaki proizvod ponaosob
-				//}
-				//if (indices[j] < 0)
-				//{
-				//	jjp = -indices[j]; //JJP=-JJ
-				//	jcm = mpc[jjp-1]; //JCM=MPC(1,JJP)
-				//	for (k = 1; k <= nezav; k++) //DO 318 K=1,NEZAV
-				//	{
-				//		jj = mpc[k*nmpc+jjp-1]; //JJ=MPC(K+1,JJP)
-				//		if (jj!=0) //IF(JJ.EQ.0)GO TO 318
-				//		{
-				//			ij = ll - jj; //IJ = II - JJ
-				//			if (ij >= 0 && (indices[i] > 0))  // IF(IJ)318,314,314	
-				//			{
-				//				cmj = cmj*cmpc[(jcm-1)*nezav + k-1]; //CMJ=CMPC(JCM,K)
-				//			}
-				//		}
-				//							
-				//	}	
-				//}
+				ii = mpc[l*nmpc + iip - 1]; //II=MPC(L+1,IIP)
+				if (ii >= mnq0) //IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 320
+				{
+					cmi = cmpc[(icm - 1)*nezav + l - 1]; //CMI=CMPC(ICM,L)
+					for (j = (bSymetric ? i : 0); j < nn; j++) //DO 310 J=1,ND
+					{
+						jj = indices[j];
+						if (jj <0) //IF(JJ)303,310,307 -> 303
+						{
+							jjp = -indices[j]; //JJP=-JJ
+							jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+							for (k = 1; k <= nezav; k++) //DO 318 K=1,NEZAV
+							{
+								jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+								if (jj != 0) //IF(JJ.EQ.0)GO TO 318
+								{
+									ij = ii - jj; //IJ = II - JJ
+									if (ij >= 0)  // IF(IJ)318,314,314	
+									{
+										cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+									}
+								}
+								if ((indices[i] < indices[j]) || (!bSymetric))
+								{//SK(KK)=SK(KK)+CMI*CMJ*SKE(KSS)
+									AddVal(indices[i], indices[j], cmi*cmj*vals[brojac]);
+								}
+								else
+								{
+									AddVal(indices[j], indices[i], cmi*cmj*vals[brojac]);
+								}
+							}
+						}
+					}
+				}
+			}    
 
-				if ((abs(indices[i]) < abs(indices[j])) || (!bSymetric))
-				{
-					AddVal(abs(indices[i]), abs(indices[j]), cmi*cmj*vals[brojac]);
-				}
-				else
-				{
-					AddVal(abs(indices[j]), abs(indices[i]), cmi*cmj*vals[brojac]);
-				}
-			}
-			brojac++;
 		}
+		else // II > 0
+		{
+			for (j = (bSymetric ? i : 0); j<nn; j++)
+			{
+				if ((indices[i] != 0) && (indices[j] != 0))
+				{
+					
+					if (indices[i] < 0) 
+					{
+						
+					}
+					if (indices[j] < 0)
+					{
+						
+						
+					}
+
+
+				}
+				brojac++;
+			}
+			if (indices[j] < 0)
+			{}
+			else // oba indeksa veca od 0 default ponasanje kada nema vezanih pomeranja
+			{
+			}
+		}
+		
 	}
 }
 
