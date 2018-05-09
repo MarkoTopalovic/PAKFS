@@ -392,6 +392,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 	{
 		if (indices[i] < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
+			printf("vezana pomeranja i\n");
 			iip = -indices[i]; //IIP=-II
 			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
 			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
@@ -403,7 +404,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 					for (j = (bSymetric ? i : 0); j < nn; j++) //DO 310 J=1,ND
 					{
 						jj = indices[j];
-						if (jj <0) //IF(JJ)303,310,307 -> 303
+						if (jj <0 ) //IF(JJ)303,310,307 -> 303
 						{
 							jjp = -indices[j]; //JJP=-JJ
 							jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
@@ -418,6 +419,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 										cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
 									}
 								}
+								brojac = i*nn + j - 0.5*(i*i - i);
 								if ((indices[i] < indices[j]) || (!bSymetric))
 								{//SK(KK)=SK(KK)+CMI*CMJ*SKE(KSS)
 									AddVal(indices[i], indices[j], cmi*cmj*vals[brojac]);
@@ -428,6 +430,22 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 								}
 							}
 						}
+						else if(jj > 0)//IF(JJ)303,310,307 -> 307
+						{
+							ij = ii - jj; //IJ = II - JJ
+							if (ij >= 0)  // IF(IJ)310,311,311	
+							{
+								brojac = i*nn + j - 0.5*(i*i - i);
+								if ((indices[i] < indices[j]) || (!bSymetric))
+								{//SK(KK)=SK(KK)+CMI*SKE(KSS)
+									AddVal(indices[i], indices[j], cmi*vals[brojac]);
+								}
+								else
+								{
+									AddVal(indices[j], indices[i], cmi*vals[brojac]);
+								}
+							}
+						}
 					}
 				}
 			}    
@@ -435,32 +453,52 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 		}
 		else // II > 0
 		{
-			for (j = (bSymetric ? i : 0); j<nn; j++)
+			for (j = (bSymetric ? i : 0); j<nn; j++) //DO 220 J=1,ND
 			{
-				if ((indices[i] != 0) && (indices[j] != 0))
+				jj = indices[j];
+				if (jj < 0) //IF(JJ)420,220,110 -> 420
 				{
-					
-					if (indices[i] < 0) 
+					printf("vezana pomeranja j\n");
+					jjp = -indices[j]; //JJP=-JJ
+					jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+					for (k = 1; k <= nezav; k++) //DO 418 K=1,NEZAV
 					{
+						jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+						if (jj != 0) //IF(JJ.EQ.0)GO TO 318
+						{
+							cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+							ij = ii - jj; //IJ = II - JJ
+							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
+							{
+								brojac = i*nn + j - 0.5*(i*i - i);
+								if ((indices[i] < indices[j]) || (!bSymetric))
+								{//SK(KK)=SK(KK)+CMJ*SKE(KSS)
+									AddVal(indices[i], indices[j], cmj*vals[brojac]);
+								}
+								else
+								{
+									AddVal(indices[j], indices[i], cmj*vals[brojac]);
+								}
+							}
+						}
 						
 					}
-					if (indices[j] < 0)
-					{
-						
-						
+				}
+				else // oba indeksa veca od nule
+				{
+					//brojac = i*nn + j - 0.5*(i*i - i);
+					if ((indices[i] < indices[j]) || (!bSymetric)) //IF(IJ)220,210,210
+					{//SK(KK)=SK(KK)+SKE(KSS)
+						AddVal(indices[i], indices[j], vals[brojac]);
 					}
-
-
+					else
+					{
+						AddVal(indices[j], indices[i], vals[brojac]);
+					}
 				}
 				brojac++;
-			}
-			if (indices[j] < 0)
-			{}
-			else // oba indeksa veca od 0 default ponasanje kada nema vezanih pomeranja
-			{
-			}
-		}
-		
+			}	
+		}	
 	}
 }
 
