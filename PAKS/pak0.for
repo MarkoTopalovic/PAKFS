@@ -47,7 +47,7 @@ C       WRITE(*,*) '1 - Structure analysis only'
 C       WRITE(*,*) '2 - Fluid analysis only'
 C       WRITE(*,*) '3 - Interaction fluid-structure analysis'
 C       READ(*,*) KOJPAK     
-        KOJPAK=1
+        KOJPAK = 1
         IF(KOJPAK.EQ.0) KOJPAK=3
 CE      MEMORY INDICATOR (=0-ENOUGH, =1-NOT ENOUGH)
 CS      DA LI IMA PROSTORA ZA SVE U MEMORIJI (=0-IMA, =1-NEMA)
