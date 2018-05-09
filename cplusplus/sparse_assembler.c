@@ -425,7 +425,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 				//							
 				//	}	
 				//}
-
+				brojac = i*(nn - 1) + j - 0.5*(i*i - i);
 				if ((abs(indices[i]) < abs(indices[j])) || (!bSymetric))
 				{
 					AddVal(abs(indices[i]), abs(indices[j]), cmi*cmj*vals[brojac]);
@@ -435,7 +435,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 					AddVal(abs(indices[j]), abs(indices[i]), cmi*cmj*vals[brojac]);
 				}
 			}
-			brojac++;
+			//brojac++;
 		}
 	}
 }
