@@ -243,6 +243,7 @@ ModelManifest.xml
 *.lst
 *.unv
 *.dat
+*.neu
 ZBELEM
 ZDIVER
 ZFORCE
@@ -250,3 +251,4 @@ ZIBACK
 ZIELEM
 ZIPODS
 ZSTRAIN
+fort.39
