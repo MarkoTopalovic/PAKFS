@@ -392,7 +392,6 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 	{
 		if (indices[i] < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
-			printf("vezana pomeranja i\n");
 			iip = -indices[i]; //IIP=-II
 			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
 			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
@@ -419,7 +418,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 										cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
 									}
 								}
-								brojac = i*nn + j - 0.5*(i*i - i);
+								brojac = i*(nn-1) + j - 0.5*(i*i - i);
 								if ((indices[i] < indices[j]) || (!bSymetric))
 								{//SK(KK)=SK(KK)+CMI*CMJ*SKE(KSS)
 									AddVal(indices[i], indices[j], cmi*cmj*vals[brojac]);
@@ -435,7 +434,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 							ij = ii - jj; //IJ = II - JJ
 							if (ij >= 0)  // IF(IJ)310,311,311	
 							{
-								brojac = i*nn + j - 0.5*(i*i - i);
+								brojac = i*(nn-1) + j - 0.5*(i*i - i);
 								if ((indices[i] < indices[j]) || (!bSymetric))
 								{//SK(KK)=SK(KK)+CMI*SKE(KSS)
 									AddVal(indices[i], indices[j], cmi*vals[brojac]);
@@ -458,7 +457,6 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 				jj = indices[j];
 				if (jj < 0) //IF(JJ)420,220,110 -> 420
 				{
-					printf("vezana pomeranja j\n");
 					jjp = -indices[j]; //JJP=-JJ
 					jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
 					for (k = 1; k <= nezav; k++) //DO 418 K=1,NEZAV
@@ -470,7 +468,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 							ij = ii - jj; //IJ = II - JJ
 							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
 							{
-								brojac = i*nn + j - 0.5*(i*i - i);
+								brojac = i*(nn-1) + j - 0.5*(i*i - i);
 								if ((indices[i] < indices[j]) || (!bSymetric))
 								{//SK(KK)=SK(KK)+CMJ*SKE(KSS)
 									AddVal(indices[i], indices[j], cmj*vals[brojac]);
@@ -486,7 +484,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 				}
 				else // oba indeksa veca od nule
 				{
-					//brojac = i*nn + j - 0.5*(i*i - i);
+					brojac = i*(nn-1) + j - 0.5*(i*i - i);
 					if ((indices[i] < indices[j]) || (!bSymetric)) //IF(IJ)220,210,210
 					{//SK(KK)=SK(KK)+SKE(KSS)
 						AddVal(indices[i], indices[j], vals[brojac]);
@@ -496,7 +494,6 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 						AddVal(indices[j], indices[i], vals[brojac]);
 					}
 				}
-				brojac++;
 			}	
 		}	
 	}
