@@ -379,10 +379,13 @@ void sparseassembler_init_(int *symetric)
 	RBInit();
 	bSymetric = *symetric;
 }
-void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int nezav, int nmpc, double *cmpc, int *mpc)
+void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nezavp, int *nmpcp, double *cmpc, int *mpc)
 {
-	int64_t i, j, l, k, iip, jjp, ii, kk, jj, ij, icm, jcm, brojac, nn = *n;
+	int64_t i, j, l, k,  nn = *n;
 	int64_t indicesi, indicesj;
+	int iip, jjp, ii, kk, jj, ij, icm, jcm, brojac;
+	int nezav = *nezavp;
+	int nmpc = *nmpcp;
 	double cmi, cmj;
 	brojac = 0;
 	int mnq0 = 0;
@@ -392,7 +395,6 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int neza
 	{
 		if (indices[i] < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
-			printf("vezana pomeranja i\n");
 			iip = -indices[i]; //IIP=-II
 			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
 			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
