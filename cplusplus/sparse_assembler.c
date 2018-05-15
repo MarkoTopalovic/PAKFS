@@ -486,7 +486,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 					}
 				}
 				else
-				{
+				{ //ovo je deo koji se koristi kada nema vezanih pomeranja
 					if ((indices[i] != 0) && (indices[j] != 0))
 					{
 						brojac = i*(nn - 1) + j - 0.5*(i*i - i);
