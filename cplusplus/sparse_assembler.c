@@ -403,7 +403,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 				if (ii >= mnq0) //IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 320
 				{
 					cmi = cmpc[(icm - 1)*nezav + l - 1]; //CMI=CMPC(ICM,L)
-					for (j = (bSymetric ? i : 0); j < nn; j++) //DO 310 J=1,ND
+					for (j = 0; j < nn; j++) //DO 310 J=1,ND
 					{
 						jj = indices[j];
 						if (jj < 0) //IF(JJ)303,310,307 -> 303
@@ -416,9 +416,9 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 								if (jj != 0) //IF(JJ.EQ.0)GO TO 318
 								{
 									ij = ii - jj; //IJ = II - JJ
-									if (ij >= 0)  // IF(IJ)318,314,314	
+									if (ij <= 0)  // IF(IJ)318,314,314	
 									{
-										cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+										cmj = cmpc[(jcm - 1)*nezav + k - 1]; // 314 CMJ=CMPC(JCM,K)
 									}
 								}
 								brojac = i*(nn - 1) + j - 0.5*(i*i - i);
@@ -435,7 +435,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 						else if (jj > 0)//IF(JJ)303,310,307 -> 307
 						{
 							ij = ii - jj; //IJ = II - JJ
-							if (ij >= 0)  // IF(IJ)310,311,311	
+							if (ij <= 0)  // IF(IJ)310,311,311	
 							{
 								brojac = i*(nn - 1) + j - 0.5*(i*i - i);
 								if ((indices[ii] < indices[j]) || (!bSymetric))
@@ -453,9 +453,8 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 			}
 
 		}
-		else // II > 0
-		{
-			for (j = (bSymetric ? i : 0); j < nn; j++) //DO 220 J=1,ND
+		
+			for (j = 0; j < nn; j++) //DO 220 J=1,ND
 			{
 				jj = indices[j];
 				if (jj < 0) //IF(JJ)420,220,110 -> 420
@@ -469,7 +468,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 						{
 							cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
 							ij = ii - jj; //IJ = II - JJ
-							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
+							if (ij <= 0)  // IF(IJ)418,415,415 -> 415	
 							{
 								brojac = i*(nn - 1) + j - 0.5*(i*i - i);
 								if ((indices[i] < indices[jj]) || (!bSymetric))
@@ -487,7 +486,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 				}
 				else
 				{ //ovo je deo koji se koristi kada nema vezanih pomeranja
-					if ((indices[i] != 0) && (indices[j] != 0))
+					if ((indices[i] != 0) && (indices[j] != 0) && (j>=i))
 					{
 						brojac = i*(nn - 1) + j - 0.5*(i*i - i);
 						if ((indices[i] < indices[j]) || (!bSymetric)) //IF(IJ)220,210,210
@@ -501,7 +500,7 @@ void sparseassembler_addelemmatrix_(int *n, int *indices, double *vals, int *nez
 					}
 				}
 			}
-		}
+		
 	}
 }
 
