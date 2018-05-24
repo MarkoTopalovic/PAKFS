@@ -383,11 +383,12 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 {
 	int64_t i, j, l, k,  nd = *n;
 	int64_t lmi, lmj;
-	int iip, jjp, ii, kk, jj, ij, icm, jcm, kss;
+	int iip, jjp, ii, kk, jj, ij, icm, jcm, kss, ks, ndi;
 	int nezav = *nezavp;
 	int nmpc = *nmpcp;
 	double cmi, cmj;
 	kss = 0;
+	ndi = 0; //   11 NDI=0
 	int mnq0 = 1;
 	cmi = 1;
 	cmj = 1;
@@ -456,6 +457,7 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 		}
 		if (ii >= mnq0)//IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 200
 		{
+			ks = i+1;
 			for (j = 0; j < nd; j++) //DO 220 J=1,ND
 			{
 				jj = lm[j];
@@ -488,21 +490,28 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 				}
 				else if (jj > 0) //IF(JJ)420,220,110 -> 110
 				{ //ovo je deo koji se koristi kada nema vezanih pomeranja
-					if ((ii != 0) && (jj != 0) && (j >= i))
+					ij = ii - jj;
+					if (ij>=0)
+				  //if ((ii != 0) && (jj != 0) && (j >= i))
 					{
-						kss = i*(nd - 1) + j - 0.5*(i*i - i);
-						if ((ii < jj) || (!bSymetric)) //IF(IJ)220,210,210
-						{//SK(KK)=SK(KK)+SKE(KSS)
-							AddVal(ii, jj, ske[kss]);
-						}
-						else
-						{
-							AddVal(jj, ii, ske[kss]);
-						}
+						//kss = i*(nd - 1) + j - 0.5*(i*i - i);
+						kss = ks-1; // KSS = KS
+						if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
+						//if ((ii < jj) || (!bSymetric)) //IF(IJ)220,210,210
+						//{//SK(KK)=SK(KK)+SKE(KSS)
+						//	AddVal(ii, jj, ske[kss]);
+						//}
+						//else
+						//{
+						//	AddVal(jj, ii, ske[kss]);
+						//}
+						AddVal( min(ii, jj) , max(ii, jj), ske[kss]);
 					}
 				}
+				ks = ks + nd - j-1; //220 KS = KS + ND - J
 			}
 		}
+		ndi = ndi + nd - i-1; //  200 NDI=NDI+ND-I
 	}
 }
 
