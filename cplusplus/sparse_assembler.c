@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "redblack_t.h"
 #include "NamingStrategy.h"
 
@@ -395,7 +396,7 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 	for(i=0;i<nd;i++)
 	{
 		ii = lm[i];
-		if (lm[i] < 0)//IF(II.LT.0)THEN pak062 ispakg
+		if (ii < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
 			iip = -lm[i]; //IIP=-II
 			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
@@ -410,47 +411,37 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 						jj = lm[j];
 						if (jj < 0) //IF(JJ)303,310,307 -> 303
 						{
-							jjp = -lm[j]; //JJP=-JJ
+							jjp = -jj; //JJP=-JJ
 							jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+							kss = ks - 1; // KSS = KS
+							if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
 							for (k = 1; k <= nezav; k++) //DO 318 K=1,NEZAV
 							{
 								jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
 								if (jj != 0) //IF(JJ.EQ.0)GO TO 318
 								{
 									ij = ii - jj; //IJ = II - JJ
-									if (ij <= 0)  // IF(IJ)318,314,314	
+									if (ij >= 0)  // IF(IJ)318,314,314	
 									{
 										cmj = cmpc[(jcm - 1)*nezav + k - 1]; // 314 CMJ=CMPC(JCM,K)
+										AddVal(cmin(ii, jj), cmax(ii, jj), cmi*cmj*ske[kss]);
 									}
 								}
-								kss = i*(nd - 1) + j - 0.5*(i*i - i);
-								if ((lm[ii] < lm[jj]) || (!bSymetric))
-								{//SK(KK)=SK(KK)+CMI*CMJ*SKE(KSS)
-									AddVal(lm[ii], lm[jj], cmi*cmj*ske[kss]);
-								}
-								else
-								{
-									AddVal(lm[jj], lm[ii], cmi*cmj*ske[kss]);
-								}
-							}
+								
+							} //318
 						}
 						else if (jj > 0)//IF(JJ)303,310,307 -> 307
 						{
 							ij = ii - jj; //IJ = II - JJ
-							if (ij <= 0)  // IF(IJ)310,311,311	
+							if (ij >= 0)  // IF(IJ)310,311,311	
 							{
-								kss = i*(nd - 1) + j - 0.5*(i*i - i);
-								if ((lm[ii] < lm[j]) || (!bSymetric))
-								{//SK(KK)=SK(KK)+CMI*SKE(KSS)
-									AddVal(lm[ii], lm[j], cmi*ske[kss]);
-								}
-								else
-								{
-									AddVal(lm[j], lm[ii], cmi*ske[kss]);
-								}
+								kss = ks - 1; // KSS = KS
+								if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
+								AddVal(cmin(ii, jj), cmax(ii, jj), cmi*ske[kss]);
 							}
 						}
-					}
+						ks = ks + nd - j - 1; //310 KS = KS + ND - J
+					} //310
 				}
 			}
 
@@ -465,24 +456,19 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 				{
 					jjp = -lm[j]; //JJP=-JJ
 					jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+					kss = ks - 1; // KSS = KS
+					if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
+
 					for (k = 1; k <= nezav; k++) //DO 418 K=1,NEZAV
 					{
 						jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
-						if (jj != 0) //IF(JJ.EQ.0)GO TO 318
+						if (jj != 0) //IF(JJ.EQ.0)GO TO 418
 						{
 							cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
 							ij = ii - jj; //IJ = II - JJ
-							if (ij <= 0)  // IF(IJ)418,415,415 -> 415	
+							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
 							{
-								kss = i*(nd - 1) + j - 0.5*(i*i - i);
-								if ((lm[i] < lm[jj]) || (!bSymetric))
-								{//SK(KK)=SK(KK)+CMJ*SKE(KSS)
-									AddVal(lm[i], lm[jj], cmj*ske[kss]);
-								}
-								else
-								{
-									AddVal(lm[jj], lm[i], cmj*ske[kss]);
-								}
+								AddVal(cmin(ii, jj), cmax(ii, jj), cmj*ske[kss]);
 							}
 						}
 
@@ -505,7 +491,7 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 						//{
 						//	AddVal(jj, ii, ske[kss]);
 						//}
-						AddVal( min(ii, jj) , max(ii, jj), ske[kss]);
+						AddVal( cmin(ii, jj) , cmax(ii, jj), ske[kss]);
 					}
 				}
 				ks = ks + nd - j-1; //220 KS = KS + ND - J
@@ -537,5 +523,28 @@ void sparseassembler_getnz_(int64_t *nz)
     inorder(root);
     *nz = nCounter;
 //     printf("Nonzero count in nz: %d\n", *nz);
+}
+
+int cmin(int a, int b)
+{
+	if (a > b)
+	{
+		return b;
+	}
+	else
+	{
+		return a;
+	}
+}
+int cmax(int a, int b)
+{
+	if (a > b)
+	{
+		return a;
+	}
+	else
+	{
+		return b;
+	}
 }
 
