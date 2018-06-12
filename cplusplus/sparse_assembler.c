@@ -391,6 +391,7 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 	kss = 0;
 	ndi = 0; //   11 NDI=0
 	int mnq0 = 1;
+	int goto200 = 0;
 	cmi = 1;
 	cmj = 1;
 	for(i=0;i<nd;i++)
@@ -399,32 +400,35 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 		if (ii < 0)//IF(II.LT.0)THEN pak062 ispakg
 		{
 			iip = -lm[i]; //IIP=-II
-			icm = mpc[iip - 1]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
+			//When I wrote this, only God and I understood what I was doing. Now, God only knows
+			icm = mpc[(iip-1) *(nezav+1)]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
 			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
 			{
-				ii = mpc[l*nmpc + iip - 1]; //II=MPC(L+1,IIP)
+				ii = mpc[(iip - 1) *(nezav + 1)+l]; //II=MPC(L+1,IIP)
 				if (ii >= mnq0) //IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 320
 				{
-					cmi = cmpc[(icm - 1)*nezav + l - 1]; //CMI=CMPC(ICM,L)
+					cmi = cmpc[(l - 1)*nmpc + icm - 1]; //CMI=CMPC(ICM,L)
+					ks = i;
 					for (j = 0; j < nd; j++) //DO 310 J=1,ND
 					{
 						jj = lm[j];
 						if (jj < 0) //IF(JJ)303,310,307 -> 303
 						{
 							jjp = -jj; //JJP=-JJ
-							jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
-							kss = ks - 1; // KSS = KS
+							jcm = mpc[(jjp - 1) *(nezav + 1)];//mpc[jjp - 1]; //JCM=MPC(1,JJP)
+							kss = ks ; // KSS = KS
 							if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
 							for (k = 1; k <= nezav; k++) //DO 318 K=1,NEZAV
 							{
-								jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+								jj = mpc[(jjp - 1) *(nezav + 1) + k];//mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
 								if (jj != 0) //IF(JJ.EQ.0)GO TO 318
 								{
 									ij = ii - jj; //IJ = II - JJ
 									if (ij >= 0)  // IF(IJ)318,314,314	
 									{
-										cmj = cmpc[(jcm - 1)*nezav + k - 1]; // 314 CMJ=CMPC(JCM,K)
+										cmj = cmpc[(k - 1)*nmpc + jcm - 1];//cmpc[(jcm - 1)*nezav + k - 1]; // 314 CMJ=CMPC(JCM,K)
 										AddVal(cmin(ii, jj), cmax(ii, jj), cmi*cmj*ske[kss]);
+										//printf("i= %d j= %d ske= %f \n", i, j, cmi*cmj*ske[kss]);
 									}
 								}
 								
@@ -435,40 +439,45 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 							ij = ii - jj; //IJ = II - JJ
 							if (ij >= 0)  // IF(IJ)310,311,311	
 							{
-								kss = ks - 1; // KSS = KS
+								kss = ks ; // KSS = KS
 								if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
 								AddVal(cmin(ii, jj), cmax(ii, jj), cmi*ske[kss]);
+								//printf("i= %d j= %d ske= %f \n", i, j, cmi*ske[kss]);
 							}
 						}
-						ks = ks + nd - j - 1; //310 KS = KS + ND - J
+						ks = ks + nd - j-1 ; //310 KS = KS + ND - J
 					} //310
 				}
 			}
-
+			goto200 = 1; //#$%$#%$#@% ^&*$#$@#%$ %$#%$#% go to 200 &^@#$# @%@# $^&^%*&
 		}
-		if (ii >= mnq0)//IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 200
+		if ((ii >= mnq0)&&(goto200 == 0))//IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 200
 		{
-			ks = i+1;
+			ks = i;
 			for (j = 0; j < nd; j++) //DO 220 J=1,ND
 			{
 				jj = lm[j];
 				if (jj < 0) //IF(JJ)420,220,110 -> 420
 				{
 					jjp = -lm[j]; //JJP=-JJ
-					jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
-					kss = ks - 1; // KSS = KS
+					//jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+					jcm = mpc[(jjp - 1) *(nezav + 1)];
+					kss = ks ; // KSS = KS
 					if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
 
 					for (k = 1; k <= nezav; k++) //DO 418 K=1,NEZAV
 					{
-						jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+						//jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+						jj = mpc[(jjp - 1) *(nezav + 1) + k];
 						if (jj != 0) //IF(JJ.EQ.0)GO TO 418
 						{
-							cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+							//cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+							cmj = cmpc[(k - 1)*nmpc + jcm - 1];
 							ij = ii - jj; //IJ = II - JJ
 							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
 							{
 								AddVal(cmin(ii, jj), cmax(ii, jj), cmj*ske[kss]);
+								//printf("i= %d j= %d ske= %f \n", i, j, cmj*ske[kss]);
 							}
 						}
 
@@ -481,7 +490,7 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 				  //if ((ii != 0) && (jj != 0) && (j >= i))
 					{
 						//kss = i*(nd - 1) + j - 0.5*(i*i - i);
-						kss = ks-1; // KSS = KS
+						kss = ks; // KSS = KS
 						if (j >= i) kss = j + ndi; //	IF(J.GE.I)KSS = J + NDI
 						//if ((ii < jj) || (!bSymetric)) //IF(IJ)220,210,210
 						//{//SK(KK)=SK(KK)+SKE(KSS)
@@ -492,12 +501,14 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 						//	AddVal(jj, ii, ske[kss]);
 						//}
 						AddVal( cmin(ii, jj) , cmax(ii, jj), ske[kss]);
+						//printf("i= %d j= %d ske= %f \n", i,j, ske[kss]);
 					}
 				}
 				ks = ks + nd - j-1; //220 KS = KS + ND - J
 			}
 		}
 		ndi = ndi + nd - i-1; //  200 NDI=NDI+ND-I
+		goto200 = 0;
 	}
 }
 
