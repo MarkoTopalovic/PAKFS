@@ -511,7 +511,130 @@ void sparseassembler_addelemmatrix_(int *n, int *lm, double *ske, int *nezavp, i
 		goto200 = 0;
 	}
 }
+void sparseassembler_addnonsymmatrix_(int *n, int *lm, double *ske, int *nezavp, int *nmpcp, double *cmpc, int *mpc)
+{
+	int64_t i, j, l, k, nd = *n;
+	int64_t lmi, lmj;
+	int iip, jjp, ii, kk, jj, ij, icm, jcm, kssu, kssl, ks, ndi;
+	int nezav = *nezavp;
+	int nmpc = *nmpcp;
+	double cmi, cmj;
+	kssu = 0;
+	kssl = 0;
+	ndi = 0; //   11 NDI=0
+	int mnq0 = 1;
+	int goto200 = 0;
+	cmi = 1;
+	cmj = 1;
+	for (i = 0; i<nd; i++)
+	{
+		ii = lm[i];
+		if (ii < 0)//IF(II.LT.0)THEN pak062 ispakg
+		{
+			iip = -lm[i]; //IIP=-II
+						  //When I wrote this, only God and I understood what I was doing. Now, God only knows
+			icm = mpc[(iip - 1) *(nezav + 1)]; //ICM=MPC(1,IIP) (-1 jer u c++ pocinje od 0)
+			for (l = 1; l <= nezav; l++) //DO 320 L=1,NEZAV
+			{
+				ii = mpc[(iip - 1) *(nezav + 1) + l]; //II=MPC(L+1,IIP)
+				if (ii >= mnq0) //IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 320
+				{
+					cmi = cmpc[(l - 1)*nmpc + icm - 1]; //CMI=CMPC(ICM,L)
+					ks = i;
+					for (j = 0; j < nd; j++) //DO 310 J=1,ND
+					{
+						jj = lm[j];
+						if (jj < 0) //IF(JJ)303,310,307 -> 303
+						{
+							jjp = -jj; //JJP=-JJ
+							jcm = mpc[(jjp - 1) *(nezav + 1)];//mpc[jjp - 1]; //JCM=MPC(1,JJP)
+							kssu = i*nd+j; // KSSU=(I-1)*ND+J
+							kssl = j*nd+i; // KSSL=(J-1)*ND+I
 
+							for (k = 1; k <= nezav; k++) //DO 318 K=1,NEZAV
+							{
+								jj = mpc[(jjp - 1) *(nezav + 1) + k];//mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+								if (jj != 0) //IF(JJ.EQ.0)GO TO 318
+								{
+									ij = ii - jj; //IJ = II - JJ
+									if (ij >= 0)  // IF(IJ)318,314,314	
+									{
+										cmj = cmpc[(k - 1)*nmpc + jcm - 1];//cmpc[(jcm - 1)*nezav + k - 1]; // 314 CMJ=CMPC(JCM,K)
+										AddVal(ii, jj, cmi*cmj*ske[kssu]);
+										AddVal(jj, ii, cmi*cmj*ske[kssl]);
+									}
+								}
+
+							} //318
+						}
+						else if (jj > 0)//IF(JJ)303,310,307 -> 307
+						{
+							ij = ii - jj; //IJ = II - JJ
+							if (ij >= 0)  // IF(IJ)310,311,311	
+							{
+								kssu = i*nd + j; // KSSU=(I-1)*ND+J
+								kssl = j*nd + i; // KSSL=(J-1)*ND+I
+								AddVal(ii, jj, cmi*ske[kssu]);
+								AddVal(jj, ii, cmi*ske[kssl]);
+							}
+						}
+						ks = ks + nd - j - 1; //310 KS = KS + ND - J
+					} //310
+				}
+			}
+			goto200 = 1; //#$%$#%$#@% ^&*$#$@#%$ %$#%$#% go to 200 &^@#$# @%@# $^&^%*&
+		}
+		if ((ii >= mnq0) && (goto200 == 0))//IF(II.LT.MNQ0.OR.(II.GT.MNQ1.AND.NBLOCK.GT.1)) GO TO 200
+		{
+			ks = i;
+			for (j = 0; j < nd; j++) //DO 220 J=1,ND
+			{
+				jj = lm[j];
+				if (jj < 0) //IF(JJ)420,220,110 -> 420
+				{
+					jjp = -lm[j]; //JJP=-JJ
+								  //jcm = mpc[jjp - 1]; //JCM=MPC(1,JJP)
+					jcm = mpc[(jjp - 1) *(nezav + 1)];
+					kssu = i*nd + j; // KSSU=(I-1)*ND+J
+					kssl = j*nd + i; // KSSL=(J-1)*ND+I
+
+					for (k = 1; k <= nezav; k++) //DO 418 K=1,NEZAV
+					{
+						//jj = mpc[k*nmpc + jjp - 1]; //JJ=MPC(K+1,JJP)
+						jj = mpc[(jjp - 1) *(nezav + 1) + k];
+						if (jj != 0) //IF(JJ.EQ.0)GO TO 418
+						{
+							//cmj = cmpc[(jcm - 1)*nezav + k - 1]; //CMJ=CMPC(JCM,K)
+							cmj = cmpc[(k - 1)*nmpc + jcm - 1];
+							ij = ii - jj; //IJ = II - JJ
+							if (ij >= 0)  // IF(IJ)418,415,415 -> 415	
+							{
+								AddVal(ii, jj, cmj*ske[kssu]);
+								AddVal(jj, ii, cmj*ske[kssl]);
+							}
+						}
+
+					}
+				}
+				else if (jj > 0) //IF(JJ)420,220,110 -> 110
+				{ //ovo je deo koji se koristi kada nema vezanih pomeranja
+					ij = ii - jj;
+					if (ij >= 0)
+						//if ((ii != 0) && (jj != 0) && (j >= i))
+					{
+						kssu = i*nd + j; // KSSU=(I-1)*ND+J
+						kssl = j*nd + i; // KSSL=(J-1)*ND+I
+						AddVal(ii, jj, ske[kssu]);
+						AddVal(jj, ii, ske[kssl]);
+					}
+				}
+				ks = ks + nd - j - 1; //220 KS = KS + ND - J
+			}
+		}
+		ndi = ndi + nd - i - 1; //  200 NDI=NDI+ND-I
+		goto200 = 0;
+	}
+}
 void sparseassembler_getsparse_(int64_t *nz, int64_t *rows, int64_t *cols, double *vals, int *IMAXA)
 {
 	packRow = rows;

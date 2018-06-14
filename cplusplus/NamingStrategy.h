@@ -35,6 +35,7 @@
 #define sparseassembler_kill_                   SPARSEASSEMBLER_KILL
 #define sparseassembler_init_                   SPARSEASSEMBLER_INIT
 #define sparseassembler_addelemmatrix_                   SPARSEASSEMBLER_ADDELEMMATRIX
+#define sparseassembler_addnonsymmatrix_                   SPARSEASSEMBLER_ADDNONSYMMATRIX
 #define sparseassembler_getsparse_                   SPARSEASSEMBLER_GETSPARSE
 #define sparseassembler_getnz_                   SPARSEASSEMBLER_GETNZ
 

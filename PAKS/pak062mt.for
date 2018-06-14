@@ -22,8 +22,14 @@ C
       IF(NBLOCK.EQ.1) THEN
 !           CALL ISPAKGMT(SK,AIROWS,MAXA,SKE,LM,ND,0,
 !     &               A(LMNQ),A(LLREC),NBLOCK,LR,IBLK,A(LCMPC),A(LMPC))
+      IF(ICCGG.EQ.2) THEN
+      CALL sparseassembler_addnonsymmatrix
+     1 (ND,LM,SKE,NEZAV,NMPC,A(LCMPC),A(LMPC))        
+      ELSE !IF(ICCGG.EQ.2) THEN         
       CALL sparseassembler_addelemmatrix
      1 (ND,LM,SKE,NEZAV,NMPC,A(LCMPC),A(LMPC))
+      ENDIF !IF(ICCGG.EQ.2) THEN
+      
       ELSE
           STOP 'NE RADI S BLOKOVIMA'
       ENDIF
