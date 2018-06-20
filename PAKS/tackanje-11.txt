@@ -1,0 +1,97 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+  Untitled
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (4I5,5X.I5)
+C NP,NGELEM,NMATM,NPER,NKRT,NCRACK,NCXFEM,IGBM
+   12    1    1    1          
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 1 1 1 1       0    0    1
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0   -1    1    0    0    0    0    0    0    0    0
+C /6/ GROUP OF CARDS WITH DATA FOR BLOCKS (5I5)
+C NBL,(NPRGR(NBL,I),I=1,4)
+    1    1    1 9000    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0              0  -11  0.000000  0.000000         0
+C /8/ GROUP OF CARDS WITH DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1  1.000000
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,4F10.0,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    4   50    1    0    0  0.001000  0.000000  0.000000 0.0000001    2
+C /10/ GROUP OF CARDS FOR NODAL POINT DATA (I5,A1,6I2,2X,3F10.0,2I5) (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,LJ(N)
+    1  1 1 0 0 0 0     0.00000   0.00000   0.00000    0    0
+    2  0 1 0 0 0 0    10.00000   0.00000   0.00000    0    0
+    3  0 1 0 0 0 0    20.00000   0.00000   0.00000    0    0
+    4  0 1 0 0 0 0    30.00000   0.00000   0.00000    0    0
+    5  1 0 0 0 0 0     0.00000  10.00000   0.00000    0    0
+    6  0 0 0 0 0 0    10.00000  10.00000   0.00000    0    0
+    7  0 0 0 0 0 0    20.00000  10.00000   0.00000    0    0
+    8  0 0 0 0 0 0    30.00000  10.00000   0.00000    0    0
+    9  1 0 0 0 0 0     0.00000  20.00000   0.00000    0    0
+   10  0 0 0 0 0 0    10.00000  20.00000   0.00000    0    0
+   11  0 0 0 0 0 0    20.00000  20.00000   0.00000    0    0
+   12  0 0 0 0 0 0    30.00000  20.00000   0.00000    0    0
+C /11/ GENERAL DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    1    1   20
+C /12/ DATA FOR EACH MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    1    10.0000e+00
+C /12-1/ MATERIAL MODEL 1 (ELASTIC-ISOTROPIC)
+C YOUNGS MODULI (F10.0)
+C        E
+1.0000e+00
+C POISSONS RATIO (F10.0)
+C        V
+3.3333e-01
+C /13/ ELEMENT GROUP DATA (7I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV, COEF1, COEF2, COEF3
+    2    6    0    1    0    0    0    0  0.000000  0.000000  0.000000
+C /13-2/ DATA FOR 2D ISOPARAMETRIC ELEMENTS
+C a) First card with basic data for the element group (4I5,F10.0,I5,3F10.0,I5)
+C IETYP,NGAUSX,NGAUSY,MSET,BETA,MSLOJ,CPP1,CPP2,CPP3,IALFA
+    0    2    2    0  0.000000    0  0.000000  0.000000  0.000000    0
+C b) Card wiht data for the current element (5I5,F10.0,I5,2F10.0)
+C NN,NMAT,IPRCO,ISNA,IPGS,THI,KORC,BTH,DTH
+C c) Card with nodal point data for the current element (9I5)
+C (NEL(NN,I),I=1,9)
+    1    1    0    0    0  1.000000    0  0.000000  0.000000
+    1    2    6    5
+    2    1    0    0    0  1.000000    0  0.000000  0.000000
+    2    3    7    6
+    3    1    0    0    0  1.000000    0  0.000000  0.000000
+    3    4    8    7
+    4    1    0    0    0  1.000000    0  0.000000  0.000000
+    5    6   10    9
+    5    1    0    0    0  1.000000    0  0.000000  0.000000
+    6    7   11   10
+    6    1    0    0    0  1.000000    0  0.000000  0.000000
+    7    8   12   11
+C /14/ DATA ABOUT TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1  100
+C a) Data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) Values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+0.0000e+00 1.0000e+0
+1.0000e+04 1.0000e+0
+C /15/ GENERAL DATA ABOUT LOADS (4I5,5X,5I5)
+C NCF,NPP2,NPP3, NPGR,    NPLJ,NTEMP,NZADP,INDZS,ICERNE
+    3    0    0    0         0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC    FPOM
+    4    1    1 5.0000e-2    0  0.000000
+   12    1    1 5.0000e-2    0  0.000000
+    8    1    1 1.0000e-1    0  0.000000
+C /16/ FINAL CARD (A4)
+STOP

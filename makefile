@@ -1,4 +1,4 @@
-LIBDIR = /opt/paklibs
+LIBDIR = /opt/paklibsi
 MUMPS = $(LIBDIR)/MUMPS
 include $(MUMPS)/Makefile.inc
 # iz Makefile.inc
@@ -38,7 +38,7 @@ makdc := $(addprefix $(MAKEd),$(makc))
 RM = rm -f
 
 
-LIB = $(TARGETLIB).a $(MUMPS)/lib/libdmumps.a $(MUMPS)/lib/libmumps_common.a $(LIBS) $(LIBDIR)/ATLAS/build/lib/libatlas.a -L/usr/lib64/ -lpthread $(MUMPS)/PORD/lib/libpord.a
+LIB = $(TARGETLIB).a $(MUMPS)/lib/libdmumps.a $(MUMPS)/lib/libmumps_common.a $(LIBS) $(LIBDIR)/ATLAS/build/lib/libatlas.a -L/usr/lib64/ -lpthread $(MUMPS)/PORD/lib/libpord.a $(LIBDIR)/METIS/lib/libmetis.a
 
 all: $(makd90) $(makdc) $(makd) makefile
 	$(FC) $(FLAGS) $(LIB) -o $(TARGET)
