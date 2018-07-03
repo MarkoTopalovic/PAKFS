@@ -1,11 +1,12 @@
 LIBDIR = /opt/paklibsi
+# LIBDIR je jedini parametar koji se menja i pokazuje na direktorijum gde je instaliran MUMPS
+# za intel fortran compiler LIBDIR = /opt/paklibsi za gfortran LIBDIR = /opt/paklibs
+# sve ostale promenljive se citaju iz (MUMPS)/Makefile.inc
+# Makefile.inc je razlicit za intel i gfortran i u njemu se bira MPI, metis/pord, atlas/blas...
 MUMPS = $(LIBDIR)/MUMPS
 include $(MUMPS)/Makefile.inc
-# iz Makefile.inc
-#FC = mpif90
-#CC = icc
 
-FLAGS= -O3 -I$(MUMPS)/include -I $(LIBDIR)/MPICHinstall/src/include -static
+FLAGS= -O3 -I$(MUMPS)/include -I $(PAKINCS) -static
 
 SRC:=./PAKS
 SRCPP:=./cplusplus
@@ -38,7 +39,7 @@ makdc := $(addprefix $(MAKEd),$(makc))
 RM = rm -f
 
 
-LIB = $(TARGETLIB).a $(MUMPS)/lib/libdmumps.a $(MUMPS)/lib/libmumps_common.a $(LIBS) $(LIBDIR)/ATLAS/build/lib/libatlas.a -L/usr/lib64/ -lpthread $(MUMPS)/PORD/lib/libpord.a $(LIBDIR)/METIS/lib/libmetis.a
+LIB = $(TARGETLIB).a $(MUMPS)/lib/libdmumps.a $(MUMPS)/lib/libmumps_common.a $(PAKLIBS) $(ATLASLIB) $(LIBOTHERS) $(LIBORDERINGS)
 
 all: $(makd90) $(makdc) $(makd) makefile
 	$(FC) $(FLAGS) $(LIB) -o $(TARGET)
