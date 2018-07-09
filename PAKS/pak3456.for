@@ -2,7 +2,7 @@ C=======================================================================
 C
 CS    CONCRETE MODEL WITH DAMAGE (22.07.2015.)
 CE
-      SUBROUTINE D3M56(TAU,DEF,IRAC,LPOCG,LPOC1)
+      SUBROUTINE D3M56(TAU,DEF,IRAC,LPOCG,LPOC1,AU)
       USE PLAST3D
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       include 'paka.inc'
@@ -12,9 +12,12 @@ C
       COMMON /ELEMEN/ ELAST(6,6),XJ(3,3),ALFA(6),TEMP0,DET,NLM,KK
       COMMON /PERKOR/ LNKDT,LDTDT,LVDT,NDT,DT,VREME,KOR
       COMMON /REPERM/ MREPER(4)
+      COMMON /CVOREL/ ICVEL,LCVEL,LELCV,NPA,NPI,LCEL,LELC,NMA,NMI
       COMMON /CDEBUG/ IDEBUG
 C
       DIMENSION TAU(6),DEF(6)
+      DIMENSION AU(*)
+      REAL AU
 C
       IF(IDEBUG.GT.0) PRINT *, ' D3M56'
 C  
@@ -51,7 +54,7 @@ C
      * PLAST(LKAPA),TAU,PLAS1(LTAU1),PLAST(LTAU),DEF,
      * PLAS1(LDEF1),PLAST(LDEF),A(LFUN),IRAC,DT,KOR,MATE,
      * PLAST(LDEE),PLAS1(LDEE1),PLAS1(LUDL1),PLAS1(LUDL1+1),
-     * PLAST(LUDL),PLAST(LUDL+1),PLAST(LUPT),PLAS1(LUPT1))
+     * PLAST(LUDL),PLAST(LUDL+1),PLAST(LUPT),PLAS1(LUPT1),AU(LCEL))
 C
       RETURN
       END
@@ -61,7 +64,7 @@ C
       SUBROUTINE TI3456(DEFPT1,DEFPT,AKAPATT,AKAPAT,
      * TAU,TAU1,TAUT,DEF,DEF1,DEFT,PROPS,IRAC,DTIME,
      * KORAK,MATE,DEEEET,DEEEE1,UDL1T,UDL1C,UDLT,UDLC,
-     * XT,XTDT)
+     * XT,XTDT,MCVEL)
 C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
 C
@@ -73,6 +76,7 @@ C
      * QRESIZV(2),AKAPA(2),QRES(2),DEKAPA(2),DEDEF(6),TAU1(6),
      * DEDEF1(6),DDEKAPA(2),TSS(6,6),QIZV(2),CEPD(6,6),TAUDD1(6),
      * DEFPT1(6),TAUEFG1(6)
+      DIMENSION MCVEL(*)
 C
       COMMON /ELEMEN/ ELAST(6,6),XJ(3,3),ALFA(6),TEMP0,DETT,NLM,KK
       COMMON /CDEBUG/ IDEBUG
@@ -81,8 +85,12 @@ C
       COMMON /CEPMAT/ INDCEP
       COMMON /ITERBR/ ITER  
       COMMON /ZAPREM/ ZAPRE      
+      COMMON /CVOREL/ ICVEL,LCVEL,LELCV,NPA,NPI,LCEL,LELC,NMA,NMI
 C
       IF(IDEBUG.GT.0) PRINT *, ' TI3456'
+C
+      NMM=NLM
+      IF(ICVEL.EQ.1) NMM=MCVEL(NLM)
 C
       TOLL=1.d-8
       TOLLL=0.d0
@@ -109,13 +117,6 @@ C
 !       AKSI  = 0.D0
 C      AKSI = PROPS(12,MAT)
 !       AALFF = 0.12D0
-C
-      if(alch.lt.1.d-8)then
-      alch=ZAPRE**(1.d0/3.d0)
-      endif
-C      
-      gc=Ggc/alch
-      gt=Ggt/alch
 C
       IF(ftpri.lt.1.d-8)THEN
       ftpri=0.1d0*fcpri
@@ -152,7 +153,28 @@ C
       IF(ADCR.lt.1.d-8)THEN
       PROPS(20,MAT)=1.d0
       ADCR=1.D0
-      ENDIF         
+      ENDIF 
+C
+C     STRENGTH REDUCTION FACTOR	SAMO ZA PRIMER PRITUNI-10P0.DAT  
+      SRF=1.	  
+      IF(KORAK.GT.100) THEN
+	     SRF=1.+(KORAK-100)/100
+		 ENRED=((1.-AALFF)*fcpri-GAMMA*ftpri)/SRF
+         AALFF=AALFF/SRF
+		 fcpri=fcpri/SRF
+		 ftpri=ftpri/SRF
+		 Ggc=Ggc/SRF
+		 Ggt=Ggt/SRF
+		 GAMMA=((1.-AALFF)*fcpri-ENRED)/ftpri
+	  ENDIF
+C
+      if(alch.lt.1.d-8)then
+      alch=ZAPRE**(1.d0/3.d0)
+      endif
+C      
+      gc=Ggc/alch
+      gt=Ggt/alch
+C
       CBCONC=(DLOG(1.D0-DCCC))/(DLOG((1.D0+ACONC)/2.D0/ACONC))        
       CBCONT=(DLOG(1.D0-DTTT))/(DLOG((1.D0+ACONT)-
      1        DSQRT(1.D0+ACONT**2))-DLOG(2.D0*ACONT))
@@ -281,8 +303,16 @@ C
       CALL CLEAR(DEKAPA,2)    
 !       l=0
  300  CONTINUE
-       IF(AKAPA(1).LT.-1.d-8) STOP 'KAPA_T < 0'
-       IF(AKAPA(2).LT.-1.d-8) STOP 'KAPA_C < 0'       
+!        IF(AKAPA(1).LT.-1.d-8) STOP 'KAPA_T < 0'
+!        IF(AKAPA(2).LT.-1.d-8) STOP 'KAPA_C < 0'   
+       IF(AKAPA(1).LT.-1.d-8) THEN
+       DEEEE=0.97
+       goto 301
+       ENDIF
+       IF(AKAPA(2).LT.-1.d-8) THEN
+       DEEEE=0.97
+       goto 301
+       ENDIF       
 C
 !       ALAMBDA=(AALFF*AITR1+SEQV+BBETT*TAUEFGL(1)-(1.D0-AALFF)*fc1)/
 !      1 (9.D0*AK0*AALFFP*AALFF+DSQRT(6.D0)*GE*SEF1/DSQRT(BBETTH**2.D0+
@@ -316,7 +346,8 @@ C
      1            SEF+3.D0*AK0*AALFFP-
      1            GE*AITR1/3.D0/SEF))
 !       write(3,*)'ALAMBDA',ALAMBDA    
-       IF(ALAMBDA.LT.0.D0) write(*,*)'UPOZORENJE ALAMBDA<0'
+       IF(ALAMBDA.LT.0.D0) write(*,*)'UPOZORENJE ALAMBDA<0',
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
 C
 !       ADCR=1.d0   
 C     
@@ -333,6 +364,11 @@ C
      1            SEF+3.D0*AK0*AALFFP*AJED(I)-
      1            GE*AITR1/3.D0/SEF*AJED(I))
   80  CONTINUE
+      IF(ADCR.GT.1.D0) goto 301  
+      IF(DEEEET.GT.0.969999) THEN
+      DEEEE=0.97
+      goto 301  
+      ENDIF
 C
       DETTT=1.D0-(((1.D0+ACONT-
      1    DSQRT(fiikt1))/ACONT)**CBCONT)
@@ -369,8 +405,10 @@ C
       QRESN=DSQRT(QRESN2)
       DO 122 I=1,2
         IF(AKAPA(I).GT.ADCR) THEN 
-        write(*,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I)
-        write(3,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I)      
+        write(*,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I),
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
+        write(3,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I),      
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
 !         GOTO 301     
         ENDIF
   122 CONTINUE 
@@ -402,7 +440,8 @@ C
  110    DEKAPA(I)=DEKAPA(I)+DDEKAPA(I) 
       DO 127 I=1,2
         IF(DEKAPA(I).LT.-1.d-8) THEN
-        write(*,*)'DEKAPA(',I,')<0=',DEKAPA(I) 
+        write(*,*)'DEKAPA(',I,')<0=',DEKAPA(I), 
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
         ENDIF
   127 CONTINUE   
 ! ! !       write(*,*)'DEKAPA,AKAPAT,AKAPA',DEKAPA,AKAPAT,AKAPA 
@@ -415,22 +454,29 @@ C
       
       DO 121 I=1,2
         IF(AKAPA(I).GT.ADCR) THEN 
-        write(*,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I)
-        write(3,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I)  
+        write(*,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I),
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
+        write(3,*)'POTPUNA DEGRADACIJA - K(',I,')>',ADCR,'=',AKAPA(I),  
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
         AKAPA(I)=ADCR
+        DEEEE=0.97
         GOTO 301     
         ENDIF
         IF(AKAPA(I).LT.-1.d-8) THEN 
-        write(*,*)'NEGATIVNO - K(',I,')<0 =',AKAPA(I),'SMANJITI KORAK'
-        write(3,*)'NEGATIVNO - K(',I,')<0 =',AKAPA(I),'SMANJITI KORAK'   
-        write(*,*)'AKAPA=',AKAPA        
-!         GOTO 301     
+        write(*,*)'NEGATIVNO - K(',I,')<0=',AKAPA(I),'SMANJITI KORAK',
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
+        write(3,*)'NEGATIVNO - K(',I,')<0=',AKAPA(I),'SMANJITI KORAK',   
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
+        write(*,*)'AKAPA=',AKAPA    
+        DEEEE=0.97
+        GOTO 301     
         ENDIF        
   121 CONTINUE        
       if(l.gt.100) then 
-      write(*,*)'QRESN',QRESN
+      write(*,*)'QRESN',QRESN,
+     1               ' MAT=',MAT,' NMODM=',NMODM,' NLM=',NMM
       stop 'Prekoracio broj lokalnih iteracija>100'
-      endif
+      endif 
       GOTO 300
 C      
  301  CONTINUE 
@@ -482,7 +528,9 @@ C
 !       write(3,*)'ESS0,ESS,Ar',ESS0,ESS,Ar
 !       ESS=1.D0
 C
+      IF(DEEEE.LT.0.969999) THEN
       DEEEE=1.D0-(1.D0-DECCC)*(1.D0-ESS*DETTT)
+      ENDIF
 !       DEEEE=1.D0-(1.D0-(1.d0-Ar)*DECCC)*(1.D0-Ar*DETTT)
 !       DEEEE=0.D0
 !       write(3,*)'DE,DEC,DET',DEEEE,DECCC,DETTT 

@@ -305,10 +305,12 @@ CS    UCITAVANJE VEKTORA KONCENTRISANIH ZAPREMINSKIH SILA U TRENUTKU T+DT
 C  ZA INSTITUT CERNE!!
 C
       IF(ICERNE.GT.0.AND.ICERNM.EQ.0) THEN
+C slucaj za broj zadnjih koraka, ali bi morale da postoje sile za sve korake ucitane
          NDTC=NDT-ICERNE
-         IF(KOR.GT.NDTC) CALL READD(A(LRTDT),JEDN,ISILE)     
+         IF(KOR.GT.NDTC) CALL READD(A(LRTDT),JEDN,ISILE) 
       ENDIF
       IF(ICERNE.GT.0.AND.ICERNM.GT.0) THEN
+C slucaj kada se cita jedan set sila ali premnozava sa funkcijom u ulazu se zadaje -broj funkcije
          CALL TABF(A(LTABFT),A(LNTFT),ICERNM,NTABFT,VREME,FT,NTMX,IND)
         WRITE(*,*) 'FT',FT
          IF(IND.GT.0) THEN
@@ -813,6 +815,7 @@ C
          ENDIF
    10 CONTINUE
       ELSE
+C VAZNO - TEMPC0 SE UZIMA OD PRVOG MATERIJALA POSLEDNJEG UCITANOG MODELA
          DO I=1,NP
             TEMP(I)=TEMPC0
          ENDDO
