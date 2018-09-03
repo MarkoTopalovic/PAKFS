@@ -7,11 +7,12 @@ MUMPS = $(LIBDIR)/MUMPS
 include $(MUMPS)/Makefile.inc
 
 FLAGS= -O3 -I$(MUMPS)/include -I $(PAKINCS) -static -init=zero
+FLAGSC= -O3 -I$(MUMPS)/include -I $(PAKINCS) -static
 
-SRC:=./PAK
+SRC:=./PAKS
 SRCPP:=./cplusplus
 DEPS = $(SRCPP)/*.h
-MAKEd = PAK/x64linux/
+MAKEd = PAKS/x64linux/
 
 TARGETLIB = $(MAKEd)/libpak
 TARGET = linuxexe/pak.exe
@@ -49,7 +50,7 @@ $(MAKEd)%.obj: $(SRC)/%.$(SUFFIX90) # makefile
 	ar rs $(TARGETLIB).a $@
 
 $(MAKEd)%.obj: $(SRCPP)/%.$(SUFFIXC) $(DEPS) # makefile
-	$(CC) -c $(FLAGS)  $< -o $@
+	$(CC) -c $(FLAGSC)  $< -o $@
 	ar rs $(TARGETLIB).a $@
 
 $(MAKEd)%.obj: $(SRC)/%.$(SUFFIX) # makefile
