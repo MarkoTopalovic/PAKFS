@@ -6,12 +6,12 @@ LIBDIR = /opt/paklibsi
 MUMPS = $(LIBDIR)/MUMPS
 include $(MUMPS)/Makefile.inc
 
-FLAGS= -O3 -I$(MUMPS)/include -I $(PAKINCS) -static
+FLAGS= -O3 -I$(MUMPS)/include -I $(PAKINCS) -static -init=zero
 
-SRC:=./PAKS
+SRC:=./PAK
 SRCPP:=./cplusplus
 DEPS = $(SRCPP)/*.h
-MAKEd = PAKS/x64linux/
+MAKEd = PAK/x64linux/
 
 TARGETLIB = $(MAKEd)/libpak
 TARGET = linuxexe/pak.exe
