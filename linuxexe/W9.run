@@ -1,0 +1,111 @@
+#!/bin/bash
+
+if [ -f Ulaz.csv ]
+then
+        #      E,nu,fcPrim,ftPrim,a_c,D_c,a_t,D_t,indtem,temp0,alfat,Gc,Gt,Lch,timeT,s0,ALFA_P,AALFF,GAMMA,ADCR
+
+	varsInline=`cat Ulaz.csv | tail -n 1`
+	E=`echo $varsInline | awk -F"," '{print $1}'`
+	E=$(printf "%10s\n" "$E")
+	nu=`echo $varsInline | awk -F"," '{print $2}'`
+	nu=$(printf "%10s\n" "$nu")
+	fcPrim=`echo $varsInline | awk -F"," '{print $3}'`
+	fcPrim=$(printf "%10s\n" "$fcPrim")
+	ftPrim=`echo $varsInline | awk -F"," '{print $4}'`
+	ftPrim=$(printf "%10s\n" "$ftPrim")
+	a_c=`echo $varsInline | awk -F"," '{print $5}'`
+	a_c=$(printf "%10s\n" "$a_c")
+	D_c=`echo $varsInline | awk -F"," '{print $6}'`
+	D_c=$(printf "%10s\n" "$D_c")
+	a_t=`echo $varsInline | awk -F"," '{print $7}'`
+	a_t=$(printf "%10s\n" "$a_t")
+	D_t=`echo $varsInline | awk -F"," '{print $8}'`
+	D_t=$(printf "%10s\n" "$D_t")
+	
+	indtem=`echo $varsInline | awk -F"," '{print $9}'`
+	indtem=$(printf "%10s\n" "$indtem")
+	temp0=`echo $varsInline | awk -F"," '{print $10}'`
+	temp0=$(printf "%10s\n" "$temp0")
+	alfat=`echo $varsInline | awk -F"," '{print $11}'`
+	alfat=$(printf "%10s\n" "$alfat")
+	Gc=`echo $varsInline | awk -F"," '{print $12}'`
+	Gc=$(printf "%10s\n" "$Gc")
+	Gt=`echo $varsInline | awk -F"," '{print $13}'`
+	Gt=$(printf "%10s\n" "$Gt")
+	Lch=`echo $varsInline | awk -F"," '{print $14}'`
+	Lch=$(printf "%10s\n" "$Lch")
+	timeT=`echo $varsInline | awk -F"," '{print $15}'`
+	timeT=$(printf "%10s\n" "$timeT")
+	s0=`echo $varsInline | awk -F"," '{print $16}'`
+	s0=$(printf "%10s\n" "$s0")
+	
+	ALFA_P=`echo $varsInline | awk -F"," '{print $17}'`
+	ALFA_P=$(printf "%10s\n" "$ALFA_P")
+	AALFF=`echo $varsInline | awk -F"," '{print $18}'`
+	AALFF=$(printf "%10s\n" "$AALFF")
+	GAMMA=`echo $varsInline | awk -F"," '{print $19}'`
+	GAMMA=$(printf "%10s\n" "$GAMMA")
+	ADCR=`echo $varsInline | awk -F"," '{print $20}'`
+	ADCR=$(printf "%10s\n" "$ADCR")
+	
+	Ebeton=`echo $varsInline | awk -F"," '{print $21}'| tr -d '\r'`
+	Ebeton=$(printf "%10s\n" "$Ebeton")
+	
+	echo "variables loaded"
+else
+	echo Ulaz.csv doesnt exist
+	exit 1
+fi
+
+if [ -f paks.dat ]
+then
+	rm paks.*
+fi
+        pakDat=paks.dat
+        templateDat="TS_SSG4_1.dat"
+      
+        cat $templateDat | sed '5551s/.*/'"$E""$nu""$fcPrim""$ftPrim""$a_c""$D_c""$a_t""$D_t"'/' |\
+        sed '5553s/.*/'"$indtem""$temp0""$alfat""$Gc""$Gt""$Lch""$timeT""$s0"'/' |\
+        sed '5555s/.*/'"$ALFA_P""$AALFF""$GAMMA""$ADCR"'/' |\
+	sed '5561s/   32.0e+6/'"$Ebeton"'/' > $pakDat
+        
+        echo "1 input file created"
+        echo "trying to start 1 analysis"
+        ./pak.exe < inp.txt
+        
+        
+        
+if [ -f paks.dat ]
+then
+	rm paks.*
+fi
+        pakDat=paks.dat
+        templateDat="TS_SSG4_2.dat"
+      
+        cat $templateDat | sed '5551s/.*/'"$E""$nu""$fcPrim""$ftPrim""$a_c""$D_c""$a_t""$D_t"'/' |\
+        sed '5553s/.*/'"$indtem""$temp0""$alfat""$Gc""$Gt""$Lch""$timeT""$s0"'/' |\
+        sed '5555s/.*/'"$ALFA_P""$AALFF""$GAMMA""$ADCR"'/' |\
+	sed '5561s/   32.0e+6/'"$Ebeton"'/' > $pakDat
+        
+        echo "2 input file created"
+        echo "trying to start 2 analysis"
+        ./pak.exe < inp.txt
+        
+        
+if [ -f paks.dat ]
+then
+	rm paks.*
+fi
+        pakDat=paks.dat
+        templateDat="TS_SSG4_3.dat"
+      
+        cat $templateDat | sed '5551s/.*/'"$E""$nu""$fcPrim""$ftPrim""$a_c""$D_c""$a_t""$D_t"'/' |\
+        sed '5553s/.*/'"$indtem""$temp0""$alfat""$Gc""$Gt""$Lch""$timeT""$s0"'/' |\
+        sed '5555s/.*/'"$ALFA_P""$AALFF""$GAMMA""$ADCR"'/' |\
+	sed '5561s/   32.0e+6/'"$Ebeton"'/' > $pakDat
+        
+        echo "3 input file created"
+        echo "trying to start 3 analysis"
+        ./pak.exe < inp.txt
+        
+        
