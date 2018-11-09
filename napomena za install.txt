@@ -1,4 +1,3 @@
-pre kompajliranja instalirati 
-.NET framework (NetFx64)
-a potom
+pre kompajliranja ukljuciti stari .NET framework 3.5 u "Windows Features"
+a potom instalirati
 MPICH2 (mpich2-1.4.1p1-win-x86-64)
